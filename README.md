@@ -2,22 +2,19 @@
 
 A software system for an imaginary hotel. Supports in-hotel, call and online reservation. Intentionally over-engineered. 
 
+<br>
+<br>
+
 ![Model](assets/model.png)
 
 ![Design1](assets/design1.png)
 
+<br>
+<br>
+
 If you want to take a closer look at the UML design, you can visit it <a href="https://lucid.app/lucidchart/e0c57e48-c5d1-4812-af3d-4a13d766994e/edit?viewport_loc=-9506%2C-4956%2C31791%2C14162%2C0_0&invitationId=inv_7089af6c-d665-4f91-8786-333e7d46c243" target="_blank">here.</a>
 
-![Design2](assets/design2.png)
-
-![Design3](assets/design3.png)
-
-![Design4](assets/design4.png)
-
-![Design5](assets/design5.png)
-
-![Design6](assets/design6.png)
-
+<br>
 
 # Scenarios
 
