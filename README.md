@@ -5,14 +5,20 @@ A software system for an imaginary hotel. Supports in-hotel, call and online res
 <br>
 <br>
 
+![EventStorming](assets/es.png)
+
 ![Model](assets/model.png)
 
 ![Design1](assets/design1.png)
+
+![Design2](assets/design2.png)
 
 <br>
 <br>
 
 If you want to take a closer look at the UML design, you can visit it <a href="https://lucid.app/lucidchart/e0c57e48-c5d1-4812-af3d-4a13d766994e/edit?viewport_loc=-9506%2C-4956%2C31791%2C14162%2C0_0&invitationId=inv_7089af6c-d665-4f91-8786-333e7d46c243" target="_blank">here.</a>
+
+And you can access to event storming in <a href="https://miro.com/app/board/uXjVLFt3NmM=/?share_link_id=196794179204">here.</a>
 
 <br>
 
