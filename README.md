@@ -145,7 +145,7 @@ And you can access to event storming in <a href="https://miro.com/app/board/uXjV
 
 ### Use Cases Involved
 - `RetrieveReservationsOfCustomer`
-- `ReservationCheckIn(reservationId, confirmationCode)`
+- `ReservationCheckIn`
 
 <br>
 
@@ -156,11 +156,13 @@ And you can access to event storming in <a href="https://miro.com/app/board/uXjV
 
 ### Use Cases Involved
 - `RetrieveReservationsOfCustomer`
-- `ReservationCheckOut(reservationId)`
+- `ReservationCheckOut`
 
 <br>
 
 ## Room Type Management
+
+Manager can manage room types.
 
 - Retrieve room types.
 - Add a room type.
@@ -177,14 +179,16 @@ And you can access to event storming in <a href="https://miro.com/app/board/uXjV
 
 ## Room Management
 
+Manager can manage rooms.
+
 - Retrieve rooms.
 - Add a room.
 - Delete a room.
 
 ### Use Cases Involved
-- `RetrieveRooms(roomTypeId)`
-- `AddRoom(roomNumber, roomTypeId)`
-- `DeleteRoom(roomId)`
+- `RetrieveRooms`
+- `AddRoom`
+- `DeleteRoom`
 
 <br>
 <br>
