@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = false)
 public class ModifyRoomTypeUseCase extends Message {
 
+    private Long id;
     private String title;
     private String description;
     private BigDecimal priceForNight;
