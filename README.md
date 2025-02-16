@@ -1,6 +1,6 @@
 # Hotel Reservation System
 
-A software system for an imaginary hotel. Supports in-hotel, call and online reservation. Intentionally over-engineered. 
+A software system for an imaginary hotel. Supports in-hotel, call and online reservation.
 
 <br>
 <br>
