@@ -50,4 +50,8 @@ public class RoomType extends AggregateRoot {
         numberOfRooms++;
     }
 
+    public void decreaseNumberOfRooms() {
+        numberOfRooms--;
+    }
+
 }

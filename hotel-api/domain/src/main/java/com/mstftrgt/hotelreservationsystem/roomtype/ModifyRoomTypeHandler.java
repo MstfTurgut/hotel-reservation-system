@@ -23,6 +23,6 @@ public class ModifyRoomTypeHandler extends MessageHandler<ModifyRoomTypeUseCase,
 
         roomType.modify(message);
 
-        return roomTypePort.save(roomType);
+        return roomTypePort.update(roomType);
     }
 }
