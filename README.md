@@ -12,7 +12,7 @@ A software system for an imaginary hotel. Supports in-hotel, call and online res
 <br>
 <br>
 
-And you can access to event storming in <a href="https://miro.com/app/board/uXjVLFt3NmM=/?share_link_id=196794179204">here.</a>
+You can access to event storming in <a href="https://miro.com/app/board/uXjVLFt3NmM=/?share_link_id=196794179204">here.</a>
 
 <br>
 
