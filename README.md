@@ -160,7 +160,7 @@ And you can access to event storming in <a href="https://miro.com/app/board/uXjV
 
 <br>
 
-## Room Type Management
+## com.mstftrgt.hotelreservationsystem.model.Room Type Management
 
 Manager can manage room types.
 
@@ -177,7 +177,7 @@ Manager can manage room types.
 
 <br>
 
-## Room Management
+## com.mstftrgt.hotelreservationsystem.model.Room Management
 
 Manager can manage rooms.
 

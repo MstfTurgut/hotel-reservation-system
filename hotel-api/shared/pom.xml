@@ -4,24 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>hotel-api</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>shared</artifactId>
+    <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
-
 
     <parent>
         <groupId>com.mstftrgt</groupId>
-        <artifactId>hotel-reservation-system</artifactId>
+        <artifactId>hotel-api</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <modules>
-        <module>reservation</module>
-        <module>roommanagement</module>
-        <module>identityaccess</module>
-        <module>payment</module>
-        <module>notification</module>
-        <module>shared</module>
-    </modules>
+    <dependencies>
+
+    </dependencies>
 
 </project>
