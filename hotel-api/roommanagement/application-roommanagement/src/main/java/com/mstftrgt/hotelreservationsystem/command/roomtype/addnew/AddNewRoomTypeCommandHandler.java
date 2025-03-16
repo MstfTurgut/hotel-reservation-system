@@ -1,7 +1,8 @@
 package com.mstftrgt.hotelreservationsystem.command.roomtype.addnew;
 
 import com.mstftrgt.hotelreservationsystem.CommandHandler;
-import com.mstftrgt.hotelreservationsystem.repository.dto.RoomTypeCreate;
+import com.mstftrgt.hotelreservationsystem.dto.RoomTypeCreate;
+import com.mstftrgt.hotelreservationsystem.model.RoomType;
 import com.mstftrgt.hotelreservationsystem.repository.RoomTypeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,16 +15,8 @@ public class AddNewRoomTypeCommandHandler implements CommandHandler<AddNewRoomTy
 
     @Override
     public void handle(AddNewRoomTypeCommand command) {
-        roomTypeRepository.save(buildRoomTypeCreate(command));
-    }
+        RoomType roomType = RoomType.create(command.toRoomTypeCreate());
 
-    private static RoomTypeCreate buildRoomTypeCreate(AddNewRoomTypeCommand command) {
-        return new RoomTypeCreate(
-                command.getTitle(),
-                command.getDescription(),
-                command.getPriceForNight(),
-                command.getAdultCapacity(),
-                command.getChildCapacity()
-        );
+        roomTypeRepository.save(roomType);
     }
 }

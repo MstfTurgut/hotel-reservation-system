@@ -1,6 +1,7 @@
 package com.mstftrgt.hotelreservationsystem.query.user.find;
 
 import com.mstftrgt.hotelreservationsystem.QueryHandler;
+import com.mstftrgt.hotelreservationsystem.identityaccess.exception.UserNotFoundException;
 import com.mstftrgt.hotelreservationsystem.identityaccess.model.User;
 import com.mstftrgt.hotelreservationsystem.identityaccess.repository.UserRepository;
 import com.mstftrgt.hotelreservationsystem.readmodel.UserReadModel;
@@ -16,7 +17,7 @@ public class FindUserQueryHandler implements QueryHandler<FindUserQuery, UserRea
     @Override
     public UserReadModel handle(FindUserQuery query) {
         User user = userRepository.findById(query.userId())
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException(query.userId()));
 
         return UserReadModel.from(user);
     }

@@ -2,8 +2,9 @@ package com.mstftrgt.hotelreservationsystem.command.room.remove;
 
 import com.mstftrgt.hotelreservationsystem.CommandHandler;
 import com.mstftrgt.hotelreservationsystem.DomainEventPublisher;
+import com.mstftrgt.hotelreservationsystem.exception.RoomNotFoundException;
 import com.mstftrgt.hotelreservationsystem.model.Room;
-import com.mstftrgt.hotelreservationsystem.event.RoomRemoved;
+import com.mstftrgt.hotelreservationsystem.event.RoomRemovedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,15 +14,14 @@ import org.springframework.stereotype.Service;
 public class RemoveRoomCommandHandler implements CommandHandler<RemoveRoomCommand> {
 
     private final RoomRepository roomRepository;
-    private final DomainEventPublisher eventPublisher;
 
     @Override
     public void handle(RemoveRoomCommand command) {
-        Room room = roomRepository.findById(command.getRoomId())
-                .orElseThrow(() -> new IllegalArgumentException("com.mstftrgt.hotelreservationsystem.model.Room not found"));
+        Room room = roomRepository.findById(command.roomId())
+                .orElseThrow(() -> new RoomNotFoundException(command.roomId()));
 
-        roomRepository.deleteById(command.getRoomId());
+        room.remove();
 
-        eventPublisher.publish(new RoomRemoved(room.getRoomTypeId()));
+        roomRepository.deleteById(command.roomId());
     }
 }

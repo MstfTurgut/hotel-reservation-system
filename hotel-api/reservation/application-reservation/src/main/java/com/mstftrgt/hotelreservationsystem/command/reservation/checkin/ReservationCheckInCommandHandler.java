@@ -1,6 +1,7 @@
 package com.mstftrgt.hotelreservationsystem.command.reservation.checkin;
 
 import com.mstftrgt.hotelreservationsystem.CommandHandler;
+import com.mstftrgt.hotelreservationsystem.reservation.exception.ReservationNotFoundException;
 import com.mstftrgt.hotelreservationsystem.reservation.model.Reservation;
 import com.mstftrgt.hotelreservationsystem.reservation.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,11 +15,11 @@ public class ReservationCheckInCommandHandler implements CommandHandler<Reservat
 
     @Override
     public void handle(ReservationCheckInCommand command) {
-        Reservation reservation = reservationRepository.findById(command.getReservationId())
-                .orElseThrow(() -> new IllegalArgumentException("Reservation not found"));
+        Reservation reservation = reservationRepository.findById(command.reservationId())
+                .orElseThrow(() -> new ReservationNotFoundException(command.reservationId()));
 
         reservation.checkIn();
 
-        reservationRepository.update(reservation);
+        reservationRepository.save(reservation);
     }
 }

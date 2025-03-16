@@ -1,7 +1,8 @@
 package com.mstftrgt.hotelreservationsystem.command.user.addnewadmin;
 
 import com.mstftrgt.hotelreservationsystem.CommandHandler;
-import com.mstftrgt.hotelreservationsystem.identityaccess.model.UserCreate;
+import com.mstftrgt.hotelreservationsystem.identityaccess.dto.UserCreate;
+import com.mstftrgt.hotelreservationsystem.identityaccess.model.User;
 import com.mstftrgt.hotelreservationsystem.identityaccess.repository.UserRepository;
 import com.mstftrgt.hotelreservationsystem.identityaccess.model.UserRole;
 import lombok.RequiredArgsConstructor;
@@ -15,14 +16,8 @@ public class AddNewAdminUserCommandHandler implements CommandHandler<AddNewAdmin
 
     @Override
     public void handle(AddNewAdminUserCommand command) {
-        userRepository.save(buildUserCreate(command));
-    }
+        User user = User.create(command.toUserCreateWith(UserRole.ADMIN));
 
-    private UserCreate buildUserCreate(AddNewAdminUserCommand command) {
-        return UserCreate.builder()
-                .email(command.getEmail())
-                .password(command.getPassword())
-                .role(UserRole.ADMIN)
-                .build();
+        userRepository.save(user);
     }
 }

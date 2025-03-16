@@ -4,10 +4,11 @@ import com.mstftrgt.hotelreservationsystem.model.RoomType;
 import lombok.Builder;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Builder
 public record RoomTypeReadModel(
-        Long id,
+        UUID id,
         String title,
         String description,
         BigDecimal priceForNight,

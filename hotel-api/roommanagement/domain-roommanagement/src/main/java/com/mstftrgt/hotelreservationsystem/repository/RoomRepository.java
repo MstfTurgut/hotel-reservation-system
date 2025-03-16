@@ -5,14 +5,15 @@ import com.mstftrgt.hotelreservationsystem.model.Room;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface RoomRepository extends Repository {
 
 
-    Optional<Room> findById(long roomId);
-    void save(String roomNumber, long roomTypeId);
+    Optional<Room> findById(UUID roomId);
+    void save(Room room);
 
-    List<Room> getAllRoomsOfRoomType(long roomTypeId);
+    List<Room> getAllRoomsOfRoomType(UUID roomTypeId);
 
-    void deleteById(long roomId);
+    void deleteById(UUID roomId);
 }

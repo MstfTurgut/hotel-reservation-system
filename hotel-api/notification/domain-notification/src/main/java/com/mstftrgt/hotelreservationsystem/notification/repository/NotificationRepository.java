@@ -1,8 +1,8 @@
 package com.mstftrgt.hotelreservationsystem.notification.repository;
 
 
-import com.mstftrgt.hotelreservationsystem.notification.repository.dto.NotificationCreate;
+import com.mstftrgt.hotelreservationsystem.notification.model.Notification;
 
 public interface NotificationRepository {
-    void save(NotificationCreate notificationCreate);
+    void save(Notification notification);
 }

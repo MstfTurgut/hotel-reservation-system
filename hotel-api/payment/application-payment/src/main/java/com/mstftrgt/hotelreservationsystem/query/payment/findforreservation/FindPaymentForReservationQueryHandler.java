@@ -1,6 +1,7 @@
 package com.mstftrgt.hotelreservationsystem.query.payment.findforreservation;
 
 import com.mstftrgt.hotelreservationsystem.QueryHandler;
+import com.mstftrgt.hotelreservationsystem.exception.PaymentNotFoundException;
 import com.mstftrgt.hotelreservationsystem.readmodel.PaymentReadModel;
 import com.mstftrgt.hotelreservationsystem.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,6 @@ public class FindPaymentForReservationQueryHandler implements QueryHandler<FindP
     @Override
     public PaymentReadModel handle(FindPaymentForReservationQuery query) {
         return paymentRepository.findByReservationId(query.reservationId()).map(PaymentReadModel::from)
-                .orElseThrow(() -> new IllegalArgumentException("Payment not found"));
+                .orElseThrow(PaymentNotFoundException::new);
     }
 }

@@ -1,6 +1,11 @@
 package com.mstftrgt.hotelreservationsystem.model;
 
 public enum PaymentStatus {
+
+    PENDING,
+
     PAID,
-    REFUND_INITIATED
+    FAILED,
+    REFUND_INITIATED,
+    REFUND_FAILED
 }

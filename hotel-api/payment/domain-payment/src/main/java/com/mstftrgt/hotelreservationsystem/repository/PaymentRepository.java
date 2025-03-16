@@ -1,19 +1,18 @@
 package com.mstftrgt.hotelreservationsystem.repository;
 
-import com.mstftrgt.hotelreservationsystem.repository.dto.PaymentCreate;
-import com.mstftrgt.hotelreservationsystem.kernel.CardDetails;
+import com.mstftrgt.hotelreservationsystem.dto.PaymentCreate;
 import com.mstftrgt.hotelreservationsystem.model.Payment;
 
-import java.math.BigDecimal;
+import java.util.UUID;
 import java.util.Optional;
 
 public interface PaymentRepository {
 
-    void save(PaymentCreate paymentCreate);
 
-    long pay(BigDecimal amount, CardDetails cardDetails);
+    void save(Payment payment);
 
-    Optional<Payment> findByReservationId(long reservationId);
+    Optional<Payment> findById(UUID paymentId);
 
-    void initializeRefund(long transactionId);
+    Optional<Payment> findByReservationId(UUID reservationId);
+
 }

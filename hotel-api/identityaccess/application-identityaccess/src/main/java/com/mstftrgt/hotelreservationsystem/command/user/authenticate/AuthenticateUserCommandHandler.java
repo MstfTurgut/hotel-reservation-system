@@ -19,7 +19,7 @@ public class AuthenticateUserCommandHandler implements CommandHandlerWithResult<
     @Override
     public AuthenticationResult handle(AuthenticateUserCommand command) {
 
-        Optional<User> userOptional = userRepository.findByEmail(command.getEmail());
+        Optional<User> userOptional = userRepository.findByEmail(command.email());
 
         if (userOptional.isEmpty()) {
             return new AuthenticationResult("Incorrect login or password");
@@ -27,7 +27,7 @@ public class AuthenticateUserCommandHandler implements CommandHandlerWithResult<
 
         User user = userOptional.get();
 
-        if (!passwordVerifierPort.doesMatch(command.getPassword(), user.getPassword())) {
+        if (!passwordVerifierPort.doesMatch(command.password(), user.getPassword())) {
             return new AuthenticationResult("Incorrect login or password");
         }
 

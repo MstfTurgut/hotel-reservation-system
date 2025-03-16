@@ -2,12 +2,13 @@ package com.mstftrgt.hotelreservationsystem.readmodel;
 
 import com.mstftrgt.hotelreservationsystem.model.Room;
 import lombok.Builder;
+import java.util.UUID;
 
 
 @Builder
 public record RoomReadModel(
-        Long id,
-        Long roomTypeId,
+        UUID id,
+        UUID roomTypeId,
         String roomNumber
 ) {
 

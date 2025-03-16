@@ -18,6 +18,7 @@
         <module>application-roommanagement</module>
         <module>domain-roommanagement</module>
         <module>infrastructure-roommanagement</module>
+        <module>integration-roommanagement</module>
     </modules>
 
     <dependencies>

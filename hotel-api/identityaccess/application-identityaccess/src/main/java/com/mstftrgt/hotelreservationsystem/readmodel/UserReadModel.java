@@ -2,10 +2,11 @@ package com.mstftrgt.hotelreservationsystem.readmodel;
 
 import com.mstftrgt.hotelreservationsystem.identityaccess.model.User;
 import lombok.Builder;
+import java.util.UUID;
 
 @Builder
 public record UserReadModel (
-        Long id,
+        UUID id,
         String email,
         String password,
         String userRole)  {

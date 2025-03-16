@@ -2,12 +2,12 @@ package com.mstftrgt.hotelreservationsystem.reservation.model;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Value;
 
-@Data
+@Value
 @Builder
 public class GuestSpecification {
 
-    private int adultGuestCount;
-    private int childGuestCount;
-
+    int adultGuestCount;
+    int childGuestCount;
 }

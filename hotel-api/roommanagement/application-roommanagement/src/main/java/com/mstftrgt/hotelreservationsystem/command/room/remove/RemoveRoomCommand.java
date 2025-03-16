@@ -2,10 +2,8 @@ package com.mstftrgt.hotelreservationsystem.command.room.remove;
 
 import com.mstftrgt.hotelreservationsystem.Command;
 import lombok.Builder;
-import lombok.Data;
+import java.util.UUID;
 
-@Data
 @Builder
-public class RemoveRoomCommand implements Command {
-    private final Long roomId;
+public record RemoveRoomCommand(UUID roomId) implements Command {
 }

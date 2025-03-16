@@ -1,7 +1,8 @@
 package com.mstftrgt.hotelreservationsystem.reservation.model;
 
 public enum ReservationStatus {
-    WAITING,
+
+    CONFIRMED,
     CANCELLED,
     CHECKED_IN,
     CHECKED_OUT

@@ -1,12 +1,17 @@
 package com.mstftrgt.hotelreservationsystem.command.room.addnew;
 
 import com.mstftrgt.hotelreservationsystem.Command;
+import com.mstftrgt.hotelreservationsystem.dto.RoomCreate;
 import lombok.Builder;
-import lombok.Data;
+import java.util.UUID;
 
-@Data
 @Builder
-public class AddNewRoomCommand implements Command {
-    private final String roomNumber;
-    private final Long roomTypeId;
+public record AddNewRoomCommand(String roomNumber, UUID roomTypeId) implements Command {
+
+    public RoomCreate toRoomCreate() {
+        return RoomCreate.builder()
+                .roomNumber(roomNumber)
+                .roomTypeId(roomTypeId)
+                .build();
+    }
 }

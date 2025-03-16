@@ -3,15 +3,30 @@ package com.mstftrgt.hotelreservationsystem.reservation.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Value;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Data
+@Value
 @Builder
 @AllArgsConstructor
 public class StayDate {
 
-    private final LocalDate checkInDate;
-    private final LocalDate checkOutDate;
+    LocalDate checkInDate;
+    LocalDate checkOutDate;
+
+    public boolean overlaps(StayDate other) {
+        return !checkInDate.isAfter(other.checkOutDate) &&
+                !other.checkInDate.isAfter(checkOutDate);
+    }
+
+    public boolean isInverse() {
+        return checkInDate.isAfter(checkOutDate);
+    }
+
+    public boolean isPast() {
+        return checkInDate.isBefore(LocalDate.now());
+    }
+
 }

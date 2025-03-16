@@ -1,8 +1,9 @@
 package com.mstftrgt.hotelreservationsystem.query.room.findallforroomtype;
 
 import com.mstftrgt.hotelreservationsystem.Query;
+import java.util.UUID;
 
 public record FindAllRoomsOfRoomTypeQuery(
-        Long roomTypeId
+        UUID roomTypeId
 ) implements Query {
 }

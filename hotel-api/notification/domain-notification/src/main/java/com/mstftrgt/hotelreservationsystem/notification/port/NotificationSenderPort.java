@@ -1,6 +1,6 @@
 package com.mstftrgt.hotelreservationsystem.notification.port;
 
-import com.mstftrgt.hotelreservationsystem.notification.port.dto.NotificationSend;
+import com.mstftrgt.hotelreservationsystem.notification.dto.NotificationSend;
 
 public interface NotificationSenderPort {
 

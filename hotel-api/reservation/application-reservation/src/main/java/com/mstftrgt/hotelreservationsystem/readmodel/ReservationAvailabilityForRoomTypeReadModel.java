@@ -8,17 +8,8 @@ import java.math.BigDecimal;
 
 @Builder
 public record ReservationAvailabilityForRoomTypeReadModel(
-        String roomTypeTitle,
-
-        String roomTypeDescription,
-
-        BigDecimal roomTypePriceForNight,
-
-        int roomTypeAdultCapacity,
-
-        int roomTypeChildCapacity,
-
+        RoomTypeInfoReadModel roomTypeInfoReadModel,
         int remainingRooms,
-        BigDecimal totalPrice
+        BigDecimal totalPriceForStayDate
 ) {
 }

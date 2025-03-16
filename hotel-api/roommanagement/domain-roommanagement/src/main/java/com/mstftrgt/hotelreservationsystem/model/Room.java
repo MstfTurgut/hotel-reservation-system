@@ -1,13 +1,36 @@
 package com.mstftrgt.hotelreservationsystem.model;
 
+import com.mstftrgt.hotelreservationsystem.domain.AggregateRoot;
+import com.mstftrgt.hotelreservationsystem.dto.RoomCreate;
+import com.mstftrgt.hotelreservationsystem.event.RoomAddedDomainEvent;
+import com.mstftrgt.hotelreservationsystem.event.RoomRemovedDomainEvent;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import java.util.UUID;
 
 @Data
 @Builder
-public class Room {
+@EqualsAndHashCode(callSuper = true)
+public class Room extends AggregateRoot {
 
-    private Long id;
-    private Long roomTypeId;
+    private UUID id;
+    private UUID roomTypeId;
     private String roomNumber;
+
+    public static Room create(RoomCreate roomCreate) {
+        Room newRoom = Room.builder()
+                .id(UUID.randomUUID())
+                .roomTypeId(roomCreate.roomTypeId())
+                .roomNumber(roomCreate.roomNumber())
+                .build();
+
+        newRoom.registerEvent(new RoomAddedDomainEvent(newRoom.getId()));
+
+        return newRoom;
+    }
+
+    public void remove() {
+        this.registerEvent(new RoomRemovedDomainEvent(roomTypeId));
+    }
 }

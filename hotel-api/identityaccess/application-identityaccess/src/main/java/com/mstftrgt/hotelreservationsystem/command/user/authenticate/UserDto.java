@@ -3,10 +3,11 @@ package com.mstftrgt.hotelreservationsystem.command.user.authenticate;
 
 import com.mstftrgt.hotelreservationsystem.identityaccess.model.User;
 import lombok.Builder;
+import java.util.UUID;
 
 @Builder
 public record UserDto (
-        Long id,
+        UUID id,
         String email,
         String password,
         String userRole)  {

@@ -18,6 +18,7 @@
         <module>application-reservation</module>
         <module>domain-reservation</module>
         <module>infrastructure-reservation</module>
+        <module>integration-reservation</module>
     </modules>
 
     <dependencies>

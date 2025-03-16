@@ -4,9 +4,6 @@ import com.mstftrgt.hotelreservationsystem.Command;
 import lombok.Builder;
 import lombok.Data;
 
-@Data
 @Builder
-public class AuthenticateUserCommand implements Command {
-    private final String email;
-    private final String password;
+public record AuthenticateUserCommand(String email, String password) implements Command {
 }

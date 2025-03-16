@@ -1,6 +1,6 @@
 package com.mstftrgt.hotelreservationsystem.query.user.find;
 
 import com.mstftrgt.hotelreservationsystem.Query;
-import lombok.Data;
+import java.util.UUID;
 
-public record FindUserQuery(long userId) implements Query {}
+public record FindUserQuery(UUID userId) implements Query {}

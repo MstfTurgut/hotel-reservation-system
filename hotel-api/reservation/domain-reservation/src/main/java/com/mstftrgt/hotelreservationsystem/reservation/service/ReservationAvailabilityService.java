@@ -1,12 +1,12 @@
 package com.mstftrgt.hotelreservationsystem.reservation.service;
 
 
+import com.mstftrgt.hotelreservationsystem.reservation.exception.ReservationNotAvailableException;
 import com.mstftrgt.hotelreservationsystem.reservation.model.Reservation;
 import com.mstftrgt.hotelreservationsystem.reservation.model.StayDate;
 import com.mstftrgt.hotelreservationsystem.reservation.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
-
-import java.time.LocalDate;
+import java.util.UUID;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -15,28 +15,25 @@ public class ReservationAvailabilityService {
     private final ReservationRepository reservationRepository;
 
 
-    public Long getAvailableRoomForReservation(List<Long> roomIds, LocalDate checkInDate, LocalDate checkOutDate) {
+    public UUID getAvailableRoomForReservation(List<UUID> roomIds, StayDate requestedStay) {
         return roomIds
                 .stream()
-                .filter(roomId -> isReservationAvailable(roomId, checkInDate, checkOutDate))
-                .findFirst().orElseThrow(() -> new IllegalArgumentException("No available room found"));
+                .filter(roomId -> isReservationAvailable(roomId, requestedStay))
+                .findFirst()
+                .orElseThrow(ReservationNotAvailableException::new);
     }
 
 
-    public int getNumberOfAvailableRoomsForReservation(List<Long> roomIds, LocalDate checkInDate, LocalDate checkOutDate) {
+    public int getNumberOfAvailableRoomsForReservation(List<UUID> roomIds, StayDate requestedStay) {
         return (int)roomIds
                 .stream()
-                .filter(roomId -> isReservationAvailable(roomId, checkInDate, checkOutDate))
+                .filter(roomId -> isReservationAvailable(roomId, requestedStay))
                 .count();
     }
 
-    private boolean isReservationAvailable(Long roomId, LocalDate requestedCheckIn, LocalDate requestedCheckOut) {
-
+    private boolean isReservationAvailable(UUID roomId, StayDate requestedStay) {
         List<Reservation> roomReservations =
-                reservationRepository.findReservationsOfRoomByStayDate(
-                        roomId,
-                        new StayDate(requestedCheckIn, requestedCheckOut)
-                );
+                reservationRepository.findReservationsOfRoomByStayDate(roomId, requestedStay);
 
         if (roomReservations.isEmpty()) {
             return true;
@@ -44,19 +41,10 @@ public class ReservationAvailabilityService {
 
         return roomReservations.stream()
                 .noneMatch(existingReservation ->
-                        isDateRangeOverlap(
-                                requestedCheckIn,
-                                requestedCheckOut,
-                                existingReservation.getStayDate().getCheckInDate(),
-                                existingReservation.getStayDate().getCheckOutDate()
-                        )
+                        existingReservation.isNotCancelled()
+                        &&
+                        existingReservation.getStayDate().overlaps(requestedStay)
                 );
-    }
-
-
-    private boolean isDateRangeOverlap(LocalDate start1, LocalDate end1,
-                                       LocalDate start2, LocalDate end2) {
-        return !start1.isAfter(end2) && !start2.isAfter(end1);
     }
 
 }

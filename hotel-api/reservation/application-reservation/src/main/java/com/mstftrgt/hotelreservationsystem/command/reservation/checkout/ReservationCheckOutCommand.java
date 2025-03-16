@@ -2,10 +2,8 @@ package com.mstftrgt.hotelreservationsystem.command.reservation.checkout;
 
 import com.mstftrgt.hotelreservationsystem.Command;
 import lombok.Builder;
-import lombok.Data;
+import java.util.UUID;
 
-@Data
 @Builder
-public class ReservationCheckOutCommand implements Command {
-    private final Long reservationId;
+public record ReservationCheckOutCommand(UUID reservationId) implements Command {
 }

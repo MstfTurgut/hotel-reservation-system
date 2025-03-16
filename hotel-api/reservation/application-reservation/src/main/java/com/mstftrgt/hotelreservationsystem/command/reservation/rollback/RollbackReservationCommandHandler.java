@@ -13,6 +13,6 @@ public class RollbackReservationCommandHandler implements CommandHandler<Rollbac
 
     @Override
     public void handle(RollbackReservationCommand command) {
-        reservationRepository.deleteById(command.getReservationId());
+        reservationRepository.deleteById(command.reservationId());
     }
 }

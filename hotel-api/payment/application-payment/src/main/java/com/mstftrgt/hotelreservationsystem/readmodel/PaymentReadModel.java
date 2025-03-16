@@ -5,12 +5,14 @@ import lombok.Builder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
+
 
 @Builder
 public record PaymentReadModel(
-        Long id,
-        Long transactionId,
-        Long reservationId,
+        UUID id,
+        UUID transactionId,
+        UUID reservationId,
         BigDecimal amount,
         LocalDateTime createDate,
         String status

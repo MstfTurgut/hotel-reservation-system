@@ -18,6 +18,7 @@
         <module>application-payment</module>
         <module>domain-payment</module>
         <module>infrastructure-payment</module>
+        <module>integration-payment</module>
     </modules>
 
     <dependencies>

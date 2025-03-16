@@ -4,24 +4,22 @@ package com.mstftrgt.hotelreservationsystem.reservation.repository;
 import com.mstftrgt.hotelreservationsystem.domain.Repository;
 import com.mstftrgt.hotelreservationsystem.reservation.model.Reservation;
 import com.mstftrgt.hotelreservationsystem.reservation.model.StayDate;
-import com.mstftrgt.hotelreservationsystem.reservation.repository.dto.ReservationCreate;
-
+import com.mstftrgt.hotelreservationsystem.reservation.dto.ReservationCreate;
+import java.util.UUID;
 import java.util.List;
 import java.util.Optional;
 
 public interface ReservationRepository extends Repository {
 
-    Optional<Reservation> findById(long reservationId);
+    Optional<Reservation> findById(UUID reservationId);
 
-    void update(Reservation reservation);
+    List<Reservation> findReservationsOfRoomByStayDate(UUID roomId, StayDate stayDate);
 
-    List<Reservation> findReservationsOfRoomByStayDate(long roomId, StayDate stayDate);
+    void save(Reservation reservation);
 
-    Reservation save(ReservationCreate reservationCreate);
-
-    void deleteById(long reservationId);
+    void deleteById(UUID reservationId);
 
     List<Reservation> findAllByCustomerFullNameAndPhoneNumber(String fullName, String phoneNumber);
 
-    List<Reservation> findAllByUserId(long userId);
+    List<Reservation> findAllByUserId(UUID userId);
 }

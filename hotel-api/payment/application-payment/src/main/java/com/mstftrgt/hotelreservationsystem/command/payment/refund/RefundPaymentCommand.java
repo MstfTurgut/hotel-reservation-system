@@ -2,10 +2,8 @@ package com.mstftrgt.hotelreservationsystem.command.payment.refund;
 
 import com.mstftrgt.hotelreservationsystem.Command;
 import lombok.Builder;
-import lombok.Data;
+import java.util.UUID;
 
-@Data
 @Builder
-public class RefundPaymentCommand implements Command {
-    private final Long reservationId;
+public record RefundPaymentCommand(UUID reservationId) implements Command {
 }

@@ -2,12 +2,13 @@ package com.mstftrgt.hotelreservationsystem.reservation.model;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Value;
 
-@Data
+@Value
 @Builder
 public class CustomerDetails {
 
-    private final String fullName;
-    private final String phoneNumber;
-    private final String emailAddress;
+    String fullName;
+    String phoneNumber;
+    String emailAddress;
 }

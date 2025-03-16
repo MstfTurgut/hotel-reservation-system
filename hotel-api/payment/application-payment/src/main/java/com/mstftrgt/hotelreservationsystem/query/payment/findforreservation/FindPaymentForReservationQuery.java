@@ -1,8 +1,9 @@
 package com.mstftrgt.hotelreservationsystem.query.payment.findforreservation;
 
 import com.mstftrgt.hotelreservationsystem.Query;
+import java.util.UUID;
 
 public record FindPaymentForReservationQuery(
-        Long reservationId
+        UUID reservationId
 ) implements Query {
 }

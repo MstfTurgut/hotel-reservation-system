@@ -1,8 +1,9 @@
 package com.mstftrgt.hotelreservationsystem.query.reservation.findforuser;
 
 import com.mstftrgt.hotelreservationsystem.Query;
+import java.util.UUID;
 
 public record FindReservationsOfUserQuery(
-        Long userId
+        UUID userId
 ) implements Query {
 }

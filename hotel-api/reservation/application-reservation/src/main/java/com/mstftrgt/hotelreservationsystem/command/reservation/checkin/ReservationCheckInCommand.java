@@ -2,11 +2,8 @@ package com.mstftrgt.hotelreservationsystem.command.reservation.checkin;
 
 import com.mstftrgt.hotelreservationsystem.Command;
 import lombok.Builder;
-import lombok.Data;
+import java.util.UUID;
 
-@Data
 @Builder
-public class ReservationCheckInCommand implements Command {
-    private final Long reservationId;
-    private final String confirmationCode;
+public record ReservationCheckInCommand(UUID reservationId, String confirmationCode) implements Command {
 }
