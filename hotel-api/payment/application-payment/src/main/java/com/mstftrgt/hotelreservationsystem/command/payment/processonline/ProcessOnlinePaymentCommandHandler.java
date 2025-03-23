@@ -25,11 +25,10 @@ public class ProcessOnlinePaymentCommandHandler implements CommandHandler<Proces
         try {
             UUID transactionId = paymentGatewayPort.pay(payment.getAmount(), command.cardDetails());
             payment.setTransactionId(transactionId);
+            payment.markAsPaid();
         } catch (Exception e) {
             payment.markAsFailed();
         }
-
-        payment.markAsPaid();
 
         paymentRepository.save(payment);
     }

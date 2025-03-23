@@ -22,11 +22,10 @@ public class RefundPaymentCommandHandler implements CommandHandler<RefundPayment
 
         try {
             paymentGatewayPort.initiateRefund(payment.getTransactionId());
+            payment.markAsRefundInitiated();
         } catch (Exception e) {
             payment.markAsRefundFailed();
         }
-
-        payment.markAsRefundInitiated();
 
         paymentRepository.save(payment);
     }
