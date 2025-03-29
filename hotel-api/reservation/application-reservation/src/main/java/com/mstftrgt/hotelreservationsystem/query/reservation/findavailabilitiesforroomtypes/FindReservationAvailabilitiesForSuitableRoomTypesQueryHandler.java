@@ -45,7 +45,7 @@ public class FindReservationAvailabilitiesForSuitableRoomTypesQueryHandler imple
     }
 
     private int getNumberOfAvailableRoomsForReservation(List<UUID> roomIdsOfRoomType, StayDate requestedStay) {
-        return reservationAvailabilityService.getNumberOfAvailableRoomsForReservation(roomIdsOfRoomType, requestedStay);
+        return reservationAvailabilityService.findNumberOfAvailableRoomsToReserveForStayDate(roomIdsOfRoomType, requestedStay);
     }
 
     private BigDecimal calculatePrice(RoomTypeContract roomType, StayDate requestedStay) {

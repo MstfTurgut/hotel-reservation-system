@@ -28,22 +28,17 @@ public record CreateReservationCommand(
         BigDecimal totalPrice,
         CardDetails cardDetails) implements Command {
 
-    public ReservationCreate toReservationCreateWith(UUID roomId, StayDate requestedStay, String confirmationCode, String reservationCode) {
+    public ReservationCreate toReservationCreateWith(UUID roomId, String confirmationCode, String reservationCode) {
         return ReservationCreate.builder()
                 .userId(userId)
                 .roomId(roomId)
-                .guestSpecification(GuestSpecification
-                        .builder()
-                        .adultGuestCount(adultGuestCount)
-                        .childGuestCount(childGuestCount)
-                        .build())
-                .stayDate(requestedStay)
-                .customerDetails(CustomerDetails
-                        .builder()
-                        .fullName(fullName)
-                        .phoneNumber(phoneNumber)
-                        .emailAddress(emailAddress)
-                        .build())
+                .adultGuestCount(adultGuestCount)
+                .childGuestCount(childGuestCount)
+                .checkInDate(checkInDate)
+                .checkOutDate(checkOutDate)
+                .customerFullName(fullName)
+                .customerPhoneNumber(phoneNumber)
+                .customerEmailAddress(emailAddress)
                 .confirmationCode(confirmationCode)
                 .reservationCode(reservationCode)
                 .totalPrice(totalPrice)

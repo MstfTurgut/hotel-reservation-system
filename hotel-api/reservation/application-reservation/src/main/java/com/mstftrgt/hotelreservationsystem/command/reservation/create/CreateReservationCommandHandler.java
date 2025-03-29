@@ -29,17 +29,15 @@ public class CreateReservationCommandHandler implements CommandHandler<CreateRes
 
     @Override
     public void handle(CreateReservationCommand command) {
-
         StayDate requestedStay = Reservation.createValidStayDate(command.checkInDate(), command.checkOutDate());
 
         List<UUID> roomIdsForRoomType = roomManagementFacade.findAllRoomIdsForRoomType(command.roomTypeId());
 
         UUID roomIdToReserve = reservationAvailabilityService
-                .getAvailableRoomForReservation(roomIdsForRoomType, requestedStay);
+                .findAvailableRoomToReserveForStayDate(roomIdsForRoomType, requestedStay);
 
         ReservationCreate reservationCreate = command.toReservationCreateWith(
                         roomIdToReserve,
-                        requestedStay,
                         confirmationCodeGenerationService.generateConfirmationCode(),
                         reservationCodeGenerationService.generateReservationCode());
 

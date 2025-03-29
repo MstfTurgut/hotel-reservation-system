@@ -25,7 +25,7 @@ public class Room extends AggregateRoot {
                 .roomNumber(roomCreate.roomNumber())
                 .build();
 
-        newRoom.registerEvent(new RoomAddedDomainEvent(newRoom.getId()));
+        newRoom.registerEvent(new RoomAddedDomainEvent(roomCreate.roomTypeId()));
 
         return newRoom;
     }

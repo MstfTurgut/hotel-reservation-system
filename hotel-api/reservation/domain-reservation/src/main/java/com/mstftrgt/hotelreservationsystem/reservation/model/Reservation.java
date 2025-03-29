@@ -9,16 +9,17 @@ import com.mstftrgt.hotelreservationsystem.reservation.exception.LastMinuteCance
 import com.mstftrgt.hotelreservationsystem.reservation.exception.ReservationAlreadyCancelledException;
 import com.mstftrgt.hotelreservationsystem.reservation.exception.ReservationAlreadyCheckedInException;
 import com.mstftrgt.hotelreservationsystem.reservation.exception.ReservationAlreadyCheckedOutException;
-import com.mstftrgt.hotelreservationsystem.reservation.exception.StayDateInPastException;
-import com.mstftrgt.hotelreservationsystem.reservation.exception.InverseStayDateException;
+import com.mstftrgt.hotelreservationsystem.reservation.exception.InvalidStayDateException;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.With;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
+@With
 @Builder
 @EqualsAndHashCode(callSuper = true)
 public class Reservation extends AggregateRoot {
@@ -34,16 +35,30 @@ public class Reservation extends AggregateRoot {
     private CustomerDetails customerDetails;
 
     public static Reservation create(ReservationCreate reservationCreate) {
+
+        GuestSpecification guestSpecification = GuestSpecification.builder()
+                .adultGuestCount(reservationCreate.adultGuestCount())
+                .childGuestCount(reservationCreate.childGuestCount())
+                .build();
+
+        StayDate stayDate = createValidStayDate(reservationCreate.checkInDate(), reservationCreate.checkOutDate());
+
+        CustomerDetails customerDetails = CustomerDetails.builder()
+                .fullName(reservationCreate.customerFullName())
+                .emailAddress(reservationCreate.customerEmailAddress())
+                .phoneNumber(reservationCreate.customerPhoneNumber())
+                .build();
+
         Reservation newReservation = Reservation.builder()
                 .id(UUID.randomUUID())
                 .userId(reservationCreate.userId())
                 .roomId(reservationCreate.roomId())
                 .confirmationCode(reservationCreate.confirmationCode())
                 .reservationCode(reservationCreate.reservationCode())
-                .guestSpecification(reservationCreate.guestSpecification())
+                .guestSpecification(guestSpecification)
                 .status(ReservationStatus.CONFIRMED)
-                .stayDate(reservationCreate.stayDate())
-                .customerDetails(reservationCreate.customerDetails())
+                .stayDate(stayDate)
+                .customerDetails(customerDetails)
                 .build();
 
         newReservation.registerEvent(
@@ -97,11 +112,15 @@ public class Reservation extends AggregateRoot {
         StayDate stayDate = new StayDate(checkInDate, checkOutDate);
 
         if(stayDate.isInverse()) {
-            throw new InverseStayDateException();
+            throw new InvalidStayDateException("check-in must be before check-out");
         }
 
         if(stayDate.isPast()) {
-            throw new StayDateInPastException();
+            throw new InvalidStayDateException("stay date cannot be in past");
+        }
+
+        if(stayDate.hasInvalidLength()) {
+            throw new InvalidStayDateException("stay date must have length of at least one");
         }
 
         return stayDate;

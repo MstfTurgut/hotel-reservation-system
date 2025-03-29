@@ -2,11 +2,9 @@ package com.mstftrgt.hotelreservationsystem.reservation.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Value;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Value
 @Builder
@@ -29,4 +27,6 @@ public class StayDate {
         return checkInDate.isBefore(LocalDate.now());
     }
 
+    public boolean hasInvalidLength() { return checkOutDate.equals(checkInDate);
+    }
 }

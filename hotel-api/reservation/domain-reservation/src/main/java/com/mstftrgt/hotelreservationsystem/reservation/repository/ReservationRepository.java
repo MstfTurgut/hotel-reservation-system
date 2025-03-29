@@ -13,7 +13,7 @@ public interface ReservationRepository extends Repository {
 
     Optional<Reservation> findById(UUID reservationId);
 
-    List<Reservation> findReservationsOfRoomByStayDate(UUID roomId, StayDate stayDate);
+    List<Reservation> findReservationsOfRoom(UUID roomId);
 
     void save(Reservation reservation);
 

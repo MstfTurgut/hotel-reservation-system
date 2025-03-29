@@ -12,12 +12,14 @@ import com.mstftrgt.hotelreservationsystem.dto.PaymentCreate;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.With;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
+@With
 @Builder
 @EqualsAndHashCode(callSuper = true)
 public class Payment extends AggregateRoot {
@@ -66,4 +68,5 @@ public class Payment extends AggregateRoot {
         status = PaymentStatus.FAILED;
         this.registerEvent(new PaymentFailedDomainEvent(reservationId, amount));
     }
+
 }

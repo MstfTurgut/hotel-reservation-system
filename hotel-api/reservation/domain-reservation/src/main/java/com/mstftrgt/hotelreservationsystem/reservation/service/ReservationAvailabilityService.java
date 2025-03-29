@@ -15,7 +15,7 @@ public class ReservationAvailabilityService {
     private final ReservationRepository reservationRepository;
 
 
-    public UUID getAvailableRoomForReservation(List<UUID> roomIds, StayDate requestedStay) {
+    public UUID findAvailableRoomToReserveForStayDate(List<UUID> roomIds, StayDate requestedStay) {
         return roomIds
                 .stream()
                 .filter(roomId -> isReservationAvailable(roomId, requestedStay))
@@ -24,7 +24,7 @@ public class ReservationAvailabilityService {
     }
 
 
-    public int getNumberOfAvailableRoomsForReservation(List<UUID> roomIds, StayDate requestedStay) {
+    public int findNumberOfAvailableRoomsToReserveForStayDate(List<UUID> roomIds, StayDate requestedStay) {
         return (int)roomIds
                 .stream()
                 .filter(roomId -> isReservationAvailable(roomId, requestedStay))
@@ -33,7 +33,7 @@ public class ReservationAvailabilityService {
 
     private boolean isReservationAvailable(UUID roomId, StayDate requestedStay) {
         List<Reservation> roomReservations =
-                reservationRepository.findReservationsOfRoomByStayDate(roomId, requestedStay);
+                reservationRepository.findReservationsOfRoom(roomId);
 
         if (roomReservations.isEmpty()) {
             return true;
@@ -46,5 +46,4 @@ public class ReservationAvailabilityService {
                         existingReservation.getStayDate().overlaps(requestedStay)
                 );
     }
-
 }

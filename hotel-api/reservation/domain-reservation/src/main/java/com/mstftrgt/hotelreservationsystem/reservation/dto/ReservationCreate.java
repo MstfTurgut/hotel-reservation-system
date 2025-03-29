@@ -1,9 +1,6 @@
 package com.mstftrgt.hotelreservationsystem.reservation.dto;
 
 import com.mstftrgt.hotelreservationsystem.kernel.CardDetails;
-import com.mstftrgt.hotelreservationsystem.reservation.model.StayDate;
-import com.mstftrgt.hotelreservationsystem.reservation.model.CustomerDetails;
-import com.mstftrgt.hotelreservationsystem.reservation.model.GuestSpecification;
 import lombok.Builder;
 
 import java.math.BigDecimal;
@@ -14,9 +11,13 @@ import java.util.UUID;
 public record ReservationCreate (
         UUID userId,
         UUID roomId,
-        GuestSpecification guestSpecification,
-        StayDate stayDate,
-        CustomerDetails customerDetails,
+        int adultGuestCount,
+        int childGuestCount,
+        LocalDate checkInDate,
+        LocalDate checkOutDate,
+        String customerFullName,
+        String customerPhoneNumber,
+        String customerEmailAddress,
         String confirmationCode,
         String reservationCode,
         BigDecimal totalPrice,

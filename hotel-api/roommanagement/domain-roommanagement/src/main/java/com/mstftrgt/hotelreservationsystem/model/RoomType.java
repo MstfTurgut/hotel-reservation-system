@@ -14,6 +14,7 @@ import java.security.PublicKey;
 import java.util.UUID;
 
 @Data
+@With
 @Builder
 public class RoomType {
 
