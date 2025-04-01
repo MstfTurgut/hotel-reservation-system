@@ -15,8 +15,18 @@ public class AddNewRoomTypeCommandHandler implements CommandHandler<AddNewRoomTy
 
     @Override
     public void handle(AddNewRoomTypeCommand command) {
-        RoomType roomType = RoomType.create(command.toRoomTypeCreate());
+        RoomType roomType = RoomType.create(buildRoomTypeCreate(command));
 
         roomTypeRepository.save(roomType);
+    }
+
+    private static RoomTypeCreate buildRoomTypeCreate(AddNewRoomTypeCommand command) {
+        return RoomTypeCreate.builder()
+                .title(command.title())
+                .description(command.description())
+                .priceForNight(command.priceForNight())
+                .adultCapacity(command.adultCapacity())
+                .childCapacity(command.childCapacity())
+                .build();
     }
 }

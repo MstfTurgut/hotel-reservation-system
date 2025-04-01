@@ -19,10 +19,5 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.mstftrgt</groupId>
-            <artifactId>domain-roommanagement</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
 </project>

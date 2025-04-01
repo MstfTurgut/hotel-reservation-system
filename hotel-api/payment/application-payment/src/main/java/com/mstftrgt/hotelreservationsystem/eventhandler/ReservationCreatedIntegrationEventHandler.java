@@ -15,11 +15,12 @@ public class ReservationCreatedIntegrationEventHandler implements IntegrationEve
 
     @Override
     public void handle(ReservationCreatedIntegrationEvent event) {
-            commandDispatcher.dispatch(
-                    InitiatePaymentCommand.builder()
-                            .reservationId(event.reservationId())
-                            .paymentAmount(event.totalPrice())
-                            .cardDetails(event.cardDetails())
-                            .build());
+        InitiatePaymentCommand initiatePaymentCommand = InitiatePaymentCommand.builder()
+                .reservationId(event.reservationId())
+                .paymentAmount(event.totalPrice())
+                .cardDetails(event.cardDetails())
+                .build();
+
+        commandDispatcher.dispatch(initiatePaymentCommand);
     }
 }

@@ -36,7 +36,8 @@ public class CreateReservationCommandHandler implements CommandHandler<CreateRes
         UUID roomIdToReserve = reservationAvailabilityService
                 .findAvailableRoomToReserveForStayDate(roomIdsForRoomType, requestedStay);
 
-        ReservationCreate reservationCreate = command.toReservationCreateWith(
+        ReservationCreate reservationCreate = buildReservationCreate(
+                        command,
                         roomIdToReserve,
                         confirmationCodeGenerationService.generateConfirmationCode(),
                         reservationCodeGenerationService.generateReservationCode());
@@ -45,4 +46,23 @@ public class CreateReservationCommandHandler implements CommandHandler<CreateRes
 
         reservationRepository.save(reservation);
     }
+
+    private ReservationCreate buildReservationCreate(CreateReservationCommand command, UUID roomId, String confirmationCode, String reservationCode) {
+        return ReservationCreate.builder()
+                .userId(command.userId())
+                .roomId(roomId)
+                .adultGuestCount(command.adultGuestCount())
+                .childGuestCount(command.childGuestCount())
+                .checkInDate(command.checkInDate())
+                .checkOutDate(command.checkOutDate())
+                .customerFullName(command.fullName())
+                .customerPhoneNumber(command.phoneNumber())
+                .customerEmailAddress(command.emailAddress())
+                .confirmationCode(confirmationCode)
+                .reservationCode(reservationCode)
+                .totalPrice(command.totalPrice())
+                .cardDetails(command.cardDetails())
+                .build();
+    }
+
 }

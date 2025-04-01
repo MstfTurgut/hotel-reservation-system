@@ -1,6 +1,7 @@
 package com.mstftrgt.hotelreservationsystem.command.payment.initiate;
 
 import com.mstftrgt.hotelreservationsystem.CommandHandler;
+import com.mstftrgt.hotelreservationsystem.dto.PaymentCreate;
 import com.mstftrgt.hotelreservationsystem.model.Payment;
 import com.mstftrgt.hotelreservationsystem.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,10 +15,17 @@ public class InitiatePaymentCommandHandler implements CommandHandler<InitiatePay
 
     @Override
     public void handle(InitiatePaymentCommand command) {
-        Payment payment = Payment.create(command.toPaymentCreate());
+        Payment payment = Payment.create(buildPaymentCreate(command));
 
         payment.initiate(command.cardDetails());
 
         paymentRepository.save(payment);
+    }
+
+    private static PaymentCreate buildPaymentCreate(InitiatePaymentCommand command) {
+        return PaymentCreate.builder()
+                .reservationId(command.reservationId())
+                .amount(command.paymentAmount())
+                .build();
     }
 }

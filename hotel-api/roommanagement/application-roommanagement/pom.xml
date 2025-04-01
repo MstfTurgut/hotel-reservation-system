@@ -21,6 +21,11 @@
             <artifactId>domain-roommanagement</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.mstftrgt</groupId>
+            <artifactId>integration-roommanagement</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- ARCHITECTURE DEPENDENCIES END -->
 
 
@@ -28,7 +33,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.28</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

@@ -14,7 +14,6 @@ public class PaymentInitiatedDomainEventHandler implements DomainEventHandler<Pa
 
     private final CommandDispatcher commandDispatcher;
 
-
     @Override
     public void handle(PaymentInitiatedDomainEvent event) {
 

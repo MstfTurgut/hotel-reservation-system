@@ -15,5 +15,4 @@ public record RoomTypeInfoReadModel(
         int roomTypeAdultCapacity,
 
         int roomTypeChildCapacity
-) {
-}
+) {}

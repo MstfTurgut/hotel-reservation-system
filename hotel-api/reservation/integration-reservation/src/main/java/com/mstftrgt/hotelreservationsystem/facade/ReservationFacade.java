@@ -1,8 +1,9 @@
 package com.mstftrgt.hotelreservationsystem.facade;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ReservationFacade {
 
-    ReservationInfoContract findReservationById(UUID reservationId);
+    Optional<ReservationInfoContract> findReservationById(UUID reservationId);
 }

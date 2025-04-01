@@ -6,12 +6,8 @@ import lombok.Builder;
 import java.util.UUID;
 
 @Builder
-public record AddNewRoomCommand(String roomNumber, UUID roomTypeId) implements Command {
+public record AddNewRoomCommand(
+        String roomNumber,
+        UUID roomTypeId
 
-    public RoomCreate toRoomCreate() {
-        return RoomCreate.builder()
-                .roomNumber(roomNumber)
-                .roomTypeId(roomTypeId)
-                .build();
-    }
-}
+) implements Command {}

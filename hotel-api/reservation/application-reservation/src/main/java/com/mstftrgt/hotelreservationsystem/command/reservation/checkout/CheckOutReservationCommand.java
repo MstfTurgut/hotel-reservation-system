@@ -5,5 +5,5 @@ import lombok.Builder;
 import java.util.UUID;
 
 @Builder
-public record ReservationCheckOutCommand(UUID reservationId) implements Command {
+public record CheckOutReservationCommand(UUID reservationId) implements Command {
 }

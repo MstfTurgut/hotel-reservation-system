@@ -12,7 +12,7 @@ public interface RoomTypeRepository extends Repository {
 
     Optional<RoomType> findById(UUID roomTypeId);
 
-    Optional<RoomType> findByRoomId(UUID roomId);
+    RoomType findByRoomId(UUID roomId);
 
     void save(RoomType roomType);
 

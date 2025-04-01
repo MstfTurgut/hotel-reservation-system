@@ -52,7 +52,7 @@ public class FindReservationAvailabilitiesForSuitableRoomTypesQueryHandler imple
         return priceCalculationService.calculateTotalPrice(roomType.priceForNight(), requestedStay);
     }
 
-    private static ReservationAvailabilityForRoomTypeReadModel buildReservationAvailability(RoomTypeContract roomType, int numberOfAvailableRoomsForReservation, BigDecimal totalPrice) {
+    private ReservationAvailabilityForRoomTypeReadModel buildReservationAvailability(RoomTypeContract roomType, int numberOfAvailableRoomsForReservation, BigDecimal totalPrice) {
         return ReservationAvailabilityForRoomTypeReadModel
                 .builder()
                 .roomTypeInfoReadModel(RoomTypeInfoReadModel.builder()

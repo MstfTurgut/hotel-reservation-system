@@ -15,7 +15,6 @@ public class ReservationCancelledIntegrationEventHandler implements IntegrationE
 
     @Override
     public void handle(ReservationCancelledIntegrationEvent event) {
-
         RefundPaymentCommand refundPaymentCommand = RefundPaymentCommand
                 .builder()
                 .reservationId(event.reservationId())

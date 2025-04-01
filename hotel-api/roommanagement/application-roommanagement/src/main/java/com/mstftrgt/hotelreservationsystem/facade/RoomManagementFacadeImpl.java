@@ -20,14 +20,15 @@ public class RoomManagementFacadeImpl implements RoomManagementFacade {
 
     @Override
     public RoomTypeContract findRoomTypeByRoomId(UUID roomId) {
-        return roomTypeRepository.findByRoomId(roomId).
-                map(RoomTypeContract::from)
-                .orElseThrow(() -> new RoomNotFoundException(roomId));
+        return buildRoomTypeContract(roomTypeRepository.findByRoomId(roomId));
     }
 
     @Override
     public List<UUID> findAllRoomIdsForRoomType(UUID roomTypeId) {
-        return roomRepository.getAllRoomsOfRoomType(roomTypeId).stream().map(Room::getId).toList();
+        return roomRepository.getAllRoomsOfRoomType(roomTypeId)
+                .stream()
+                .map(Room::getId)
+                .toList();
     }
 
     @Override
@@ -37,8 +38,20 @@ public class RoomManagementFacadeImpl implements RoomManagementFacade {
         return allRoomTypes
                 .stream()
                 .filter(roomType -> roomType.canFit(adultGuestCount, childGuestCount))
-                .map(RoomTypeContract::from)
+                .map(this::buildRoomTypeContract)
                 .toList();
+    }
+
+    private RoomTypeContract buildRoomTypeContract(RoomType roomType) {
+        return RoomTypeContract.builder()
+                .id(roomType.getId())
+                .title(roomType.getTitle())
+                .description(roomType.getDescription())
+                .priceForNight(roomType.getPriceForNight())
+                .numberOfRooms(roomType.getNumberOfRooms())
+                .adultCapacity(roomType.getAdultCapacity())
+                .childCapacity(roomType.getChildCapacity())
+                .build();
     }
 
 }

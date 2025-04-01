@@ -15,7 +15,6 @@ public class PaymentFailedIntegrationEventHandler implements IntegrationEventHan
 
     @Override
     public void handle(PaymentFailedIntegrationEvent event) {
-
         RollbackReservationCommand rollbackReservationCommand = RollbackReservationCommand
                 .builder()
                 .reservationId(event.reservationId())

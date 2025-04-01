@@ -10,13 +10,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.time.LocalDate;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(org.mockito.junit.jupiter.MockitoExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class ReservationAvailabilityServiceTests {
 
     @Mock
@@ -25,21 +27,20 @@ public class ReservationAvailabilityServiceTests {
     @InjectMocks
     private ReservationAvailabilityService reservationAvailabilityService;
 
-    UUID roomId1;
-    UUID roomId2;
-    UUID roomId3;
+    UUID testRoomId1;
+    UUID testRoomId2;
+    UUID testRoomId3;
     StayDate testRequestedStay;
     Reservation testOverlappingReservation;
     Reservation testNonoverlappingReservation;
-
     Reservation testCancelledOverlappingReservation;
 
 
     @BeforeEach
     void setUp() {
-        roomId1 = UUID.fromString("00000000-0000-0000-0000-000000000001");
-        roomId2 = UUID.fromString("00000000-0000-0000-0000-000000000002");
-        roomId3 = UUID.fromString("00000000-0000-0000-0000-000000000003");
+        testRoomId1 = UUID.fromString("00000000-0000-0000-0000-000000000001");
+        testRoomId2 = UUID.fromString("00000000-0000-0000-0000-000000000002");
+        testRoomId3 = UUID.fromString("00000000-0000-0000-0000-000000000003");
 
         testRequestedStay = new StayDate(
                 LocalDate.of(2030, 1, 1),
@@ -58,37 +59,37 @@ public class ReservationAvailabilityServiceTests {
 
     @Test
     public void findAvailableRoomToReserveForStayDate_shouldReturnRoomId_whenARoomIsAvailableForStayDate() {
-        when(reservationRepository.findReservationsOfRoom(roomId1)).thenReturn(List.of(testOverlappingReservation));
-        when(reservationRepository.findReservationsOfRoom(roomId2)).thenReturn(List.of(testNonoverlappingReservation));
-        lenient().when(reservationRepository.findReservationsOfRoom(roomId3)).thenReturn(List.of(testOverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId1)).thenReturn(List.of(testOverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId2)).thenReturn(List.of(testNonoverlappingReservation));
+        lenient().when(reservationRepository.findReservationsOfRoom(testRoomId3)).thenReturn(List.of(testOverlappingReservation));
 
-        List<UUID> roomIdList = List.of(roomId1, roomId2, roomId3);
+        List<UUID> roomIdList = List.of(testRoomId1, testRoomId2, testRoomId3);
 
         UUID roomIdResult = reservationAvailabilityService.findAvailableRoomToReserveForStayDate(roomIdList, testRequestedStay);
 
-        assertEquals(roomId2, roomIdResult);
+        assertEquals(testRoomId2, roomIdResult);
     }
 
     @Test
     public void findAvailableRoomToReserveForStayDate_shouldReturnFirstAvailableRoomId_whenMultipleRoomsAreAvailableForStayDate() {
-        when(reservationRepository.findReservationsOfRoom(roomId1)).thenReturn(List.of(testNonoverlappingReservation));
-        lenient().when(reservationRepository.findReservationsOfRoom(roomId2)).thenReturn(List.of(testNonoverlappingReservation));
-        lenient().when(reservationRepository.findReservationsOfRoom(roomId3)).thenReturn(List.of(testOverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId1)).thenReturn(List.of(testNonoverlappingReservation));
+        lenient().when(reservationRepository.findReservationsOfRoom(testRoomId2)).thenReturn(List.of(testNonoverlappingReservation));
+        lenient().when(reservationRepository.findReservationsOfRoom(testRoomId3)).thenReturn(List.of(testOverlappingReservation));
 
-        List<UUID> roomIdList = List.of(roomId1, roomId2, roomId3);
+        List<UUID> roomIdList = List.of(testRoomId1, testRoomId2, testRoomId3);
 
         UUID roomIdResult = reservationAvailabilityService.findAvailableRoomToReserveForStayDate(roomIdList, testRequestedStay);
 
-        assertEquals(roomId1, roomIdResult);
+        assertEquals(testRoomId1, roomIdResult);
     }
 
     @Test
     public void findAvailableRoomToReserveForStayDate_shouldThrowException_whenThereIsNoAvailableRoomForStayDate() {
-        when(reservationRepository.findReservationsOfRoom(roomId1)).thenReturn(List.of(testOverlappingReservation));
-        when(reservationRepository.findReservationsOfRoom(roomId2)).thenReturn(List.of(testOverlappingReservation));
-        when(reservationRepository.findReservationsOfRoom(roomId3)).thenReturn(List.of(testOverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId1)).thenReturn(List.of(testOverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId2)).thenReturn(List.of(testOverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId3)).thenReturn(List.of(testOverlappingReservation));
 
-        List<UUID> roomIdList = List.of(roomId1, roomId2, roomId3);
+        List<UUID> roomIdList = List.of(testRoomId1, testRoomId2, testRoomId3);
 
         assertThrows(ReservationNotAvailableException.class, () ->
                 reservationAvailabilityService.findAvailableRoomToReserveForStayDate(roomIdList, testRequestedStay));
@@ -104,33 +105,33 @@ public class ReservationAvailabilityServiceTests {
 
     @Test
     public void findAvailableRoomToReserveForStayDate_shouldReturnRoomId_whenARoomHasNoReservations() {
-        when(reservationRepository.findReservationsOfRoom(roomId1)).thenReturn(List.of());
+        when(reservationRepository.findReservationsOfRoom(testRoomId1)).thenReturn(List.of());
 
-        List<UUID> roomIdList = List.of(roomId1);
+        List<UUID> roomIdList = List.of(testRoomId1);
 
         UUID roomIdResult = reservationAvailabilityService.findAvailableRoomToReserveForStayDate(roomIdList, testRequestedStay);
 
-        assertEquals(roomId1, roomIdResult);
+        assertEquals(testRoomId1, roomIdResult);
     }
 
     @Test
     public void findAvailableRoomToReserveForStayDate_shouldReturnRoomId_whenARoomHaveCancelledOverlappingReservation() {
-        when(reservationRepository.findReservationsOfRoom(roomId1)).thenReturn(List.of(testCancelledOverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId1)).thenReturn(List.of(testCancelledOverlappingReservation));
 
-        List<UUID> roomIdList = List.of(roomId1);
+        List<UUID> roomIdList = List.of(testRoomId1);
 
         UUID roomIdResult = reservationAvailabilityService.findAvailableRoomToReserveForStayDate(roomIdList, testRequestedStay);
 
-        assertEquals(roomId1, roomIdResult);
+        assertEquals(testRoomId1, roomIdResult);
     }
 
     @Test
     public void findNumberOfAvailableRoomsToReserveForStayDate_shouldReturnTheSizeOfList_whenAllRoomsAreAvailableForStayDate() {
-        when(reservationRepository.findReservationsOfRoom(roomId1)).thenReturn(List.of(testNonoverlappingReservation));
-        when(reservationRepository.findReservationsOfRoom(roomId2)).thenReturn(List.of(testNonoverlappingReservation));
-        when(reservationRepository.findReservationsOfRoom(roomId3)).thenReturn(List.of(testNonoverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId1)).thenReturn(List.of(testNonoverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId2)).thenReturn(List.of(testNonoverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId3)).thenReturn(List.of(testNonoverlappingReservation));
 
-        List<UUID> roomIdList = List.of(roomId1, roomId2, roomId3);
+        List<UUID> roomIdList = List.of(testRoomId1, testRoomId2, testRoomId3);
 
         int numberOfAvailableRoomsResult = reservationAvailabilityService.findNumberOfAvailableRoomsToReserveForStayDate(roomIdList, testRequestedStay);
 
@@ -139,11 +140,11 @@ public class ReservationAvailabilityServiceTests {
 
     @Test
     public void findNumberOfAvailableRoomsToReserveForStayDate_shouldReturnTheCorrectCount_whenSomeRoomsAreAvailableForStayDate() {
-        when(reservationRepository.findReservationsOfRoom(roomId1)).thenReturn(List.of(testNonoverlappingReservation));
-        when(reservationRepository.findReservationsOfRoom(roomId2)).thenReturn(List.of(testNonoverlappingReservation));
-        when(reservationRepository.findReservationsOfRoom(roomId3)).thenReturn(List.of(testOverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId1)).thenReturn(List.of(testNonoverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId2)).thenReturn(List.of(testNonoverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId3)).thenReturn(List.of(testOverlappingReservation));
 
-        List<UUID> roomIdList = List.of(roomId1, roomId2, roomId3);
+        List<UUID> roomIdList = List.of(testRoomId1, testRoomId2, testRoomId3);
 
         int numberOfAvailableRoomsResult = reservationAvailabilityService.findNumberOfAvailableRoomsToReserveForStayDate(roomIdList, testRequestedStay);
 
@@ -152,11 +153,11 @@ public class ReservationAvailabilityServiceTests {
 
     @Test
     public void findNumberOfAvailableRoomsToReserveForStayDate_shouldReturnZero_whenNoneOfTheRoomsAreAvailableForStayDate() {
-        when(reservationRepository.findReservationsOfRoom(roomId1)).thenReturn(List.of(testOverlappingReservation));
-        when(reservationRepository.findReservationsOfRoom(roomId2)).thenReturn(List.of(testOverlappingReservation));
-        when(reservationRepository.findReservationsOfRoom(roomId3)).thenReturn(List.of(testOverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId1)).thenReturn(List.of(testOverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId2)).thenReturn(List.of(testOverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId3)).thenReturn(List.of(testOverlappingReservation));
 
-        List<UUID> roomIdList = List.of(roomId1, roomId2, roomId3);
+        List<UUID> roomIdList = List.of(testRoomId1, testRoomId2, testRoomId3);
 
         int numberOfAvailableRoomsResult = reservationAvailabilityService.findNumberOfAvailableRoomsToReserveForStayDate(roomIdList, testRequestedStay);
 
@@ -174,11 +175,11 @@ public class ReservationAvailabilityServiceTests {
 
     @Test
     public void findNumberOfAvailableRoomsToReserveForStayDate_shouldReturnTheCorrectCount_whenARoomHasCancelledOverlappingReservation() {
-        when(reservationRepository.findReservationsOfRoom(roomId1)).thenReturn(List.of(testNonoverlappingReservation));
-        when(reservationRepository.findReservationsOfRoom(roomId2)).thenReturn(List.of(testCancelledOverlappingReservation));
-        when(reservationRepository.findReservationsOfRoom(roomId3)).thenReturn(List.of(testOverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId1)).thenReturn(List.of(testNonoverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId2)).thenReturn(List.of(testCancelledOverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId3)).thenReturn(List.of(testOverlappingReservation));
 
-        List<UUID> roomIdList = List.of(roomId1, roomId2, roomId3);
+        List<UUID> roomIdList = List.of(testRoomId1, testRoomId2, testRoomId3);
 
         int numberOfAvailableRoomsResult = reservationAvailabilityService.findNumberOfAvailableRoomsToReserveForStayDate(roomIdList, testRequestedStay);
 
@@ -187,11 +188,11 @@ public class ReservationAvailabilityServiceTests {
 
     @Test
     public void findNumberOfAvailableRoomsToReserveForStayDate_shouldReturnTheCorrectCount_whenARoomHasNoReservations() {
-        when(reservationRepository.findReservationsOfRoom(roomId1)).thenReturn(List.of(testNonoverlappingReservation));
-        when(reservationRepository.findReservationsOfRoom(roomId2)).thenReturn(List.of());
-        when(reservationRepository.findReservationsOfRoom(roomId3)).thenReturn(List.of(testOverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId1)).thenReturn(List.of(testNonoverlappingReservation));
+        when(reservationRepository.findReservationsOfRoom(testRoomId2)).thenReturn(List.of());
+        when(reservationRepository.findReservationsOfRoom(testRoomId3)).thenReturn(List.of(testOverlappingReservation));
 
-        List<UUID> roomIdList = List.of(roomId1, roomId2, roomId3);
+        List<UUID> roomIdList = List.of(testRoomId1, testRoomId2, testRoomId3);
 
         int numberOfAvailableRoomsResult = reservationAvailabilityService.findNumberOfAvailableRoomsToReserveForStayDate(roomIdList, testRequestedStay);
 

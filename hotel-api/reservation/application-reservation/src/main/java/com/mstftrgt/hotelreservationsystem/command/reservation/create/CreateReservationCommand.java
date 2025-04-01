@@ -27,22 +27,4 @@ public record CreateReservationCommand(
         String emailAddress,
         BigDecimal totalPrice,
         CardDetails cardDetails) implements Command {
-
-    public ReservationCreate toReservationCreateWith(UUID roomId, String confirmationCode, String reservationCode) {
-        return ReservationCreate.builder()
-                .userId(userId)
-                .roomId(roomId)
-                .adultGuestCount(adultGuestCount)
-                .childGuestCount(childGuestCount)
-                .checkInDate(checkInDate)
-                .checkOutDate(checkOutDate)
-                .customerFullName(fullName)
-                .customerPhoneNumber(phoneNumber)
-                .customerEmailAddress(emailAddress)
-                .confirmationCode(confirmationCode)
-                .reservationCode(reservationCode)
-                .totalPrice(totalPrice)
-                .cardDetails(cardDetails)
-                .build();
-    }
 }

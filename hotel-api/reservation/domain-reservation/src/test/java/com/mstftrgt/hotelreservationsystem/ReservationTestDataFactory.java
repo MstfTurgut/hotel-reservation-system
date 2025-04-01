@@ -24,8 +24,8 @@ public class ReservationTestDataFactory {
                 .checkInDate(LocalDate.of(2030, 1, 1))
                 .checkOutDate(LocalDate.of(2030, 1, 3))
                 .customerFullName("testFullName")
-                .customerEmailAddress("testEmailAddress")
-                .customerPhoneNumber("testPhoneNumber")
+                .customerEmailAddress("test@example.com")
+                .customerPhoneNumber("1234567890")
                 .confirmationCode("testConfirmationCode")
                 .reservationCode("testReservationCode")
                 .totalPrice(BigDecimal.TEN)
@@ -51,8 +51,8 @@ public class ReservationTestDataFactory {
                         .build())
                 .customerDetails(CustomerDetails.builder()
                         .fullName("testFullName")
-                        .emailAddress("testEmailAddress")
-                        .phoneNumber("testPhoneNumber")
+                        .emailAddress("test@example.com")
+                        .phoneNumber("1234567890")
                         .build())
                 .build();
     }

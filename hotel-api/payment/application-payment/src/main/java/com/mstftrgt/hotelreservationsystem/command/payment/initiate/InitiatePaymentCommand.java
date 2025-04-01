@@ -13,12 +13,5 @@ public record InitiatePaymentCommand(
         UUID reservationId,
         BigDecimal paymentAmount,
         CardDetails cardDetails
-) implements Command {
 
-    public PaymentCreate toPaymentCreate() {
-        return PaymentCreate.builder()
-                .reservationId(reservationId)
-                .amount(paymentAmount)
-                .build();
-    }
-}
+) implements Command {}

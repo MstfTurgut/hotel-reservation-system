@@ -17,14 +17,4 @@ public record ModifyRoomTypeCommand(
         int adultCapacity,
         int childCapacity) implements Command {
 
-    public RoomTypeModify toRoomTypeModify() {
-        return RoomTypeModify.builder()
-                .title(title)
-                .description(description)
-                .priceForNight(priceForNight)
-                .adultCapacity(adultCapacity)
-                .childCapacity(childCapacity)
-                .build();
-    }
-
 }

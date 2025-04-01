@@ -11,5 +11,4 @@ public record ReservationAvailabilityForRoomTypeReadModel(
         RoomTypeInfoReadModel roomTypeInfoReadModel,
         int remainingRooms,
         BigDecimal totalPriceForStayDate
-) {
-}
+) { }

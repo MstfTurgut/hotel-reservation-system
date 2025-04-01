@@ -3,6 +3,7 @@ package com.mstftrgt.hotelreservationsystem;
 import com.mstftrgt.hotelreservationsystem.dto.RoomTypeCreate;
 import com.mstftrgt.hotelreservationsystem.dto.RoomTypeModify;
 import com.mstftrgt.hotelreservationsystem.model.RoomType;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RoomTypeTests {
+
 
     @Test
     void create_ShouldCreateRoom() {

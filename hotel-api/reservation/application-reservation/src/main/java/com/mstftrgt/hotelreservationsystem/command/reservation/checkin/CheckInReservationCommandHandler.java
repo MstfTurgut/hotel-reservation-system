@@ -1,4 +1,4 @@
-package com.mstftrgt.hotelreservationsystem.command.reservation.checkout;
+package com.mstftrgt.hotelreservationsystem.command.reservation.checkin;
 
 import com.mstftrgt.hotelreservationsystem.CommandHandler;
 import com.mstftrgt.hotelreservationsystem.reservation.exception.ReservationNotFoundException;
@@ -9,16 +9,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ReservationCheckOutCommandHandler implements CommandHandler<ReservationCheckOutCommand> {
+public class CheckInReservationCommandHandler implements CommandHandler<CheckInReservationCommand> {
 
     private final ReservationRepository reservationRepository;
 
     @Override
-    public void handle(ReservationCheckOutCommand command) {
+    public void handle(CheckInReservationCommand command) {
         Reservation reservation = reservationRepository.findById(command.reservationId())
                 .orElseThrow(() -> new ReservationNotFoundException(command.reservationId()));
 
-        reservation.checkOut();
+        reservation.confirmCustomer(command.confirmationCode());
+
+        reservation.checkIn();
 
         reservationRepository.save(reservation);
     }

@@ -13,16 +13,4 @@ public record AddNewRoomTypeCommand(
         String description,
         BigDecimal priceForNight,
         int adultCapacity,
-        int childCapacity) implements Command {
-
-    public RoomTypeCreate toRoomTypeCreate() {
-        return RoomTypeCreate.builder()
-                .title(title)
-                .description(description)
-                .priceForNight(priceForNight)
-                .adultCapacity(adultCapacity)
-                .childCapacity(childCapacity)
-                .build();
-    }
-
-}
+        int childCapacity) implements Command {}
