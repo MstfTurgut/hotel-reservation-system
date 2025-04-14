@@ -20,7 +20,13 @@
 	</parent>
 
 	<modules>
-		<module>hotel-api</module>
+		<module>reservation</module>
+		<module>roommanagement</module>
+		<module>identityaccess</module>
+		<module>payment</module>
+		<module>notification</module>
+		<module>shared</module>
+		<module>applicationmain</module>
 	</modules>
 
 </project>
