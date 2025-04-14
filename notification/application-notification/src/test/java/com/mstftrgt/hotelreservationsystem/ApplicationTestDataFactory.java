@@ -5,9 +5,6 @@ import com.mstftrgt.hotelreservationsystem.event.PaymentCompletedIntegrationEven
 import com.mstftrgt.hotelreservationsystem.event.PaymentFailedIntegrationEvent;
 import com.mstftrgt.hotelreservationsystem.event.RefundFailedIntegrationEvent;
 import com.mstftrgt.hotelreservationsystem.event.RefundInitiatedIntegrationEvent;
-import com.mstftrgt.hotelreservationsystem.eventhandler.PaymentFailedIntegrationEventHandler;
-import com.mstftrgt.hotelreservationsystem.eventhandler.RefundFailedIntegrationEventHandler;
-import com.mstftrgt.hotelreservationsystem.eventhandler.RefundInitiatedIntegrationEventHandler;
 import com.mstftrgt.hotelreservationsystem.notification.model.NotificationType;
 
 import java.math.BigDecimal;

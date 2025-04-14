@@ -5,7 +5,6 @@ import com.mstftrgt.hotelreservationsystem.command.payment.processinhotel.Proces
 import com.mstftrgt.hotelreservationsystem.command.payment.processinhotel.ProcessInHotelPaymentCommandHandler;
 import com.mstftrgt.hotelreservationsystem.exception.PaymentNotFoundException;
 import com.mstftrgt.hotelreservationsystem.model.Payment;
-import com.mstftrgt.hotelreservationsystem.port.PaymentGatewayPort;
 import com.mstftrgt.hotelreservationsystem.repository.PaymentRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

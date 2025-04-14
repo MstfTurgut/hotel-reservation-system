@@ -1,6 +1,5 @@
 package com.mstftrgt.hotelreservationsystem;
 
-import com.mstftrgt.hotelreservationsystem.reservation.model.Reservation;
 import com.mstftrgt.hotelreservationsystem.reservation.model.StayDate;
 import com.mstftrgt.hotelreservationsystem.reservation.service.PriceCalculationService;
 import org.junit.jupiter.api.Test;

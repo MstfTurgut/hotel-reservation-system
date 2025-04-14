@@ -1,6 +1,5 @@
 package com.mstftrgt.hotelreservationsystem.repository;
 
-import com.mstftrgt.hotelreservationsystem.dto.PaymentCreate;
 import com.mstftrgt.hotelreservationsystem.model.Payment;
 
 import java.util.UUID;

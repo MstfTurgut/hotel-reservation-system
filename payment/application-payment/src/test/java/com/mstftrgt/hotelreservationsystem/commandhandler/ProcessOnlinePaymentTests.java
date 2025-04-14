@@ -1,8 +1,6 @@
 package com.mstftrgt.hotelreservationsystem.commandhandler;
 
 import com.mstftrgt.hotelreservationsystem.ApplicationTestDataFactory;
-import com.mstftrgt.hotelreservationsystem.command.payment.processinhotel.ProcessInHotelPaymentCommand;
-import com.mstftrgt.hotelreservationsystem.command.payment.processinhotel.ProcessInHotelPaymentCommandHandler;
 import com.mstftrgt.hotelreservationsystem.command.payment.processonline.ProcessOnlinePaymentCommand;
 import com.mstftrgt.hotelreservationsystem.command.payment.processonline.ProcessOnlinePaymentCommandHandler;
 import com.mstftrgt.hotelreservationsystem.exception.PaymentNotFoundException;
