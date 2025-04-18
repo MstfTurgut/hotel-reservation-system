@@ -9,6 +9,7 @@ import com.mstftrgt.hotelreservationsystem.query.room.findallforroomtype.FindAll
 import com.mstftrgt.hotelreservationsystem.query.roomtype.findall.FindAllRoomTypesQuery;
 import com.mstftrgt.hotelreservationsystem.readmodel.RoomReadModel;
 import com.mstftrgt.hotelreservationsystem.readmodel.RoomTypeReadModel;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,13 +35,13 @@ public class RoomTypeController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public void addNewRoomType(@RequestBody AddNewRoomTypeRequest request) {
+    public void addNewRoomType(@Valid @RequestBody AddNewRoomTypeRequest request) {
         commandBus.dispatch(request.toCommand());
     }
 
     @PutMapping("/{roomTypeId}")
     @ResponseStatus(HttpStatus.OK)
-    public void modifyRoomType(@PathVariable UUID roomTypeId, @RequestBody ModifyRoomTypeRequest request) {
+    public void modifyRoomType(@PathVariable UUID roomTypeId, @Valid @RequestBody ModifyRoomTypeRequest request) {
         commandBus.dispatch(request.toCommand(roomTypeId));
     }
 

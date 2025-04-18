@@ -10,7 +10,7 @@ import com.mstftrgt.hotelreservationsystem.reservation.exception.ReservationAlre
 import com.mstftrgt.hotelreservationsystem.reservation.exception.ReservationAlreadyCheckedInException;
 import com.mstftrgt.hotelreservationsystem.reservation.exception.ReservationAlreadyCheckedOutException;
 import com.mstftrgt.hotelreservationsystem.reservation.exception.InvalidStayDateException;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.With;
@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @Data
 @With
-@Builder
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Reservation extends AggregateRoot {
 
@@ -51,18 +51,18 @@ public class Reservation extends AggregateRoot {
                 .phoneNumber(reservationCreate.customerPhoneNumber())
                 .build();
 
-        Reservation newReservation = Reservation.builder()
-                .id(UUID.randomUUID())
-                .userId(reservationCreate.userId())
-                .roomId(reservationCreate.roomId())
-                .confirmationCode(reservationCreate.confirmationCode())
-                .reservationCode(reservationCreate.reservationCode())
-                .guestSpecification(guestSpecification)
-                .status(ReservationStatus.CONFIRMED)
-                .stayDate(stayDate)
-                .customerDetails(customerDetails)
-                .createdAt(LocalDateTime.now())
-                .build();
+        Reservation newReservation = new Reservation(
+                UUID.randomUUID(),
+                reservationCreate.userId(),
+                reservationCreate.roomId(),
+                reservationCreate.confirmationCode(),
+                reservationCreate.reservationCode(),
+                guestSpecification,
+                ReservationStatus.CONFIRMED,
+                stayDate,
+                customerDetails,
+                LocalDateTime.now()
+        );
 
         newReservation.registerEvent(
                 new ReservationCreatedDomainEvent(

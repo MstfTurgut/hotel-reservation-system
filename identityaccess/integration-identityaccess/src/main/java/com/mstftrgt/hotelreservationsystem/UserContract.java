@@ -1,4 +1,4 @@
-package com.mstftrgt.hotelreservationsystem.config;
+package com.mstftrgt.hotelreservationsystem;
 
 
 import java.util.UUID;

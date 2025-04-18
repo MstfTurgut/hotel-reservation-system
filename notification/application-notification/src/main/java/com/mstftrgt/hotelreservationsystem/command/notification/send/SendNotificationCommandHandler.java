@@ -21,7 +21,6 @@ public class SendNotificationCommandHandler implements CommandHandler<SendNotifi
     private final ReservationFacade reservationFacade;
     private final NotificationRepository notificationRepository;
     private final NotificationSenderPort notificationSenderPort;
-    private final NotificationContentGenerationStrategyFactory notificationContentGenerationStrategyFactory;
 
 
     @Override
@@ -30,7 +29,7 @@ public class SendNotificationCommandHandler implements CommandHandler<SendNotifi
                 .orElseThrow(() -> new ReservationInfoCouldNotBeRetrievedException(command.reservationId()));
 
         NotificationContentGenerationStrategy strategy =
-                notificationContentGenerationStrategyFactory.getStrategy(command.notificationType());
+                NotificationContentGenerationStrategyFactory.getStrategy(command.notificationType());
 
         String content = strategy.generateContent(reservationInfo, command.paymentAmount());
 

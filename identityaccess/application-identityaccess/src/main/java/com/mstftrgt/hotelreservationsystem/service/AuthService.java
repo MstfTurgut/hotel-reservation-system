@@ -1,9 +1,9 @@
 package com.mstftrgt.hotelreservationsystem.service;
 
-import com.mstftrgt.hotelreservationsystem.dto.response.AuthResponse;
+import com.mstftrgt.hotelreservationsystem.dto.AuthResponse;
 import com.mstftrgt.hotelreservationsystem.exception.AuthenticationException;
-import com.mstftrgt.hotelreservationsystem.dto.request.LoginRequest;
-import com.mstftrgt.hotelreservationsystem.dto.request.RegisterRequest;
+import com.mstftrgt.hotelreservationsystem.dto.LoginRequest;
+import com.mstftrgt.hotelreservationsystem.dto.RegisterRequest;
 import com.mstftrgt.hotelreservationsystem.domain.entity.User;
 import com.mstftrgt.hotelreservationsystem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

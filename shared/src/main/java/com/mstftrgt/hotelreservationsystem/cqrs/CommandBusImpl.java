@@ -1,11 +1,13 @@
 package com.mstftrgt.hotelreservationsystem.cqrs;
 
 // command/CommandBusImpl.java
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+@Slf4j
 @Component
 public class CommandBusImpl implements CommandBus {
 
@@ -32,6 +34,7 @@ public class CommandBusImpl implements CommandBus {
         if (handler == null) {
             throw new IllegalArgumentException("No handler found for command: " + command.getClass());
         }
+        log.info("Dispatching command: {}", command);
         handler.handle(command);
     }
 }

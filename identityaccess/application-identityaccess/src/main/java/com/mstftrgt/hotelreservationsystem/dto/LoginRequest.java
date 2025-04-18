@@ -1,6 +1,7 @@
-package com.mstftrgt.hotelreservationsystem.dto.request;
+package com.mstftrgt.hotelreservationsystem.dto;
 
-import com.mstftrgt.hotelreservationsystem.domain.entity.User;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,8 +11,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+public class LoginRequest {
+
+    @NotBlank
+    @Email
     private String email;
+
+    @NotBlank
     private String password;
-    private User.Role role;
 }

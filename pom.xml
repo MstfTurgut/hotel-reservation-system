@@ -27,6 +27,7 @@
 		<module>notification</module>
 		<module>shared</module>
 		<module>applicationmain</module>
+		<module>security</module>
 	</modules>
 
 </project>

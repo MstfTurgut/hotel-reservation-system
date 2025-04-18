@@ -4,6 +4,7 @@ package com.mstftrgt.hotelreservationsystem.presentation;
 import com.mstftrgt.hotelreservationsystem.command.room.remove.RemoveRoomCommand;
 import com.mstftrgt.hotelreservationsystem.cqrs.CommandBus;
 import com.mstftrgt.hotelreservationsystem.presentation.dto.AddNewRoomRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,7 +26,7 @@ public class RoomController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public void addNewRoom(@RequestBody AddNewRoomRequest request) {
+    public void addNewRoom(@Valid @RequestBody AddNewRoomRequest request) {
         commandBus.dispatch(request.toCommand());
     }
 

@@ -1,4 +1,4 @@
-package com.mstftrgt.hotelreservationsystem.dto.response;
+package com.mstftrgt.hotelreservationsystem.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

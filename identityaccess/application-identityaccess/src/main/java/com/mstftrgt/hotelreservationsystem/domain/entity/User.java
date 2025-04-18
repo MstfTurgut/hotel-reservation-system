@@ -1,5 +1,6 @@
 package com.mstftrgt.hotelreservationsystem.domain.entity;
 
+import com.mstftrgt.hotelreservationsystem.dto.RoleDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -20,7 +21,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user")
+@Table(name = "user", schema = "identityaccess")
 public class User implements UserDetails {
 
     @Id
@@ -30,7 +31,7 @@ public class User implements UserDetails {
 
     private String password;
 
-    private Role role;
+    private RoleDto role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -60,9 +61,5 @@ public class User implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
-    }
-
-    public enum Role {
-        USER, ADMIN
     }
 }

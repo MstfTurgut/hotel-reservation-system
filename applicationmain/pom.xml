@@ -23,7 +23,52 @@
         </dependency>
         <dependency>
             <groupId>com.mstftrgt</groupId>
+            <artifactId>integration-identityaccess</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mstftrgt</groupId>
+            <artifactId>application-notification</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mstftrgt</groupId>
+            <artifactId>domain-notification</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mstftrgt</groupId>
+            <artifactId>infrastructure-notification</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mstftrgt</groupId>
+            <artifactId>application-payment</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mstftrgt</groupId>
+            <artifactId>domain-payment</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mstftrgt</groupId>
             <artifactId>infrastructure-payment</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mstftrgt</groupId>
+            <artifactId>integration-payment</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mstftrgt</groupId>
+            <artifactId>application-reservation</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mstftrgt</groupId>
+            <artifactId>domain-reservation</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -33,13 +78,53 @@
         </dependency>
         <dependency>
             <groupId>com.mstftrgt</groupId>
+            <artifactId>integration-reservation</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mstftrgt</groupId>
+            <artifactId>application-roommanagement</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mstftrgt</groupId>
+            <artifactId>domain-roommanagement</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mstftrgt</groupId>
             <artifactId>infrastructure-roommanagement</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.mstftrgt</groupId>
+            <artifactId>integration-roommanagement</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mstftrgt</groupId>
+            <artifactId>shared</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mstftrgt</groupId>
+            <artifactId>security</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

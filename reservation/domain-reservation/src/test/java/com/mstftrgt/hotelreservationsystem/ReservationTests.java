@@ -86,11 +86,7 @@ public class ReservationTests {
     void cancel_whenValid_shouldCancelAndRegisterEvent() {
         StayDate stayDate = new StayDate(LocalDate.now().plusDays(10), LocalDate.now().plusDays(15));
 
-        Reservation reservation = Reservation.builder()
-                .id(UUID.randomUUID())
-                .status(ReservationStatus.CONFIRMED)
-                .stayDate(stayDate)
-                .build();
+        Reservation reservation = ReservationTestDataFactory.getTestReservationWith(stayDate, ReservationStatus.CONFIRMED);
 
         reservation.cancel();
 

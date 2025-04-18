@@ -1,7 +1,7 @@
 package com.mstftrgt.hotelreservationsystem.presentation;
 
 import com.mstftrgt.hotelreservationsystem.command.reservation.checkout.CheckOutReservationCommand;
-import com.mstftrgt.hotelreservationsystem.config.UserContract;
+import com.mstftrgt.hotelreservationsystem.UserContract;
 import com.mstftrgt.hotelreservationsystem.cqrs.CommandBus;
 import com.mstftrgt.hotelreservationsystem.cqrs.QueryBus;
 import com.mstftrgt.hotelreservationsystem.presentation.dto.CancelReservationRequest;
@@ -12,6 +12,7 @@ import com.mstftrgt.hotelreservationsystem.presentation.dto.FindReservationsOfCu
 import com.mstftrgt.hotelreservationsystem.query.reservation.findforuser.FindReservationsOfUserQuery;
 import com.mstftrgt.hotelreservationsystem.readmodel.ReservationAvailabilityForRoomTypeReadModel;
 import com.mstftrgt.hotelreservationsystem.readmodel.ReservationReadModel;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,13 +38,13 @@ public class ReservationController {
 
     @PutMapping("{reservationId}/cancel")
     @ResponseStatus(HttpStatus.OK)
-    public void cancelReservation(@PathVariable UUID reservationId, @RequestBody CancelReservationRequest request) {
+    public void cancelReservation(@PathVariable UUID reservationId, @Valid @RequestBody CancelReservationRequest request) {
         commandBus.dispatch(request.toCommand(reservationId));
     }
 
     @PutMapping("{reservationId}/check-in")
     @ResponseStatus(HttpStatus.OK)
-    public void checkInReservation(@PathVariable UUID reservationId, @RequestBody CheckInReservationRequest request) {
+    public void checkInReservation(@PathVariable UUID reservationId, @Valid @RequestBody CheckInReservationRequest request) {
         commandBus.dispatch(request.toCommand(reservationId));
     }
 
@@ -55,14 +56,14 @@ public class ReservationController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public void createReservation(@RequestBody CreateReservationRequest request) {
+    public void createReservation(@Valid @RequestBody CreateReservationRequest request) {
         UserContract currentUser = (UserContract) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         commandBus.dispatch(request.toCommand(currentUser.id()));
     }
 
     @GetMapping("availability")
     @ResponseStatus(HttpStatus.OK)
-    public List<ReservationAvailabilityForRoomTypeReadModel> findReservationAvailabilitiesForSuitableRoomTypes(@RequestBody FindReservationAvailabilitiesForSuitableRoomTypesRequest request) {
+    public List<ReservationAvailabilityForRoomTypeReadModel> findReservationAvailabilitiesForSuitableRoomTypes(@Valid @RequestBody FindReservationAvailabilitiesForSuitableRoomTypesRequest request) {
         return queryBus.dispatch(request.toQuery());
     }
 
@@ -75,7 +76,7 @@ public class ReservationController {
 
     @GetMapping("customer")
     @ResponseStatus(HttpStatus.OK)
-    public List<ReservationReadModel> findReservationsOfCustomer(@RequestBody FindReservationsOfCustomerRequest request) {
+    public List<ReservationReadModel> findReservationsOfCustomer(@Valid @RequestBody FindReservationsOfCustomerRequest request) {
         return queryBus.dispatch(request.toQuery());
     }
 }

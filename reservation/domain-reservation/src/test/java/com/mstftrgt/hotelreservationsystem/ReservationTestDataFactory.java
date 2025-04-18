@@ -10,6 +10,7 @@ import com.mstftrgt.hotelreservationsystem.reservation.model.StayDate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class ReservationTestDataFactory {
@@ -34,27 +35,33 @@ public class ReservationTestDataFactory {
     }
 
     public static Reservation getTestReservation() {
-        return Reservation.builder()
-                .id(UUID.fromString("00000000-0000-0000-0000-000000000000"))
-                .userId(UUID.fromString("00000000-0000-0000-0000-000000000000"))
-                .roomId(UUID.fromString("00000000-0000-0000-0000-000000000000"))
-                .confirmationCode("testConfirmationCode")
-                .reservationCode("testReservationCode")
-                .guestSpecification(GuestSpecification.builder()
-                        .adultGuestCount(1)
-                        .childGuestCount(1)
-                        .build())
-                .status(ReservationStatus.CONFIRMED)
-                .stayDate(StayDate.builder()
-                        .checkInDate(LocalDate.of(2030, 1, 1))
-                        .checkOutDate(LocalDate.of(2030, 1, 3))
-                        .build())
-                .customerDetails(CustomerDetails.builder()
-                        .fullName("testFullName")
-                        .emailAddress("test@example.com")
-                        .phoneNumber("1234567890")
-                        .build())
-                .build();
+        UUID commonId = UUID.fromString("00000000-0000-0000-0000-000000000000");
+
+        GuestSpecification guestSpec = new GuestSpecification(1, 1);
+
+        StayDate stayDate = new StayDate(
+                LocalDate.of(2030, 1, 1),
+                LocalDate.of(2030, 1, 3)
+        );
+
+        CustomerDetails customerDetails = new CustomerDetails(
+                "testFullName",
+                "test@example.com",
+                "1234567890"
+        );
+
+        return new Reservation(
+                commonId,
+                commonId,
+                commonId,
+                "testConfirmationCode",
+                "testReservationCode",
+                guestSpec,
+                ReservationStatus.CONFIRMED,
+                stayDate,
+                customerDetails,
+                LocalDateTime.now()
+        );
     }
 
     public static Reservation getTestReservationWith(ReservationStatus status) {
@@ -67,6 +74,10 @@ public class ReservationTestDataFactory {
 
     public static Reservation getTestReservationWith(StayDate stayDate) {
         return getTestReservation().withStayDate(stayDate);
+    }
+
+    public static Reservation getTestReservationWith(StayDate stayDate, ReservationStatus status) {
+        return getTestReservation().withStayDate(stayDate).withStatus(status);
     }
 
 }

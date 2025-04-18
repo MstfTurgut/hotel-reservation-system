@@ -5,10 +5,12 @@ import com.mstftrgt.hotelreservationsystem.contract.RoomTypeContract;
 import com.mstftrgt.hotelreservationsystem.reservation.model.Reservation;
 import com.mstftrgt.hotelreservationsystem.reservation.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@Service
 @RequiredArgsConstructor
 public class ReservationFacadeImpl implements ReservationFacade {
 

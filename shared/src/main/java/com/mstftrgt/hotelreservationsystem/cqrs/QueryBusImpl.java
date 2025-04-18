@@ -1,10 +1,12 @@
 package com.mstftrgt.hotelreservationsystem.cqrs;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+@Slf4j
 @Component
 public class QueryBusImpl implements QueryBus {
 
@@ -30,6 +32,7 @@ public class QueryBusImpl implements QueryBus {
         if (handler == null) {
             throw new IllegalArgumentException("No handler found for query: " + query.getClass());
         }
+        log.info("Dispatching query: {}", query);
         return handler.handle(query);
     }
 }

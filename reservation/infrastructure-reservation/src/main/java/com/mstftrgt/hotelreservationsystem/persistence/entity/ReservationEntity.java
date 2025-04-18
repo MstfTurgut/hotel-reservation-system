@@ -23,7 +23,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "reservation")
+@Table(name = "reservation", schema = "reservation")
 public class ReservationEntity {
 
     @Id
@@ -62,27 +62,33 @@ public class ReservationEntity {
     }
 
     public Reservation toModel() {
-        return Reservation.builder()
-                .id(this.id)
-                .userId(this.userId)
-                .roomId(this.roomId)
-                .confirmationCode(this.confirmationCode)
-                .reservationCode(this.reservationCode)
-                .guestSpecification(GuestSpecification.builder()
-                        .adultGuestCount(this.adultGuestCount)
-                        .childGuestCount(this.childGuestCount)
-                        .build())
-                .status(ReservationStatus.valueOf(this.status))
-                .stayDate(StayDate.builder()
-                        .checkInDate(this.checkInDate)
-                        .checkOutDate(this.checkOutDate)
-                        .build())
-                .customerDetails(CustomerDetails.builder()
-                        .fullName(this.fullName)
-                        .phoneNumber(this.phoneNumber)
-                        .emailAddress(this.emailAddress)
-                        .build())
-                .createdAt(this.createdAt)
-                .build();
+        GuestSpecification guestSpec = new GuestSpecification(
+                this.adultGuestCount,
+                this.childGuestCount
+        );
+
+        StayDate stayDate = new StayDate(
+                this.checkInDate,
+                this.checkOutDate
+        );
+
+        CustomerDetails customerDetails = new CustomerDetails(
+                this.fullName,
+                this.phoneNumber,
+                this.emailAddress
+        );
+
+        return new Reservation(
+                this.id,
+                this.userId,
+                this.roomId,
+                this.confirmationCode,
+                this.reservationCode,
+                guestSpec,
+                ReservationStatus.valueOf(this.status),
+                stayDate,
+                customerDetails,
+                this.createdAt
+        );
     }
 }

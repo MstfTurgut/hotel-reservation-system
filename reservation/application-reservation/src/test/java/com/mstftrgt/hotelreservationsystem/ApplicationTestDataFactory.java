@@ -6,7 +6,6 @@ import com.mstftrgt.hotelreservationsystem.command.reservation.checkout.CheckOut
 import com.mstftrgt.hotelreservationsystem.command.reservation.create.CreateReservationCommand;
 import com.mstftrgt.hotelreservationsystem.command.reservation.rollback.RollbackReservationCommand;
 import com.mstftrgt.hotelreservationsystem.event.PaymentFailedIntegrationEvent;
-import com.mstftrgt.hotelreservationsystem.eventhandler.ReservationCancelledDomainEventHandler;
 import com.mstftrgt.hotelreservationsystem.kernel.CardDetails;
 import com.mstftrgt.hotelreservationsystem.query.reservation.findavailabilitiesforroomtypes.FindReservationAvailabilitiesForSuitableRoomTypesQuery;
 import com.mstftrgt.hotelreservationsystem.query.reservation.findforcustomer.FindReservationsOfCustomerQuery;
@@ -21,6 +20,7 @@ import com.mstftrgt.hotelreservationsystem.reservation.model.StayDate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -96,49 +96,44 @@ public class ApplicationTestDataFactory {
     }
 
     public static List<Reservation> getTestReservationList() {
-        Reservation reservation1 = Reservation.builder()
-                .id(UUID.randomUUID())
-                .userId(UUID.randomUUID())
-                .roomId(UUID.randomUUID())
-                .confirmationCode("testConfirmationCode")
-                .reservationCode("testReservationCode")
-                .guestSpecification(GuestSpecification.builder()
-                        .adultGuestCount(2)
-                        .childGuestCount(1)
-                        .build())
-                .status(ReservationStatus.CONFIRMED)
-                .stayDate(StayDate.builder()
-                        .checkInDate(LocalDate.of(2030, 1, 1))
-                        .checkOutDate(LocalDate.of(2030, 1, 3))
-                        .build())
-                .customerDetails(CustomerDetails.builder()
-                        .fullName("testFullName")
-                        .emailAddress("test@example.com")
-                        .phoneNumber("1234567890")
-                        .build())
-                .build();
+        GuestSpecification guestSpec = new GuestSpecification(2, 1);
 
-        Reservation reservation2 = Reservation.builder()
-                .id(UUID.randomUUID())
-                .userId(UUID.randomUUID())
-                .roomId(UUID.randomUUID())
-                .confirmationCode("testConfirmationCode")
-                .reservationCode("testReservationCode")
-                .guestSpecification(GuestSpecification.builder()
-                        .adultGuestCount(2)
-                        .childGuestCount(1)
-                        .build())
-                .status(ReservationStatus.CONFIRMED)
-                .stayDate(StayDate.builder()
-                        .checkInDate(LocalDate.of(2030, 1, 1))
-                        .checkOutDate(LocalDate.of(2030, 1, 3))
-                        .build())
-                .customerDetails(CustomerDetails.builder()
-                        .fullName("testFullName")
-                        .emailAddress("test@example.com")
-                        .phoneNumber("1234567890")
-                        .build())
-                .build();
+        StayDate stayDate = new StayDate(
+                LocalDate.of(2030, 1, 1),
+                LocalDate.of(2030, 1, 3)
+        );
+
+        CustomerDetails customerDetails = new CustomerDetails(
+                "testFullName",
+                "test@example.com",
+                "1234567890"
+        );
+
+        Reservation reservation1 = new Reservation(
+                UUID.randomUUID(),
+                UUID.randomUUID(),
+                UUID.randomUUID(),
+                "testConfirmationCode",
+                "testReservationCode",
+                guestSpec,
+                ReservationStatus.CONFIRMED,
+                stayDate,
+                customerDetails,
+                LocalDateTime.now()
+        );
+
+        Reservation reservation2 = new Reservation(
+                UUID.randomUUID(),
+                UUID.randomUUID(),
+                UUID.randomUUID(),
+                "testConfirmationCode",
+                "testReservationCode",
+                guestSpec,
+                ReservationStatus.CONFIRMED,
+                stayDate,
+                customerDetails,
+                LocalDateTime.now()
+        );
 
         return List.of(reservation1, reservation2);
     }
