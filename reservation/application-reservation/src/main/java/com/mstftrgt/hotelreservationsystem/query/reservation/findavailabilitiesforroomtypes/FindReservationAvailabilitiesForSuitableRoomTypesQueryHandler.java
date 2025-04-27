@@ -1,8 +1,8 @@
 package com.mstftrgt.hotelreservationsystem.query.reservation.findavailabilitiesforroomtypes;
 
-import com.mstftrgt.hotelreservationsystem.cqrs.QueryHandler;
 import com.mstftrgt.hotelreservationsystem.facade.RoomManagementFacade;
 import com.mstftrgt.hotelreservationsystem.contract.RoomTypeContract;
+import com.mstftrgt.hotelreservationsystem.generic.application.QueryHandler;
 import com.mstftrgt.hotelreservationsystem.readmodel.ReservationAvailabilityForRoomTypeReadModel;
 import com.mstftrgt.hotelreservationsystem.readmodel.RoomTypeInfoReadModel;
 import com.mstftrgt.hotelreservationsystem.reservation.model.Reservation;

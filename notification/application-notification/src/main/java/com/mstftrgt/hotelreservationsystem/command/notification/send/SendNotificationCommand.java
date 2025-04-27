@@ -1,6 +1,6 @@
 package com.mstftrgt.hotelreservationsystem.command.notification.send;
 
-import com.mstftrgt.hotelreservationsystem.cqrs.Command;
+import com.mstftrgt.hotelreservationsystem.generic.application.Command;
 import com.mstftrgt.hotelreservationsystem.notification.dto.NotificationCreate;
 import com.mstftrgt.hotelreservationsystem.notification.model.NotificationType;
 import lombok.Builder;

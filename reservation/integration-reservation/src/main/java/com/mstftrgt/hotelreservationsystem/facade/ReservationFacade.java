@@ -7,5 +7,5 @@ import java.util.UUID;
 
 public interface ReservationFacade {
 
-    Optional<ReservationInfoContract> findReservationById(UUID reservationId);
+    ReservationInfoContract findReservationById(UUID reservationId);
 }

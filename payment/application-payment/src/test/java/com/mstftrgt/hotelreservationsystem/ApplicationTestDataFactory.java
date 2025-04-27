@@ -1,18 +1,15 @@
 package com.mstftrgt.hotelreservationsystem;
 
 
-import com.mstftrgt.hotelreservationsystem.command.payment.initiate.InitiatePaymentCommand;
 import com.mstftrgt.hotelreservationsystem.command.payment.processinhotel.ProcessInHotelPaymentCommand;
 import com.mstftrgt.hotelreservationsystem.command.payment.processonline.ProcessOnlinePaymentCommand;
 import com.mstftrgt.hotelreservationsystem.command.payment.refund.RefundPaymentCommand;
 import com.mstftrgt.hotelreservationsystem.event.PaymentCompletedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.event.PaymentFailedDomainEvent;
-import com.mstftrgt.hotelreservationsystem.event.PaymentInitiatedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.event.RefundFailedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.event.RefundInitiatedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.event.ReservationCancelledIntegrationEvent;
 import com.mstftrgt.hotelreservationsystem.event.ReservationCreatedIntegrationEvent;
-import com.mstftrgt.hotelreservationsystem.eventhandler.ReservationCancelledIntegrationEventHandler;
 import com.mstftrgt.hotelreservationsystem.kernel.CardDetails;
 import com.mstftrgt.hotelreservationsystem.model.Payment;
 import com.mstftrgt.hotelreservationsystem.model.PaymentStatus;
@@ -24,22 +21,10 @@ import java.util.UUID;
 
 public class ApplicationTestDataFactory {
 
-    public static InitiatePaymentCommand getInitiatePaymentTestCommand() {
-        return InitiatePaymentCommand.builder()
-                .cardDetails(CardDetails.builder()
-                        .cardNumber("0000000000000000")
-                        .cardHolderName("testName")
-                        .expiryDate("12/25")
-                        .cvv("000")
-                        .build())
-                .paymentAmount(BigDecimal.TEN)
-                .reservationId(UUID.randomUUID())
-                .build();
-    }
-
     public static ProcessInHotelPaymentCommand getProcessInHotelPaymentTestCommand() {
         return ProcessInHotelPaymentCommand.builder()
-                .paymentId(UUID.randomUUID())
+                .paymentAmount(BigDecimal.TEN)
+                .reservationId(UUID.randomUUID())
                 .build();
     }
 
@@ -51,7 +36,8 @@ public class ApplicationTestDataFactory {
                         .expiryDate("12/25")
                         .cvv("000")
                         .build())
-                .paymentId(UUID.randomUUID())
+                .paymentAmount(BigDecimal.TEN)
+                .reservationId(UUID.randomUUID())
                 .build();
     }
 
@@ -89,18 +75,6 @@ public class ApplicationTestDataFactory {
         return PaymentFailedDomainEvent.builder()
                 .reservationId(UUID.randomUUID())
                 .paymentAmount(BigDecimal.TEN)
-                .build();
-    }
-
-    public static PaymentInitiatedDomainEvent getPaymentInitiatedDomainEvent() {
-        return PaymentInitiatedDomainEvent.builder()
-                .paymentId(UUID.randomUUID())
-                .cardDetails(CardDetails.builder()
-                        .cardNumber("0000000000000000")
-                        .cardHolderName("testName")
-                        .expiryDate("12/25")
-                        .cvv("000")
-                        .build())
                 .build();
     }
 

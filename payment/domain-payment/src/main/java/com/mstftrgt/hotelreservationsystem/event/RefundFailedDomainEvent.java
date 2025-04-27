@@ -1,6 +1,6 @@
 package com.mstftrgt.hotelreservationsystem.event;
 
-import com.mstftrgt.hotelreservationsystem.DomainEvent;
+import com.mstftrgt.hotelreservationsystem.generic.domain.DomainEvent;
 import lombok.Builder;
 
 import java.util.UUID;

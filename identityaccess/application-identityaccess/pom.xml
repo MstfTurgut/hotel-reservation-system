@@ -18,6 +18,11 @@
     <dependencies>
         <dependency>
             <groupId>com.mstftrgt</groupId>
+            <artifactId>security</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mstftrgt</groupId>
             <artifactId>integration-identityaccess</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -55,7 +60,6 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -65,6 +69,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+
     </dependencies>
 
 </project>

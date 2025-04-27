@@ -1,6 +1,6 @@
 package com.mstftrgt.hotelreservationsystem.repository;
 
-import com.mstftrgt.hotelreservationsystem.domain.entity.User;
+import com.mstftrgt.hotelreservationsystem.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

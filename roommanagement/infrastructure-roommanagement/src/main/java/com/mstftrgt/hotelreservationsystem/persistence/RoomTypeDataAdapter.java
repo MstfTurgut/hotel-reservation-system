@@ -2,9 +2,11 @@ package com.mstftrgt.hotelreservationsystem.persistence;
 
 import com.mstftrgt.hotelreservationsystem.model.RoomType;
 import com.mstftrgt.hotelreservationsystem.persistence.entity.RoomTypeEntity;
+import com.mstftrgt.hotelreservationsystem.persistence.repository.RoomJpaRepository;
 import com.mstftrgt.hotelreservationsystem.persistence.repository.RoomTypeJpaRepository;
 import com.mstftrgt.hotelreservationsystem.repository.RoomTypeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +17,23 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RoomTypeDataAdapter implements RoomTypeRepository {
 
+    private final ApplicationEventPublisher publisher;
+    private final RoomJpaRepository roomJpaRepository;
     private final RoomTypeJpaRepository roomTypeJpaRepository;
+
+    @Override
+    public void save(RoomType roomType) {
+        roomTypeJpaRepository.save(RoomTypeEntity.from(roomType));
+
+        roomType.publishAllEventsAndClear(publisher);
+    }
+
+    @Override
+    public void remove(RoomType roomType) {
+        roomTypeJpaRepository.deleteById(roomType.getId());
+
+        roomType.publishAllEventsAndClear(publisher);
+    }
 
     @Override
     public Optional<RoomType> findById(UUID roomTypeId) {
@@ -25,14 +43,11 @@ public class RoomTypeDataAdapter implements RoomTypeRepository {
 
     @Override
     public RoomType findByRoomId(UUID roomId) {
-        return roomTypeJpaRepository.findById(roomId)
+        UUID roomTypeId = roomJpaRepository.findRoomTypeIdByRoomId(roomId);
+
+        return roomTypeJpaRepository.findById(roomTypeId)
                 .map(RoomTypeEntity::toModel)
                 .orElseThrow(() -> new IllegalArgumentException("RoomType not found"));
-    }
-
-    @Override
-    public void save(RoomType roomType) {
-        roomTypeJpaRepository.save(RoomTypeEntity.from(roomType));
     }
 
     @Override
@@ -41,10 +56,5 @@ public class RoomTypeDataAdapter implements RoomTypeRepository {
                 .stream()
                 .map(RoomTypeEntity::toModel)
                 .toList();
-    }
-
-    @Override
-    public void remove(RoomType roomType) {
-        roomTypeJpaRepository.delete(RoomTypeEntity.from(roomType));
     }
 }

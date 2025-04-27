@@ -1,7 +1,7 @@
 package com.mstftrgt.hotelreservationsystem.reservation.event;
 
 
-import com.mstftrgt.hotelreservationsystem.DomainEvent;
+import com.mstftrgt.hotelreservationsystem.generic.domain.DomainEvent;
 import com.mstftrgt.hotelreservationsystem.kernel.CardDetails;
 import lombok.Builder;
 

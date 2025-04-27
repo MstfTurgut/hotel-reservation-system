@@ -1,6 +1,7 @@
 package com.mstftrgt.hotelreservationsystem.command.reservation.rollback;
 
-import com.mstftrgt.hotelreservationsystem.cqrs.CommandHandler;
+import com.mstftrgt.hotelreservationsystem.generic.application.CommandHandler;
+import com.mstftrgt.hotelreservationsystem.generic.application.VoidCommandHandler;
 import com.mstftrgt.hotelreservationsystem.reservation.exception.ReservationNotFoundException;
 import com.mstftrgt.hotelreservationsystem.reservation.model.Reservation;
 import com.mstftrgt.hotelreservationsystem.reservation.repository.ReservationRepository;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class RollbackReservationCommandHandler implements CommandHandler<RollbackReservationCommand> {
+public class RollbackReservationCommandHandler implements VoidCommandHandler<RollbackReservationCommand> {
 
     private final ReservationRepository reservationRepository;
 

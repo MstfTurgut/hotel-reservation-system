@@ -1,13 +1,11 @@
 package com.mstftrgt.hotelreservationsystem.model;
 
-import com.mstftrgt.hotelreservationsystem.AggregateRoot;
 import com.mstftrgt.hotelreservationsystem.event.PaymentCompletedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.event.PaymentFailedDomainEvent;
-import com.mstftrgt.hotelreservationsystem.event.PaymentInitiatedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.event.RefundFailedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.event.RefundInitiatedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.exception.PaymentAlreadyRefundedException;
-import com.mstftrgt.hotelreservationsystem.kernel.CardDetails;
+import com.mstftrgt.hotelreservationsystem.generic.domain.AggregateRoot;
 import com.mstftrgt.hotelreservationsystem.dto.PaymentCreate;
 import lombok.Builder;
 import lombok.Data;
@@ -38,12 +36,8 @@ public class Payment extends AggregateRoot {
                 .reservationId(paymentCreate.reservationId())
                 .amount(paymentCreate.amount())
                 .createDate(LocalDateTime.now())
+                .transactionId(null)
                 .build();
-    }
-
-    public void initiate(CardDetails cardDetails) {
-        status = PaymentStatus.PENDING;
-        this.registerEvent(new PaymentInitiatedDomainEvent(id, cardDetails));
     }
 
     public void markAsRefundInitiated() {

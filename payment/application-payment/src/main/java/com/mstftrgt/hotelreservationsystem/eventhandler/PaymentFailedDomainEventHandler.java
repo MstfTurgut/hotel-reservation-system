@@ -1,26 +1,29 @@
 package com.mstftrgt.hotelreservationsystem.eventhandler;
 
-import com.mstftrgt.hotelreservationsystem.DomainEventHandler;
-import com.mstftrgt.hotelreservationsystem.IntegrationEventPublisher;
 import com.mstftrgt.hotelreservationsystem.event.PaymentFailedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.event.PaymentFailedIntegrationEvent;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
-public class PaymentFailedDomainEventHandler extends DomainEventHandler<PaymentFailedDomainEvent> {
+public class PaymentFailedDomainEventHandler {
 
-    private final IntegrationEventPublisher integrationEventPublisher;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
-    @Override
+    @EventListener
     public void handleEvent(PaymentFailedDomainEvent event) {
+        log.info("Handling domain event: {}", event);
 
         PaymentFailedIntegrationEvent paymentFailedIntegrationEvent = PaymentFailedIntegrationEvent.builder()
                 .reservationId(event.reservationId())
                 .paymentAmount(event.paymentAmount())
                 .build();
 
-        integrationEventPublisher.publish(paymentFailedIntegrationEvent);
+        applicationEventPublisher.publishEvent(paymentFailedIntegrationEvent);
     }
 }

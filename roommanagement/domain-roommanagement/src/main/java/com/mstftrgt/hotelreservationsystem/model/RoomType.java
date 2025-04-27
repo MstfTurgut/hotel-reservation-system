@@ -1,9 +1,9 @@
 package com.mstftrgt.hotelreservationsystem.model;
 
-import com.mstftrgt.hotelreservationsystem.AggregateRoot;
 import com.mstftrgt.hotelreservationsystem.dto.RoomTypeCreate;
 import com.mstftrgt.hotelreservationsystem.dto.RoomTypeModify;
 import com.mstftrgt.hotelreservationsystem.event.RoomTypeRemovedDomainEvent;
+import com.mstftrgt.hotelreservationsystem.generic.domain.AggregateRoot;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

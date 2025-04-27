@@ -2,7 +2,6 @@ package com.mstftrgt.hotelreservationsystem.eventhandler;
 
 
 import com.mstftrgt.hotelreservationsystem.ApplicationTestDataFactory;
-import com.mstftrgt.hotelreservationsystem.IntegrationEventPublisher;
 import com.mstftrgt.hotelreservationsystem.event.ReservationCancelledIntegrationEvent;
 import com.mstftrgt.hotelreservationsystem.reservation.event.ReservationCancelledDomainEvent;
 import org.junit.jupiter.api.Test;
@@ -10,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 public class ReservationCancelledDomainEventHandlerTests {
 
     @Mock
-    IntegrationEventPublisher integrationEventPublisher;
+    ApplicationEventPublisher applicationEventPublisher;
 
     @InjectMocks
     ReservationCancelledDomainEventHandler handler;
@@ -29,7 +29,7 @@ public class ReservationCancelledDomainEventHandlerTests {
 
         handler.handleEvent(event);
 
-        verify(integrationEventPublisher).publish(any(ReservationCancelledIntegrationEvent.class));
+        verify(applicationEventPublisher).publishEvent(any(ReservationCancelledIntegrationEvent.class));
     }
 
 }

@@ -1,6 +1,6 @@
 package com.mstftrgt.hotelreservationsystem.command.room.addnew;
 
-import com.mstftrgt.hotelreservationsystem.cqrs.Command;
+import com.mstftrgt.hotelreservationsystem.generic.application.Command;
 import lombok.Builder;
 
 import java.util.UUID;

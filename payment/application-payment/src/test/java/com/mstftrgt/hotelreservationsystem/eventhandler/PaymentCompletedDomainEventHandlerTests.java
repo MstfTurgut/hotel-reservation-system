@@ -1,7 +1,6 @@
 package com.mstftrgt.hotelreservationsystem.eventhandler;
 
 import com.mstftrgt.hotelreservationsystem.ApplicationTestDataFactory;
-import com.mstftrgt.hotelreservationsystem.IntegrationEventPublisher;
 import com.mstftrgt.hotelreservationsystem.event.PaymentCompletedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.event.PaymentCompletedIntegrationEvent;
 import org.junit.jupiter.api.Test;
@@ -9,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.verify;
 public class PaymentCompletedDomainEventHandlerTests {
 
     @Mock
-    IntegrationEventPublisher integrationEventPublisher;
+    ApplicationEventPublisher applicationEventPublisher;
 
     @InjectMocks
     PaymentCompletedDomainEventHandler handler;
@@ -28,7 +28,6 @@ public class PaymentCompletedDomainEventHandlerTests {
 
         handler.handleEvent(event);
 
-        verify(integrationEventPublisher).publish(any(PaymentCompletedIntegrationEvent.class));
+        verify(applicationEventPublisher).publishEvent(any(PaymentCompletedIntegrationEvent.class));
     }
-
 }

@@ -5,6 +5,7 @@ import com.mstftrgt.hotelreservationsystem.command.reservation.checkin.CheckInRe
 import com.mstftrgt.hotelreservationsystem.command.reservation.checkout.CheckOutReservationCommand;
 import com.mstftrgt.hotelreservationsystem.command.reservation.create.CreateReservationCommand;
 import com.mstftrgt.hotelreservationsystem.command.reservation.rollback.RollbackReservationCommand;
+import com.mstftrgt.hotelreservationsystem.contract.RoomTypeContract;
 import com.mstftrgt.hotelreservationsystem.event.PaymentFailedIntegrationEvent;
 import com.mstftrgt.hotelreservationsystem.kernel.CardDetails;
 import com.mstftrgt.hotelreservationsystem.query.reservation.findavailabilitiesforroomtypes.FindReservationAvailabilitiesForSuitableRoomTypesQuery;
@@ -28,7 +29,6 @@ public class ApplicationTestDataFactory {
 
     public static CreateReservationCommand getCreateReservationTestCommand() {
         return CreateReservationCommand.builder()
-                .userId(UUID.randomUUID())
                 .roomTypeId(UUID.randomUUID())
                 .checkInDate(LocalDate.of(2030, 1, 1))
                 .checkOutDate(LocalDate.of(2030, 1, 5))
@@ -82,7 +82,6 @@ public class ApplicationTestDataFactory {
 
     public static FindReservationsOfUserQuery getFindReservationsOfUserTestQuery() {
         return FindReservationsOfUserQuery.builder()
-                .userId(UUID.randomUUID())
                 .build();
     }
 

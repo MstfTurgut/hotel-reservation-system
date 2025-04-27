@@ -7,5 +7,4 @@ import java.util.UUID;
 
 public interface RoomTypeJpaRepository extends JpaRepository<RoomTypeEntity, UUID> {
 
-
 }

@@ -1,20 +1,23 @@
 package com.mstftrgt.hotelreservationsystem.eventhandler;
 
-import com.mstftrgt.hotelreservationsystem.DomainEventHandler;
-import com.mstftrgt.hotelreservationsystem.IntegrationEventPublisher;
 import com.mstftrgt.hotelreservationsystem.event.ReservationCreatedIntegrationEvent;
 import com.mstftrgt.hotelreservationsystem.reservation.event.ReservationCreatedDomainEvent;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
-public class ReservationCreatedDomainEventHandler extends DomainEventHandler<ReservationCreatedDomainEvent> {
+public class ReservationCreatedDomainEventHandler {
 
-    private final IntegrationEventPublisher integrationEventPublisher;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
-    @Override
+    @EventListener
     public void handleEvent(ReservationCreatedDomainEvent event) {
+        log.info("Handling domain event: {}", event);
 
         ReservationCreatedIntegrationEvent reservationCreatedIntegrationEvent = ReservationCreatedIntegrationEvent
                 .builder()
@@ -23,6 +26,6 @@ public class ReservationCreatedDomainEventHandler extends DomainEventHandler<Res
                 .cardDetails(event.cardDetails())
                 .build();
 
-        integrationEventPublisher.publish(reservationCreatedIntegrationEvent);
+        applicationEventPublisher.publishEvent(reservationCreatedIntegrationEvent);
     }
 }

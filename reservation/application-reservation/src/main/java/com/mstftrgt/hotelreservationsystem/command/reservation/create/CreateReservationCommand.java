@@ -1,7 +1,7 @@
 package com.mstftrgt.hotelreservationsystem.command.reservation.create;
 
 
-import com.mstftrgt.hotelreservationsystem.cqrs.Command;
+import com.mstftrgt.hotelreservationsystem.generic.application.Command;
 import com.mstftrgt.hotelreservationsystem.kernel.CardDetails;
 import lombok.Builder;
 
@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @Builder
 public record CreateReservationCommand(
-        UUID userId,
         UUID roomTypeId,
         LocalDate checkInDate,
         LocalDate checkOutDate,

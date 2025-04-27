@@ -2,9 +2,10 @@ package com.mstftrgt.hotelreservationsystem.eventhandler;
 
 
 import com.mstftrgt.hotelreservationsystem.ApplicationTestDataFactory;
-import com.mstftrgt.hotelreservationsystem.command.payment.initiate.InitiatePaymentCommand;
-import com.mstftrgt.hotelreservationsystem.cqrs.CommandBus;
+import com.mstftrgt.hotelreservationsystem.command.payment.processinhotel.ProcessInHotelPaymentCommand;
+import com.mstftrgt.hotelreservationsystem.command.payment.processonline.ProcessOnlinePaymentCommand;
 import com.mstftrgt.hotelreservationsystem.event.ReservationCreatedIntegrationEvent;
+import com.mstftrgt.hotelreservationsystem.generic.application.CommandBus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,13 +25,22 @@ public class ReservationCreatedIntegrationEventHandlerTests {
     ReservationCreatedIntegrationEventHandler handler;
 
     @Test
-    void shouldHandleReservationCreatedIntegrationEventSuccessfully() {
+    void shouldDispatchProcessInHotelPaymentCommandWhenCardDetailsIsNull() {
         ReservationCreatedIntegrationEvent event = ApplicationTestDataFactory
-                .getReservationCreatedIntegrationEvent();
+                .getReservationCreatedIntegrationEvent().withCardDetails(null);
 
         handler.handle(event);
 
-        verify(commandBus).dispatch(any(InitiatePaymentCommand.class));
+        verify(commandBus).dispatch(any(ProcessInHotelPaymentCommand.class));
+    }
+
+    @Test
+    void shouldDispatchProcessInHotelPaymentCommandWhenCardDetailsIsNotNull() {
+        ReservationCreatedIntegrationEvent event = ApplicationTestDataFactory.getReservationCreatedIntegrationEvent();
+
+        handler.handle(event);
+
+        verify(commandBus).dispatch(any(ProcessOnlinePaymentCommand.class));
     }
 
 }

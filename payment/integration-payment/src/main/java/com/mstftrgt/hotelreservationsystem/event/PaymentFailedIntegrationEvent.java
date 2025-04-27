@@ -1,7 +1,7 @@
 package com.mstftrgt.hotelreservationsystem.event;
 
 
-import com.mstftrgt.hotelreservationsystem.IntegrationEvent;
+import com.mstftrgt.hotelreservationsystem.generic.integration.IntegrationEvent;
 import lombok.Builder;
 import java.math.BigDecimal;
 import java.util.UUID;

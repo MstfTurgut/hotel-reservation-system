@@ -1,8 +1,9 @@
 package com.mstftrgt.hotelreservationsystem.command.roomtype.modify;
 
-import com.mstftrgt.hotelreservationsystem.cqrs.CommandHandler;
 import com.mstftrgt.hotelreservationsystem.dto.RoomTypeModify;
 import com.mstftrgt.hotelreservationsystem.exception.RoomTypeNotFoundException;
+import com.mstftrgt.hotelreservationsystem.generic.application.CommandHandler;
+import com.mstftrgt.hotelreservationsystem.generic.application.VoidCommandHandler;
 import com.mstftrgt.hotelreservationsystem.model.RoomType;
 import com.mstftrgt.hotelreservationsystem.repository.RoomTypeRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ModifyRoomTypeCommandHandler implements CommandHandler<ModifyRoomTypeCommand> {
+public class ModifyRoomTypeCommandHandler implements VoidCommandHandler<ModifyRoomTypeCommand> {
 
     private final RoomTypeRepository roomTypeRepository;
 

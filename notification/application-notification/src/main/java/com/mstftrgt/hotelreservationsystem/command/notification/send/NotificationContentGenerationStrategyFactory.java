@@ -6,7 +6,7 @@ public class NotificationContentGenerationStrategyFactory {
 
     public static NotificationContentGenerationStrategy getStrategy(NotificationType type) {
         if (type == NotificationType.PAYMENT_CREATED) {
-            return new PaymentCreatedNotificationContentGenerationStrategy();
+            return new PaymentCompletedNotificationContentGenerationStrategy();
         } else if (type == NotificationType.PAYMENT_FAILED) {
             return new PaymentFailedNotificationContentGenerationStrategy();
         } else if (type == NotificationType.REFUND_INITIATED) {

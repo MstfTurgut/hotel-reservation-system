@@ -5,7 +5,6 @@ import com.mstftrgt.hotelreservationsystem.command.notification.send.Notificatio
 import com.mstftrgt.hotelreservationsystem.command.notification.send.NotificationContentGenerationStrategyFactory;
 import com.mstftrgt.hotelreservationsystem.command.notification.send.SendNotificationCommand;
 import com.mstftrgt.hotelreservationsystem.command.notification.send.SendNotificationCommandHandler;
-import com.mstftrgt.hotelreservationsystem.exception.ReservationInfoCouldNotBeRetrievedException;
 import com.mstftrgt.hotelreservationsystem.facade.ReservationFacade;
 import com.mstftrgt.hotelreservationsystem.contract.ReservationInfoContract;
 import com.mstftrgt.hotelreservationsystem.notification.dto.NotificationSend;
@@ -21,14 +20,11 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -59,7 +55,7 @@ public class SendNotificationTests {
         String generatedContent = "Test notification content";
 
         try (MockedStatic<NotificationContentGenerationStrategyFactory> factoryMockedStatic = mockStatic(NotificationContentGenerationStrategyFactory.class)) {
-            when(reservationFacade.findReservationById(command.reservationId())).thenReturn(Optional.of(reservationInfo));
+            when(reservationFacade.findReservationById(command.reservationId())).thenReturn(reservationInfo);
             factoryMockedStatic.when(() -> NotificationContentGenerationStrategyFactory.getStrategy(any(NotificationType.class)))
                     .thenReturn(notificationContentGenerationStrategy);
             when(notificationContentGenerationStrategy.generateContent(reservationInfo, command.paymentAmount())).thenReturn(generatedContent);
@@ -86,18 +82,5 @@ public class SendNotificationTests {
             assertNotNull(savedNotification.getId());
             assertNotNull(savedNotification.getCreatedAt());
         }
-    }
-
-    @Test
-    void shouldThrowIfReservationInfoCouldNotBeRetrieved() {
-        SendNotificationCommand command = ApplicationTestDataFactory.getSendNotificationTestCommand();
-
-        when(reservationFacade.findReservationById(command.reservationId())).thenReturn(Optional.empty());
-
-        assertThrows(ReservationInfoCouldNotBeRetrievedException.class, () -> handler.handle(command));
-
-        verify(notificationContentGenerationStrategy, never()).generateContent(any(), any());
-        verify(notificationSenderPort, never()).sendNotification(any());
-        verify(notificationRepository, never()).save(any());
     }
 }

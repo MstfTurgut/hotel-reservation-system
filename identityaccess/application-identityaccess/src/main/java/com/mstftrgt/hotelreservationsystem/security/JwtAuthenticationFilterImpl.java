@@ -1,6 +1,6 @@
 package com.mstftrgt.hotelreservationsystem.security;
 
-import com.mstftrgt.hotelreservationsystem.JwtAuthenticationFilter;
+import com.mstftrgt.hotelreservationsystem.AbstractJwtAuthenticationFilter;
 import com.mstftrgt.hotelreservationsystem.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -18,7 +18,7 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-public class JwtAuthenticationFilterImpl extends JwtAuthenticationFilter {
+public class JwtAuthenticationFilterImpl extends AbstractJwtAuthenticationFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;

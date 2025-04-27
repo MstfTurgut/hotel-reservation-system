@@ -7,7 +7,6 @@ import java.time.LocalDate;
 @Builder
 public record ReservationInfoContract(
         String customerFullName,
-
         String customerPhoneNumber,
 
         String customerEmailAddress,

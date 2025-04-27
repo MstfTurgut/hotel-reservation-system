@@ -1,6 +1,6 @@
 package com.mstftrgt.hotelreservationsystem.query.room.findallforroomtype;
 
-import com.mstftrgt.hotelreservationsystem.cqrs.QueryHandler;
+import com.mstftrgt.hotelreservationsystem.generic.application.QueryHandler;
 import com.mstftrgt.hotelreservationsystem.readmodel.RoomReadModel;
 import com.mstftrgt.hotelreservationsystem.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;

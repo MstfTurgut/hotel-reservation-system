@@ -5,6 +5,7 @@ import com.mstftrgt.hotelreservationsystem.persistence.entity.RoomEntity;
 import com.mstftrgt.hotelreservationsystem.persistence.repository.RoomJpaRepository;
 import com.mstftrgt.hotelreservationsystem.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,22 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RoomDataAdapter implements RoomRepository {
 
+    private final ApplicationEventPublisher publisher;
     private final RoomJpaRepository roomJpaRepository;
+
+    @Override
+    public void save(Room room) {
+        roomJpaRepository.save(RoomEntity.from(room));
+
+        room.publishAllEventsAndClear(publisher);
+    }
+
+    @Override
+    public void remove(Room room) {
+        roomJpaRepository.deleteById(room.getId());
+
+        room.publishAllEventsAndClear(publisher);
+    }
 
     @Override
     public Optional<Room> findById(UUID roomId) {
@@ -24,21 +40,11 @@ public class RoomDataAdapter implements RoomRepository {
     }
 
     @Override
-    public void save(Room room) {
-        roomJpaRepository.save(RoomEntity.from(room));
-    }
-
-    @Override
     public List<Room> getAllRoomsOfRoomType(UUID roomTypeId) {
         return roomJpaRepository.findAllByRoomTypeId(roomTypeId)
                 .stream()
                 .map(RoomEntity::toModel)
                 .toList();
-    }
-
-    @Override
-    public void remove(Room room) {
-        roomJpaRepository.delete(RoomEntity.from(room));
     }
 
     @Override

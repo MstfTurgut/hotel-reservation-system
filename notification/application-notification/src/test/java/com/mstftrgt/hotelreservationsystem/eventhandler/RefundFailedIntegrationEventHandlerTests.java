@@ -2,8 +2,8 @@ package com.mstftrgt.hotelreservationsystem.eventhandler;
 
 import com.mstftrgt.hotelreservationsystem.ApplicationTestDataFactory;
 import com.mstftrgt.hotelreservationsystem.command.notification.send.SendNotificationCommand;
-import com.mstftrgt.hotelreservationsystem.cqrs.CommandBus;
 import com.mstftrgt.hotelreservationsystem.event.RefundFailedIntegrationEvent;
+import com.mstftrgt.hotelreservationsystem.generic.application.CommandBus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

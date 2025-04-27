@@ -1,6 +1,8 @@
 package com.mstftrgt.hotelreservationsystem.queryhandler;
 
 import com.mstftrgt.hotelreservationsystem.ApplicationTestDataFactory;
+import com.mstftrgt.hotelreservationsystem.IdentityManagementFacade;
+import com.mstftrgt.hotelreservationsystem.UserContract;
 import com.mstftrgt.hotelreservationsystem.query.reservation.findforuser.FindReservationsOfUserQuery;
 import com.mstftrgt.hotelreservationsystem.query.reservation.findforuser.FindReservationsOfUserQueryHandler;
 import com.mstftrgt.hotelreservationsystem.readmodel.ReservationReadModel;
@@ -15,8 +17,10 @@ import org.mockito.Mock;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,6 +28,9 @@ class FindReservationsOfUserTests {
 
     @Mock
     private ReservationRepository reservationRepository;
+
+    @Mock
+    private IdentityManagementFacade identityManagementFacade;
 
     @InjectMocks
     private FindReservationsOfUserQueryHandler handler;
@@ -38,7 +45,9 @@ class FindReservationsOfUserTests {
                 .map(ReservationReadModel::from)
                 .toList();
 
-        when(reservationRepository.findAllByUserId(query.userId()))
+        when(identityManagementFacade.getCurrentUser())
+                .thenReturn(new UserContract(UUID.randomUUID()));
+        when(reservationRepository.findAllByUserId(any(UUID.class)))
                 .thenReturn(testReservationList);
 
         List<ReservationReadModel> result = handler.handle(query);
@@ -50,7 +59,9 @@ class FindReservationsOfUserTests {
     void shouldReturnEmptyListWhenNoReservationsExist() {
         FindReservationsOfUserQuery query = ApplicationTestDataFactory.getFindReservationsOfUserTestQuery();
 
-        when(reservationRepository.findAllByUserId(query.userId()))
+        when(identityManagementFacade.getCurrentUser())
+                .thenReturn(new UserContract(UUID.randomUUID()));
+        when(reservationRepository.findAllByUserId(any(UUID.class)))
                 .thenReturn(Collections.emptyList());
 
         List<ReservationReadModel> result = handler.handle(query);

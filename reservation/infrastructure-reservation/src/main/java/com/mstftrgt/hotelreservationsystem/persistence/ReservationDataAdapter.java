@@ -5,6 +5,7 @@ import com.mstftrgt.hotelreservationsystem.persistence.repository.ReservationJpa
 import com.mstftrgt.hotelreservationsystem.reservation.model.Reservation;
 import com.mstftrgt.hotelreservationsystem.reservation.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,22 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ReservationDataAdapter implements ReservationRepository {
 
+    private final ApplicationEventPublisher publisher;
     private final ReservationJpaRepository reservationJpaRepository;
+
+    @Override
+    public void save(Reservation reservation) {
+        reservationJpaRepository.save(ReservationEntity.from(reservation));
+
+        reservation.publishAllEventsAndClear(publisher);
+    }
+
+    @Override
+    public void delete(Reservation reservation) {
+        reservationJpaRepository.deleteById(reservation.getId());
+
+        reservation.publishAllEventsAndClear(publisher);
+    }
 
     @Override
     public Optional<Reservation> findById(UUID reservationId) {
@@ -30,17 +46,6 @@ public class ReservationDataAdapter implements ReservationRepository {
                 .map(ReservationEntity::toModel)
                 .toList();
     }
-
-    @Override
-    public void save(Reservation reservation) {
-        reservationJpaRepository.save(ReservationEntity.from(reservation));
-    }
-
-    @Override
-    public void delete(Reservation reservation) {
-        reservationJpaRepository.delete(ReservationEntity.from(reservation));
-    }
-
 
     @Override
     public List<Reservation> findAllByCustomerFullNameAndPhoneNumber(String fullName, String phoneNumber) {

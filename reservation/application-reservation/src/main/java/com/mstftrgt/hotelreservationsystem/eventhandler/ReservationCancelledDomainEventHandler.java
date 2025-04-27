@@ -1,26 +1,29 @@
 package com.mstftrgt.hotelreservationsystem.eventhandler;
 
-import com.mstftrgt.hotelreservationsystem.DomainEventHandler;
-import com.mstftrgt.hotelreservationsystem.IntegrationEventPublisher;
 import com.mstftrgt.hotelreservationsystem.event.ReservationCancelledIntegrationEvent;
 import com.mstftrgt.hotelreservationsystem.reservation.event.ReservationCancelledDomainEvent;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
-public class ReservationCancelledDomainEventHandler extends DomainEventHandler<ReservationCancelledDomainEvent> {
+public class ReservationCancelledDomainEventHandler {
 
-    private final IntegrationEventPublisher integrationEventPublisher;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
-    @Override
+    @EventListener
     public void handleEvent(ReservationCancelledDomainEvent event) {
+        log.info("Handling domain event: {}", event);
 
         ReservationCancelledIntegrationEvent reservationCancelledIntegrationEvent = ReservationCancelledIntegrationEvent
                 .builder()
                 .reservationId(event.reservationId())
                 .build();
 
-        integrationEventPublisher.publish(reservationCancelledIntegrationEvent);
+        applicationEventPublisher.publishEvent(reservationCancelledIntegrationEvent);
     }
 }

@@ -1,10 +1,10 @@
 package com.mstftrgt.hotelreservationsystem.command.notification.send;
 
 
-import com.mstftrgt.hotelreservationsystem.cqrs.CommandHandler;
-import com.mstftrgt.hotelreservationsystem.exception.ReservationInfoCouldNotBeRetrievedException;
 import com.mstftrgt.hotelreservationsystem.facade.ReservationFacade;
 import com.mstftrgt.hotelreservationsystem.contract.ReservationInfoContract;
+import com.mstftrgt.hotelreservationsystem.generic.application.CommandHandler;
+import com.mstftrgt.hotelreservationsystem.generic.application.VoidCommandHandler;
 import com.mstftrgt.hotelreservationsystem.notification.dto.NotificationSend;
 import com.mstftrgt.hotelreservationsystem.notification.model.Notification;
 import com.mstftrgt.hotelreservationsystem.notification.port.NotificationSenderPort;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class SendNotificationCommandHandler implements CommandHandler<SendNotificationCommand> {
+public class SendNotificationCommandHandler implements VoidCommandHandler<SendNotificationCommand> {
 
     private final ReservationFacade reservationFacade;
     private final NotificationRepository notificationRepository;
@@ -25,8 +25,7 @@ public class SendNotificationCommandHandler implements CommandHandler<SendNotifi
 
     @Override
     public void handle(SendNotificationCommand command) {
-        ReservationInfoContract reservationInfo = reservationFacade.findReservationById(command.reservationId())
-                .orElseThrow(() -> new ReservationInfoCouldNotBeRetrievedException(command.reservationId()));
+        ReservationInfoContract reservationInfo = reservationFacade.findReservationById(command.reservationId());
 
         NotificationContentGenerationStrategy strategy =
                 NotificationContentGenerationStrategyFactory.getStrategy(command.notificationType());

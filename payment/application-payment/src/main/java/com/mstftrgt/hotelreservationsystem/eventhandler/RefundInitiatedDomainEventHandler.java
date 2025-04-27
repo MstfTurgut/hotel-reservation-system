@@ -1,20 +1,23 @@
 package com.mstftrgt.hotelreservationsystem.eventhandler;
 
-import com.mstftrgt.hotelreservationsystem.DomainEventHandler;
-import com.mstftrgt.hotelreservationsystem.IntegrationEventPublisher;
 import com.mstftrgt.hotelreservationsystem.event.RefundInitiatedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.event.RefundInitiatedIntegrationEvent;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
-public class RefundInitiatedDomainEventHandler extends DomainEventHandler<RefundInitiatedDomainEvent> {
+public class RefundInitiatedDomainEventHandler {
 
-    private final IntegrationEventPublisher integrationEventPublisher;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
-    @Override
+    @EventListener
     public void handleEvent(RefundInitiatedDomainEvent event) {
+        log.info("Handling domain event: {}", event);
 
         RefundInitiatedIntegrationEvent refundInitiatedIntegrationEvent = RefundInitiatedIntegrationEvent
                 .builder()
@@ -22,6 +25,6 @@ public class RefundInitiatedDomainEventHandler extends DomainEventHandler<Refund
                 .paymentAmount(event.paymentAmount())
                 .build();
 
-        integrationEventPublisher.publish(refundInitiatedIntegrationEvent);
+        applicationEventPublisher.publishEvent(refundInitiatedIntegrationEvent);
     }
 }

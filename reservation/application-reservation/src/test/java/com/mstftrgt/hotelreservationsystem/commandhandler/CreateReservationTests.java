@@ -1,6 +1,8 @@
 package com.mstftrgt.hotelreservationsystem.commandhandler;
 
 import com.mstftrgt.hotelreservationsystem.ApplicationTestDataFactory;
+import com.mstftrgt.hotelreservationsystem.IdentityManagementFacade;
+import com.mstftrgt.hotelreservationsystem.UserContract;
 import com.mstftrgt.hotelreservationsystem.command.reservation.create.CreateReservationCommand;
 import com.mstftrgt.hotelreservationsystem.command.reservation.create.CreateReservationCommandHandler;
 import com.mstftrgt.hotelreservationsystem.facade.RoomManagementFacade;
@@ -42,6 +44,9 @@ class CreateReservationTests {
     private ReservationRepository reservationRepository;
 
     @Mock
+    private IdentityManagementFacade identityManagementFacade;
+
+    @Mock
     private ReservationAvailabilityService reservationAvailabilityService;
 
     @Mock
@@ -72,6 +77,9 @@ class CreateReservationTests {
 
             when(reservationAvailabilityService.findAvailableRoomToReserveForStayDate(List.of(testRoomId), stayDate))
                     .thenReturn(testRoomId);
+
+            when(identityManagementFacade.getCurrentUser())
+                    .thenReturn(new UserContract(UUID.randomUUID()));
 
             when(confirmationCodeGenerationService.generateConfirmationCode())
                     .thenReturn(confirmationCode);

@@ -1,7 +1,8 @@
 package com.mstftrgt.hotelreservationsystem.command.payment.processinhotel;
 
-import com.mstftrgt.hotelreservationsystem.cqrs.CommandHandler;
-import com.mstftrgt.hotelreservationsystem.exception.PaymentNotFoundException;
+import com.mstftrgt.hotelreservationsystem.dto.PaymentCreate;
+import com.mstftrgt.hotelreservationsystem.generic.application.CommandHandler;
+import com.mstftrgt.hotelreservationsystem.generic.application.VoidCommandHandler;
 import com.mstftrgt.hotelreservationsystem.model.Payment;
 import com.mstftrgt.hotelreservationsystem.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,17 +10,23 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ProcessInHotelPaymentCommandHandler implements CommandHandler<ProcessInHotelPaymentCommand> {
+public class ProcessInHotelPaymentCommandHandler implements VoidCommandHandler<ProcessInHotelPaymentCommand> {
 
     private final PaymentRepository paymentRepository;
 
     @Override
     public void handle(ProcessInHotelPaymentCommand command) {
-        Payment payment = paymentRepository.findById(command.paymentId())
-                .orElseThrow(() -> new PaymentNotFoundException(command.paymentId()));
+        Payment payment = Payment.create(buildPaymentCreate(command));
 
         payment.markAsPaid();
 
         paymentRepository.save(payment);
+    }
+
+    private static PaymentCreate buildPaymentCreate(ProcessInHotelPaymentCommand command) {
+        return PaymentCreate.builder()
+                .reservationId(command.reservationId())
+                .amount(command.paymentAmount())
+                .build();
     }
 }

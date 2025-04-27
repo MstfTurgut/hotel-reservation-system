@@ -28,14 +28,6 @@ public class PaymentTestDataFactory {
                 .build();
     }
 
-    public static CardDetails getTestCardDetails() {
-        return CardDetails.builder()
-                .cardNumber("0000000000000000")
-                .cardHolderName("testHolderName")
-                .expiryDate("07/26")
-                .cvv("912")
-                .build();
-    }
 
     public static Payment getTestPaymentWith(PaymentStatus paymentStatus) {
         return getTestPayment().withStatus(paymentStatus);

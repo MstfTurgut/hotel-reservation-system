@@ -1,7 +1,6 @@
 package com.mstftrgt.hotelreservationsystem;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,20 +12,18 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Service;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter jwtAuthFilter;
-    private final IntegrationUserDetailsService userDetailsService;
+    private final AbstractJwtAuthenticationFilter jwtAuthFilter;
+    private final AbstractUserDetailsService userDetailsService;
 
 
     @Bean
@@ -35,11 +32,12 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/payments/reservation/{reservationId}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/reservations/create-online").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.POST, "/api/reservations/create-in-hotel").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/reservations/{reservationId}/cancel").hasAnyRole("ADMIN", "USER")
                         .requestMatchers(HttpMethod.PUT, "/api/reservations/{reservationId}/check-in").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/reservations/{reservationId}/check-out").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/reservations").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.GET, "/api/payments/reservation/{reservationId}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/reservations/availability").hasAnyRole("ADMIN", "USER")
                         .requestMatchers(HttpMethod.GET, "/api/reservations/user").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/api/reservations/customer").hasRole("ADMIN")

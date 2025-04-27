@@ -1,6 +1,6 @@
 package com.mstftrgt.hotelreservationsystem.presentation;
 
-import com.mstftrgt.hotelreservationsystem.cqrs.QueryBus;
+import com.mstftrgt.hotelreservationsystem.generic.application.QueryBus;
 import com.mstftrgt.hotelreservationsystem.query.payment.findforreservation.FindPaymentForReservationQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

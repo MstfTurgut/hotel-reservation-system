@@ -1,6 +1,6 @@
 package com.mstftrgt.hotelreservationsystem.notification.model;
 
-import com.mstftrgt.hotelreservationsystem.AggregateRoot;
+import com.mstftrgt.hotelreservationsystem.generic.domain.AggregateRoot;
 import com.mstftrgt.hotelreservationsystem.notification.dto.NotificationCreate;
 import lombok.Builder;
 import lombok.Data;

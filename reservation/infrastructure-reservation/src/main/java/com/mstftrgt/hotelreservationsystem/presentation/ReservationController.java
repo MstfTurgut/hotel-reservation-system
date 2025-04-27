@@ -2,11 +2,12 @@ package com.mstftrgt.hotelreservationsystem.presentation;
 
 import com.mstftrgt.hotelreservationsystem.command.reservation.checkout.CheckOutReservationCommand;
 import com.mstftrgt.hotelreservationsystem.UserContract;
-import com.mstftrgt.hotelreservationsystem.cqrs.CommandBus;
-import com.mstftrgt.hotelreservationsystem.cqrs.QueryBus;
+import com.mstftrgt.hotelreservationsystem.generic.application.CommandBus;
+import com.mstftrgt.hotelreservationsystem.generic.application.QueryBus;
 import com.mstftrgt.hotelreservationsystem.presentation.dto.CancelReservationRequest;
 import com.mstftrgt.hotelreservationsystem.presentation.dto.CheckInReservationRequest;
-import com.mstftrgt.hotelreservationsystem.presentation.dto.CreateReservationRequest;
+import com.mstftrgt.hotelreservationsystem.presentation.dto.CreateInHotelReservationRequest;
+import com.mstftrgt.hotelreservationsystem.presentation.dto.CreateOnlineReservationRequest;
 import com.mstftrgt.hotelreservationsystem.presentation.dto.FindReservationAvailabilitiesForSuitableRoomTypesRequest;
 import com.mstftrgt.hotelreservationsystem.presentation.dto.FindReservationsOfCustomerRequest;
 import com.mstftrgt.hotelreservationsystem.query.reservation.findforuser.FindReservationsOfUserQuery;
@@ -36,6 +37,18 @@ public class ReservationController {
     private final CommandBus commandBus;
     private final QueryBus queryBus;
 
+    @PostMapping("/create-online")
+    @ResponseStatus(HttpStatus.CREATED)
+    public UUID createOnlineReservation(@Valid @RequestBody CreateOnlineReservationRequest request) {
+        return commandBus.dispatchAndReturn(request.toCommand());
+    }
+
+    @PostMapping("/create-in-hotel")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createInHotelReservation(@Valid @RequestBody CreateInHotelReservationRequest request) {
+        commandBus.dispatch(request.toCommand());
+    }
+
     @PutMapping("{reservationId}/cancel")
     @ResponseStatus(HttpStatus.OK)
     public void cancelReservation(@PathVariable UUID reservationId, @Valid @RequestBody CancelReservationRequest request) {
@@ -54,13 +67,6 @@ public class ReservationController {
         commandBus.dispatch(new CheckOutReservationCommand(reservationId));
     }
 
-    @PostMapping()
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createReservation(@Valid @RequestBody CreateReservationRequest request) {
-        UserContract currentUser = (UserContract) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        commandBus.dispatch(request.toCommand(currentUser.id()));
-    }
-
     @GetMapping("availability")
     @ResponseStatus(HttpStatus.OK)
     public List<ReservationAvailabilityForRoomTypeReadModel> findReservationAvailabilitiesForSuitableRoomTypes(@Valid @RequestBody FindReservationAvailabilitiesForSuitableRoomTypesRequest request) {
@@ -70,8 +76,7 @@ public class ReservationController {
     @GetMapping("user")
     @ResponseStatus(HttpStatus.OK)
     public List<ReservationReadModel> findReservationsOfUser() {
-        UserContract currentUser = (UserContract) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return queryBus.dispatch(new FindReservationsOfUserQuery(currentUser.id()));
+        return queryBus.dispatch(new FindReservationsOfUserQuery());
     }
 
     @GetMapping("customer")

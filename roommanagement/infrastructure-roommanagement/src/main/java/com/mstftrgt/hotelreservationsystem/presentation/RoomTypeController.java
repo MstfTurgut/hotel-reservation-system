@@ -1,8 +1,8 @@
 package com.mstftrgt.hotelreservationsystem.presentation;
 
 import com.mstftrgt.hotelreservationsystem.command.roomtype.remove.RemoveRoomTypeCommand;
-import com.mstftrgt.hotelreservationsystem.cqrs.CommandBus;
-import com.mstftrgt.hotelreservationsystem.cqrs.QueryBus;
+import com.mstftrgt.hotelreservationsystem.generic.application.CommandBus;
+import com.mstftrgt.hotelreservationsystem.generic.application.QueryBus;
 import com.mstftrgt.hotelreservationsystem.presentation.dto.AddNewRoomTypeRequest;
 import com.mstftrgt.hotelreservationsystem.presentation.dto.ModifyRoomTypeRequest;
 import com.mstftrgt.hotelreservationsystem.query.room.findallforroomtype.FindAllRoomsOfRoomTypeQuery;
@@ -35,8 +35,8 @@ public class RoomTypeController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public void addNewRoomType(@Valid @RequestBody AddNewRoomTypeRequest request) {
-        commandBus.dispatch(request.toCommand());
+    public UUID addNewRoomType(@Valid @RequestBody AddNewRoomTypeRequest request) {
+        return commandBus.dispatchAndReturn(request.toCommand());
     }
 
     @PutMapping("/{roomTypeId}")

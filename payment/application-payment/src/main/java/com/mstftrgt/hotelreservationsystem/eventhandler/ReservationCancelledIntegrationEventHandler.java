@@ -1,20 +1,24 @@
 package com.mstftrgt.hotelreservationsystem.eventhandler;
 
-import com.mstftrgt.hotelreservationsystem.IntegrationEventHandler;
 import com.mstftrgt.hotelreservationsystem.command.payment.refund.RefundPaymentCommand;
-import com.mstftrgt.hotelreservationsystem.cqrs.CommandBus;
 import com.mstftrgt.hotelreservationsystem.event.ReservationCancelledIntegrationEvent;
+import com.mstftrgt.hotelreservationsystem.generic.application.CommandBus;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
-public class ReservationCancelledIntegrationEventHandler extends IntegrationEventHandler<ReservationCancelledIntegrationEvent> {
+public class ReservationCancelledIntegrationEventHandler {
 
     private final CommandBus commandBus;
 
-    @Override
+    @EventListener
     public void handle(ReservationCancelledIntegrationEvent event) {
+        log.info("Handling integration event {}" , event);
+
         RefundPaymentCommand refundPaymentCommand = RefundPaymentCommand
                 .builder()
                 .reservationId(event.reservationId())

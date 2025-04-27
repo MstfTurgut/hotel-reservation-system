@@ -1,7 +1,10 @@
 package com.mstftrgt.hotelreservationsystem.command.reservation.create;
 
-import com.mstftrgt.hotelreservationsystem.cqrs.CommandHandler;
+import com.mstftrgt.hotelreservationsystem.IdentityManagementFacade;
+import com.mstftrgt.hotelreservationsystem.UserContract;
 import com.mstftrgt.hotelreservationsystem.facade.RoomManagementFacade;
+import com.mstftrgt.hotelreservationsystem.generic.application.CommandHandler;
+import com.mstftrgt.hotelreservationsystem.generic.application.VoidCommandHandler;
 import com.mstftrgt.hotelreservationsystem.reservation.model.Reservation;
 import com.mstftrgt.hotelreservationsystem.reservation.dto.ReservationCreate;
 import com.mstftrgt.hotelreservationsystem.reservation.model.StayDate;
@@ -18,17 +21,18 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class CreateReservationCommandHandler implements CommandHandler<CreateReservationCommand> {
+public class CreateReservationCommandHandler implements CommandHandler<CreateReservationCommand, UUID> {
 
     private final RoomManagementFacade roomManagementFacade;
     private final ReservationRepository reservationRepository;
+    private final IdentityManagementFacade identityManagementFacade;
     private final ReservationAvailabilityService reservationAvailabilityService;
     private final ReservationCodeGenerationService reservationCodeGenerationService;
     private final ConfirmationCodeGenerationService confirmationCodeGenerationService;
 
 
     @Override
-    public void handle(CreateReservationCommand command) {
+    public UUID handle(CreateReservationCommand command) {
         StayDate requestedStay = Reservation.createValidStayDate(command.checkInDate(), command.checkOutDate());
 
         List<UUID> roomIdsForRoomType = roomManagementFacade.findAllRoomIdsForRoomType(command.roomTypeId());
@@ -36,20 +40,25 @@ public class CreateReservationCommandHandler implements CommandHandler<CreateRes
         UUID roomIdToReserve = reservationAvailabilityService
                 .findAvailableRoomToReserveForStayDate(roomIdsForRoomType, requestedStay);
 
+        UserContract currentUser = identityManagementFacade.getCurrentUser();
+
         ReservationCreate reservationCreate = buildReservationCreate(
                         command,
                         roomIdToReserve,
+                        currentUser.id(),
                         confirmationCodeGenerationService.generateConfirmationCode(),
                         reservationCodeGenerationService.generateReservationCode());
 
         Reservation reservation = Reservation.create(reservationCreate);
 
         reservationRepository.save(reservation);
+
+        return reservation.getId();
     }
 
-    private ReservationCreate buildReservationCreate(CreateReservationCommand command, UUID roomId, String confirmationCode, String reservationCode) {
+    private ReservationCreate buildReservationCreate(CreateReservationCommand command, UUID userId, UUID roomId, String confirmationCode, String reservationCode) {
         return ReservationCreate.builder()
-                .userId(command.userId())
+                .userId(userId)
                 .roomId(roomId)
                 .adultGuestCount(command.adultGuestCount())
                 .childGuestCount(command.childGuestCount())

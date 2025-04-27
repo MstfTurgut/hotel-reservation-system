@@ -1,6 +1,6 @@
 package com.mstftrgt.hotelreservationsystem.reservation.model;
 
-import com.mstftrgt.hotelreservationsystem.AggregateRoot;
+import com.mstftrgt.hotelreservationsystem.generic.domain.AggregateRoot;
 import com.mstftrgt.hotelreservationsystem.reservation.event.ReservationCancelledDomainEvent;
 import com.mstftrgt.hotelreservationsystem.reservation.dto.ReservationCreate;
 import com.mstftrgt.hotelreservationsystem.reservation.event.ReservationCreatedDomainEvent;

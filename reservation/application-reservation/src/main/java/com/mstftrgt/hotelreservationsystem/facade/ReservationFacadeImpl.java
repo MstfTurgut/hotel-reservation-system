@@ -2,6 +2,7 @@ package com.mstftrgt.hotelreservationsystem.facade;
 
 import com.mstftrgt.hotelreservationsystem.contract.ReservationInfoContract;
 import com.mstftrgt.hotelreservationsystem.contract.RoomTypeContract;
+import com.mstftrgt.hotelreservationsystem.reservation.exception.ReservationNotFoundException;
 import com.mstftrgt.hotelreservationsystem.reservation.model.Reservation;
 import com.mstftrgt.hotelreservationsystem.reservation.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,16 +19,13 @@ public class ReservationFacadeImpl implements ReservationFacade {
     private final RoomManagementFacade roomManagementFacade;
 
     @Override
-    public Optional<ReservationInfoContract> findReservationById(UUID reservationId) {
-        Optional<Reservation> optionalReservation = reservationRepository.findById(reservationId);
-
-        if(optionalReservation.isEmpty()) return Optional.empty();
-
-        Reservation reservation = optionalReservation.get();
+    public ReservationInfoContract findReservationById(UUID reservationId) {
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new ReservationNotFoundException(reservationId));
 
         RoomTypeContract roomType = roomManagementFacade.findRoomTypeByRoomId(reservation.getRoomId());
 
-        return Optional.of(buildReservationInfoContract(reservation, roomType));
+        return buildReservationInfoContract(reservation, roomType);
     }
 
     private ReservationInfoContract buildReservationInfoContract(Reservation reservation, RoomTypeContract roomType) {

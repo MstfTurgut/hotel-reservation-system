@@ -2,12 +2,15 @@ package com.mstftrgt.hotelreservationsystem.presentation;
 
 
 import com.mstftrgt.hotelreservationsystem.command.room.remove.RemoveRoomCommand;
-import com.mstftrgt.hotelreservationsystem.cqrs.CommandBus;
+import com.mstftrgt.hotelreservationsystem.generic.application.CommandBus;
+import com.mstftrgt.hotelreservationsystem.generic.application.QueryBus;
 import com.mstftrgt.hotelreservationsystem.presentation.dto.AddNewRoomRequest;
+import com.mstftrgt.hotelreservationsystem.query.room.findallforroomtype.FindAllRoomsOfRoomTypeQuery;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,11 +26,12 @@ import java.util.UUID;
 public class RoomController {
 
     private final CommandBus commandBus;
+    private final QueryBus queryBus;
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public void addNewRoom(@Valid @RequestBody AddNewRoomRequest request) {
-        commandBus.dispatch(request.toCommand());
+    public UUID addNewRoom(@Valid @RequestBody AddNewRoomRequest request) {
+        return commandBus.dispatchAndReturn(request.toCommand());
     }
 
     @DeleteMapping("/{roomId}")

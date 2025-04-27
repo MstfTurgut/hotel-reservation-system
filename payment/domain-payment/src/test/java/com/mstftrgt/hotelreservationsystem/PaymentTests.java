@@ -4,7 +4,6 @@ package com.mstftrgt.hotelreservationsystem;
 import com.mstftrgt.hotelreservationsystem.dto.PaymentCreate;
 import com.mstftrgt.hotelreservationsystem.event.PaymentCompletedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.event.PaymentFailedDomainEvent;
-import com.mstftrgt.hotelreservationsystem.event.PaymentInitiatedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.event.RefundFailedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.event.RefundInitiatedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.exception.PaymentAlreadyRefundedException;
@@ -32,22 +31,6 @@ public class PaymentTests {
         assertNotNull(payment.getCreateDate());
     }
 
-    @Test
-    void initiate_ShouldSetStatusToPendingAndRegisterEvent() {
-        Payment payment = PaymentTestDataFactory.getTestPayment();
-        CardDetails cardDetails = PaymentTestDataFactory.getTestCardDetails();
-
-        payment.initiate(cardDetails);
-
-        assertEquals(PaymentStatus.PENDING, payment.getStatus());
-
-        assertEquals(1, payment.getDomainEvents().size());
-
-        PaymentInitiatedDomainEvent event = (PaymentInitiatedDomainEvent) payment.getDomainEvents().get(0);
-
-        assertEquals(payment.getId(), event.paymentId());
-        assertEquals(cardDetails, event.cardDetails());
-    }
 
     @Test
     void markAsRefundInitiated_ShouldSetStatusAndRegisterEvent() {
