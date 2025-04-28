@@ -25,14 +25,16 @@ public class RoomTypeDataAdapter implements RoomTypeRepository {
     public void save(RoomType roomType) {
         roomTypeJpaRepository.save(RoomTypeEntity.from(roomType));
 
-        roomType.publishAllEventsAndClear(publisher);
+        roomType.getDomainEvents().forEach(publisher::publishEvent);
+        roomType.clearEvents();
     }
 
     @Override
     public void remove(RoomType roomType) {
         roomTypeJpaRepository.deleteById(roomType.getId());
 
-        roomType.publishAllEventsAndClear(publisher);
+        roomType.getDomainEvents().forEach(publisher::publishEvent);
+        roomType.clearEvents();
     }
 
     @Override

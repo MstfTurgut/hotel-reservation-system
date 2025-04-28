@@ -22,7 +22,8 @@ public class PaymentDataAdapter implements PaymentRepository {
     public void save(Payment payment) {
         paymentJpaRepository.save(PaymentEntity.from(payment));
 
-        payment.publishAllEventsAndClear(publisher);
+        payment.getDomainEvents().forEach(publisher::publishEvent);
+        payment.clearEvents();
     }
 
     @Override

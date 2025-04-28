@@ -4,6 +4,7 @@ import com.mstftrgt.hotelreservationsystem.generic.domain.AggregateRoot;
 import com.mstftrgt.hotelreservationsystem.reservation.event.ReservationCancelledDomainEvent;
 import com.mstftrgt.hotelreservationsystem.reservation.dto.ReservationCreate;
 import com.mstftrgt.hotelreservationsystem.reservation.event.ReservationCreatedDomainEvent;
+import com.mstftrgt.hotelreservationsystem.reservation.exception.CheckInDateDoesNotMatchException;
 import com.mstftrgt.hotelreservationsystem.reservation.exception.ConfirmationCodeIsNotValidException;
 import com.mstftrgt.hotelreservationsystem.reservation.exception.LastMinuteCancellationException;
 import com.mstftrgt.hotelreservationsystem.reservation.exception.ReservationAlreadyCancelledException;
@@ -96,6 +97,9 @@ public class Reservation extends AggregateRoot {
     public void checkIn() {
         if(status == ReservationStatus.CHECKED_IN) {
             throw new ReservationAlreadyCheckedInException();
+        }
+        if(stayDate.isCheckInDateNotToday()) {
+            throw new CheckInDateDoesNotMatchException();
         }
         status = ReservationStatus.CHECKED_IN;
     }

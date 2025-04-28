@@ -27,6 +27,9 @@ public class StayDate {
         return checkInDate.isBefore(LocalDate.now());
     }
 
-    public boolean hasInvalidLength() { return checkOutDate.equals(checkInDate);
+    public boolean hasInvalidLength() { return checkOutDate.equals(checkInDate); }
+
+    public boolean isCheckInDateNotToday() {
+        return !checkInDate.isEqual(LocalDate.now());
     }
 }

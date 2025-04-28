@@ -13,8 +13,7 @@ public class AggregateRoot extends AbstractAggregateRoot<AggregateRoot> {
         return (List<Object>) this.domainEvents();
     }
 
-    public void publishAllEventsAndClear(ApplicationEventPublisher publisher) {
-        this.domainEvents().forEach(publisher::publishEvent);
+    public void clearEvents() {
         this.clearDomainEvents();
     }
 }

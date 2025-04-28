@@ -44,8 +44,8 @@ public class CreateReservationCommandHandler implements CommandHandler<CreateRes
 
         ReservationCreate reservationCreate = buildReservationCreate(
                         command,
-                        roomIdToReserve,
                         currentUser.id(),
+                        roomIdToReserve,
                         confirmationCodeGenerationService.generateConfirmationCode(),
                         reservationCodeGenerationService.generateReservationCode());
 

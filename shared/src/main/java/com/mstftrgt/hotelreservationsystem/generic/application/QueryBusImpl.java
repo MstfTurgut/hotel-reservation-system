@@ -32,7 +32,7 @@ public class QueryBusImpl implements QueryBus {
         if (handler == null) {
             throw new IllegalArgumentException("No handler found for query: " + query.getClass());
         }
-        log.info("Dispatching query: {}", query);
+        log.info("Handling query: {}", query);
         return handler.handle(query);
     }
 }

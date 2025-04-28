@@ -1,6 +1,7 @@
 package com.mstftrgt.hotelreservationsystem.presentation;
 
 import com.mstftrgt.hotelreservationsystem.generic.infrastructure.ErrorResponse;
+import com.mstftrgt.hotelreservationsystem.reservation.exception.CheckInDateDoesNotMatchException;
 import com.mstftrgt.hotelreservationsystem.reservation.exception.ConfirmationCodeIsNotValidException;
 import com.mstftrgt.hotelreservationsystem.reservation.exception.InvalidStayDateException;
 import com.mstftrgt.hotelreservationsystem.reservation.exception.LastMinuteCancellationException;
@@ -60,7 +61,7 @@ public class ReservationRestExceptionHandler {
         return new ErrorResponse(exception.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(ReservationNotAvailableException.class)
     protected ErrorResponse handle(ReservationNotAvailableException exception) {
         return new ErrorResponse(exception.getMessage());
@@ -69,6 +70,12 @@ public class ReservationRestExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ReservationNotFoundException.class)
     protected ErrorResponse handle(ReservationNotFoundException exception) {
+        return new ErrorResponse(exception.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(CheckInDateDoesNotMatchException.class)
+    protected ErrorResponse handle(CheckInDateDoesNotMatchException exception) {
         return new ErrorResponse(exception.getMessage());
     }
 }

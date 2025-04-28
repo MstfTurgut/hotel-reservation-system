@@ -182,5 +182,15 @@ public class ReservationTests {
         assertThrows(InvalidStayDateException.class, () ->
                 Reservation.createValidStayDate(checkInDate, checkOutDate));
     }
+
+    @Test
+    void checkInReservation_whenCheckInDateDoesNotMatch_shouldThrowException() {
+        Reservation reservation = ReservationTestDataFactory.getTestReservationWith(
+                new StayDate(
+                        LocalDate.now().plusDays(5),
+                        LocalDate.now().plusDays(10))
+        );
+        assertThrows(CheckInDateDoesNotMatchException.class, reservation::checkIn);
+    }
 }
 

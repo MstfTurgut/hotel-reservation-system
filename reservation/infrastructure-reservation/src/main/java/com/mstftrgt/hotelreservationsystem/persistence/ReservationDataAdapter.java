@@ -23,14 +23,16 @@ public class ReservationDataAdapter implements ReservationRepository {
     public void save(Reservation reservation) {
         reservationJpaRepository.save(ReservationEntity.from(reservation));
 
-        reservation.publishAllEventsAndClear(publisher);
+        reservation.getDomainEvents().forEach(publisher::publishEvent);
+        reservation.clearEvents();
     }
 
     @Override
     public void delete(Reservation reservation) {
         reservationJpaRepository.deleteById(reservation.getId());
 
-        reservation.publishAllEventsAndClear(publisher);
+        reservation.getDomainEvents().forEach(publisher::publishEvent);
+        reservation.clearEvents();
     }
 
     @Override

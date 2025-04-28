@@ -19,6 +19,6 @@ public class PaymentGatewayFakeAdapter implements PaymentGatewayPort {
 
     @Override
     public void initiateRefund(UUID transactionId) {
-        System.out.println("PaymentGatewayAdapter.initiateRefund() called with transactionId: " + transactionId);
+        log.info("PaymentGatewayAdapter.initiateRefund() called with transactionId: {}", transactionId);
     }
 }

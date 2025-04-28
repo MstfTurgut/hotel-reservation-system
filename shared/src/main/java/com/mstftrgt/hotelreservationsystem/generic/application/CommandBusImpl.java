@@ -1,6 +1,7 @@
 package com.mstftrgt.hotelreservationsystem.generic.application;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.ResolvableType;
 import org.springframework.stereotype.Component;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Component
 public class CommandBusImpl implements CommandBus {
     private final Map<Class<? extends Command>, CommandHandler<? extends Command, ?>> commandHandlers = new HashMap<>();
@@ -52,6 +54,7 @@ public class CommandBusImpl implements CommandBus {
             throw new IllegalArgumentException("No command handler registered for " + command.getClass().getName());
         }
 
+        log.info("Handling command {}" , command);
         handler.handle(command);
     }
 
@@ -64,6 +67,7 @@ public class CommandBusImpl implements CommandBus {
             throw new IllegalArgumentException("No command handler registered for " + command.getClass().getName());
         }
 
+        log.info("Handling command {}" , command);
         return handler.handle(command);
     }
 }

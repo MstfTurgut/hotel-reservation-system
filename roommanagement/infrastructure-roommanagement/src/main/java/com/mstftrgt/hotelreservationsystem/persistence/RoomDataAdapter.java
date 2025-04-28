@@ -23,14 +23,16 @@ public class RoomDataAdapter implements RoomRepository {
     public void save(Room room) {
         roomJpaRepository.save(RoomEntity.from(room));
 
-        room.publishAllEventsAndClear(publisher);
+        room.getDomainEvents().forEach(publisher::publishEvent);
+        room.clearEvents();
     }
 
     @Override
     public void remove(Room room) {
         roomJpaRepository.deleteById(room.getId());
 
-        room.publishAllEventsAndClear(publisher);
+        room.getDomainEvents().forEach(publisher::publishEvent);
+        room.clearEvents();
     }
 
     @Override
