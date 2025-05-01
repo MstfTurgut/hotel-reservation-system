@@ -16,6 +16,11 @@
     <dependencies>
         <dependency>
             <groupId>com.mstftrgt</groupId>
+            <artifactId>security</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mstftrgt</groupId>
             <artifactId>domain-payment</artifactId>
             <version>${project.version}</version>
         </dependency>

@@ -16,6 +16,11 @@
     <dependencies>
         <dependency>
             <groupId>com.mstftrgt</groupId>
+            <artifactId>security</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mstftrgt</groupId>
             <artifactId>domain-roommanagement</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -24,7 +29,6 @@
             <artifactId>application-roommanagement</artifactId>
             <version>${project.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

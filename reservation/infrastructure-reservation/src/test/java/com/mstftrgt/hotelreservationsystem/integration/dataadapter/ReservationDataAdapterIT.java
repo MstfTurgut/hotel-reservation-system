@@ -150,7 +150,7 @@ class ReservationDataAdapterIT {
         assertEquals("12345678", reservation.getReservationCode());
         assertEquals(2, reservation.getGuestSpecification().getAdultGuestCount());
         assertEquals(1, reservation.getGuestSpecification().getChildGuestCount());
-        assertEquals("CONFIRMED", reservation.getStatus().name()); // assuming status is an enum
+        assertEquals("CONFIRMED", reservation.getStatus().name());
         assertEquals(LocalDate.of(2030, 1, 1), reservation.getStayDate().getCheckInDate());
         assertEquals(LocalDate.of(2030, 1, 5), reservation.getStayDate().getCheckOutDate());
         assertEquals("John Doe", reservation.getCustomerDetails().getFullName());
