@@ -2,6 +2,7 @@ package com.mstftrgt.hotelreservationsystem.presentation;
 
 import com.mstftrgt.hotelreservationsystem.generic.application.QueryBus;
 import com.mstftrgt.hotelreservationsystem.query.payment.findforreservation.FindPaymentForReservationQuery;
+import com.mstftrgt.hotelreservationsystem.readmodel.PaymentReadModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,7 @@ public class PaymentController {
 
     @GetMapping("/reservation/{reservationId}")
     @ResponseStatus(HttpStatus.OK)
-    public void findPaymentForReservation(@PathVariable UUID reservationId) {
-        queryBus.dispatch(new FindPaymentForReservationQuery(reservationId));
+    public PaymentReadModel findPaymentForReservation(@PathVariable UUID reservationId) {
+        return queryBus.dispatchAndReturn(new FindPaymentForReservationQuery(reservationId));
     }
 }

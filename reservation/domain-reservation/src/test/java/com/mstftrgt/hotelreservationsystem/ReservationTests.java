@@ -108,7 +108,10 @@ public class ReservationTests {
 
     @Test
     void checkIn_whenValid_shouldChangeStatus() {
-        Reservation reservation = ReservationTestDataFactory.getTestReservationWith(ReservationStatus.CONFIRMED);
+        Reservation reservation = ReservationTestDataFactory.getTestReservationWith(new StayDate(
+                LocalDate.now(),
+                LocalDate.now().plusDays(5)
+        ));
 
         reservation.checkIn();
 

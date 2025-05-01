@@ -40,7 +40,6 @@ public class RemoveRoomTypeTests {
 
         handler.handle(command);
 
-        verify(roomType).remove();
         verify(roomTypeRepository).remove(roomType);
     }
 
@@ -53,7 +52,6 @@ public class RemoveRoomTypeTests {
 
         assertThrows(RoomTypeNotFoundException.class, () -> handler.handle(command));
 
-        verify(roomType, never()).remove();
         verify(roomTypeRepository, never()).remove(any());
     }
 

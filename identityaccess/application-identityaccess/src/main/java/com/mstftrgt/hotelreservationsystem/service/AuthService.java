@@ -54,11 +54,9 @@ public class AuthService {
             );
 
             User user = userRepository.findByEmail(request.getEmail())
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                    .orElseThrow();
 
             return createAuthResponse(user);
-        } catch (UsernameNotFoundException e) {
-            throw new AuthenticationException("User not found");
         } catch (BadCredentialsException e) {
             throw new AuthenticationException("Invalid credentials");
         }

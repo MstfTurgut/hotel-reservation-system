@@ -42,7 +42,7 @@ public class ProcessInHotelPaymentCommandHandlerTests {
             handler.handle(command);
         }
 
-        verify(payment).markAsPaid();
+        verify(payment).markAsCompleted();
         verify(paymentRepository).save(payment);
     }
 }

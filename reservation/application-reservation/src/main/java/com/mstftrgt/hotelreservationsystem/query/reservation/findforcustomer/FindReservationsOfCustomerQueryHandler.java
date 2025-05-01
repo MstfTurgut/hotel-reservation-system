@@ -14,7 +14,6 @@ public class FindReservationsOfCustomerQueryHandler implements QueryHandler<Find
 
     private final ReservationRepository reservationRepository;
 
-
     @Override
     public List<ReservationReadModel> handle(FindReservationsOfCustomerQuery query) {
         return reservationRepository

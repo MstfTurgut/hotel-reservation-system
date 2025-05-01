@@ -1,6 +1,5 @@
 package com.mstftrgt.hotelreservationsystem.entity;
 
-import com.mstftrgt.hotelreservationsystem.UserContract;
 import com.mstftrgt.hotelreservationsystem.dto.RoleDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -22,7 +21,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user", schema = "identityaccess")
+@Table(name = "users", schema = "identityaccess")
 public class User implements UserDetails {
 
     @Id

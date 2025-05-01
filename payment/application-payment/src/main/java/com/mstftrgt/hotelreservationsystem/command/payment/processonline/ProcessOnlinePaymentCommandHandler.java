@@ -2,10 +2,7 @@ package com.mstftrgt.hotelreservationsystem.command.payment.processonline;
 
 import java.util.UUID;
 
-import com.mstftrgt.hotelreservationsystem.command.payment.processinhotel.ProcessInHotelPaymentCommand;
 import com.mstftrgt.hotelreservationsystem.dto.PaymentCreate;
-import com.mstftrgt.hotelreservationsystem.exception.PaymentNotFoundException;
-import com.mstftrgt.hotelreservationsystem.generic.application.CommandHandler;
 import com.mstftrgt.hotelreservationsystem.generic.application.VoidCommandHandler;
 import com.mstftrgt.hotelreservationsystem.model.Payment;
 import com.mstftrgt.hotelreservationsystem.port.PaymentGatewayPort;
@@ -27,7 +24,7 @@ public class ProcessOnlinePaymentCommandHandler implements VoidCommandHandler<Pr
         try {
             UUID transactionId = paymentGatewayPort.pay(payment.getAmount(), command.cardDetails());
             payment.setTransactionId(transactionId);
-            payment.markAsPaid();
+            payment.markAsCompleted();
         } catch (Exception e) {
             payment.markAsFailed();
         }

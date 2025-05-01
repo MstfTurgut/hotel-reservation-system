@@ -15,6 +15,4 @@ public interface RoomRepository {
     List<Room> getAllRoomsOfRoomType(UUID roomTypeId);
 
     void remove(Room room);
-
-    void removeAllByRoomTypeId(UUID roomTypeId);
 }

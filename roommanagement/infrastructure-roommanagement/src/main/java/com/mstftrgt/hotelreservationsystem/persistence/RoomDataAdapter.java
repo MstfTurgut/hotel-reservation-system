@@ -49,10 +49,4 @@ public class RoomDataAdapter implements RoomRepository {
                 .toList();
     }
 
-    @Override
-    public void removeAllByRoomTypeId(UUID roomTypeId) {
-        List<RoomEntity> rooms = roomJpaRepository.findAllByRoomTypeId(roomTypeId);
-        roomJpaRepository.deleteAll(rooms);
-    }
-
 }

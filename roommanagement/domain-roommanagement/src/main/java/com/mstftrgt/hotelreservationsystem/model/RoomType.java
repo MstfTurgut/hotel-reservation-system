@@ -2,7 +2,6 @@ package com.mstftrgt.hotelreservationsystem.model;
 
 import com.mstftrgt.hotelreservationsystem.dto.RoomTypeCreate;
 import com.mstftrgt.hotelreservationsystem.dto.RoomTypeModify;
-import com.mstftrgt.hotelreservationsystem.event.RoomTypeRemovedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.generic.domain.AggregateRoot;
 import lombok.Builder;
 import lombok.Data;
@@ -44,10 +43,6 @@ public class RoomType extends AggregateRoot {
         this.priceForNight = roomTypeModify.priceForNight();
         this.adultCapacity = roomTypeModify.adultCapacity();
         this.childCapacity = roomTypeModify.childCapacity();
-    }
-
-    public void remove() {
-        this.registerEvent(new RoomTypeRemovedDomainEvent(id));
     }
     public void incrementNumberOfRooms() {
         this.numberOfRooms++;

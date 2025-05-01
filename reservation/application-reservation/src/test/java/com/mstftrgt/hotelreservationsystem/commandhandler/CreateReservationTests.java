@@ -14,6 +14,8 @@ import com.mstftrgt.hotelreservationsystem.reservation.repository.ReservationRep
 import com.mstftrgt.hotelreservationsystem.reservation.service.ConfirmationCodeGenerationService;
 import com.mstftrgt.hotelreservationsystem.reservation.service.ReservationAvailabilityService;
 import com.mstftrgt.hotelreservationsystem.reservation.service.ReservationCodeGenerationService;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -58,6 +60,18 @@ class CreateReservationTests {
     @InjectMocks
     private CreateReservationCommandHandler handler;
 
+    private MockedStatic<Reservation> reservationStatic;
+
+    @BeforeEach
+    void setUp() {
+        reservationStatic = mockStatic(Reservation.class);
+    }
+
+    @AfterEach
+    void tearDown() {
+        reservationStatic.close();
+    }
+
     @Test
     void shouldCreateReservationSuccessfully() {
         CreateReservationCommand command = ApplicationTestDataFactory.getCreateReservationTestCommand();
@@ -67,51 +81,46 @@ class CreateReservationTests {
         String reservationCode = "testReservationCode";
         UUID testRoomId = UUID.randomUUID();
 
-        try (MockedStatic<Reservation> reservationStatic = mockStatic(Reservation.class)) {
+        reservationStatic.when(() -> Reservation.createValidStayDate(command.checkInDate(), command.checkOutDate()))
+                .thenReturn(stayDate);
 
-            reservationStatic.when(() -> Reservation.createValidStayDate(command.checkInDate(), command.checkOutDate()))
-                    .thenReturn(stayDate);
+        reservationStatic.when(() -> Reservation.create(any(ReservationCreate.class)))
+                .thenReturn(reservation);
 
-            when(roomManagementFacade.findAllRoomIdsForRoomType(command.roomTypeId()))
-                    .thenReturn(List.of(testRoomId));
+        when(roomManagementFacade.findAllRoomIdsForRoomType(command.roomTypeId()))
+                .thenReturn(List.of(testRoomId));
 
-            when(reservationAvailabilityService.findAvailableRoomToReserveForStayDate(List.of(testRoomId), stayDate))
-                    .thenReturn(testRoomId);
+        when(reservationAvailabilityService.findAvailableRoomToReserveForStayDate(List.of(testRoomId), stayDate))
+                .thenReturn(testRoomId);
 
-            when(identityManagementFacade.getCurrentUser())
-                    .thenReturn(new UserContract(UUID.randomUUID()));
+        when(identityManagementFacade.getCurrentUser())
+                .thenReturn(new UserContract(UUID.randomUUID()));
 
-            when(confirmationCodeGenerationService.generateConfirmationCode())
-                    .thenReturn(confirmationCode);
+        when(confirmationCodeGenerationService.generateConfirmationCode())
+                .thenReturn(confirmationCode);
 
-            when(reservationCodeGenerationService.generateReservationCode())
-                    .thenReturn(reservationCode);
+        when(reservationCodeGenerationService.generateReservationCode())
+                .thenReturn(reservationCode);
 
-            reservationStatic.when(() -> Reservation.create(any(ReservationCreate.class)))
-                    .thenReturn(reservation);
+        handler.handle(command);
 
-            handler.handle(command);
-
-            verify(reservationRepository).save(reservation);
-        }
+        verify(reservationRepository).save(reservation);
     }
 
     @Test
     void shouldNotSaveIfCreateValidStayDateThrows() {
         CreateReservationCommand command = ApplicationTestDataFactory.getCreateReservationTestCommand();
 
-        try (MockedStatic<Reservation> reservationStatic = mockStatic(Reservation.class)) {
-            reservationStatic.when(() -> Reservation.createValidStayDate(command.checkInDate(), command.checkOutDate()))
-                    .thenThrow(new InvalidStayDateException("stay date cannot be in past"));
+        reservationStatic.when(() -> Reservation.createValidStayDate(command.checkInDate(), command.checkOutDate()))
+                .thenThrow(new InvalidStayDateException("stay date cannot be in past"));
 
-            assertThrows(InvalidStayDateException.class, () -> handler.handle(command));
+        assertThrows(InvalidStayDateException.class, () -> handler.handle(command));
 
-            verifyNoInteractions(roomManagementFacade);
-            verifyNoInteractions(reservationAvailabilityService);
-            verifyNoInteractions(reservationCodeGenerationService);
-            verifyNoInteractions(confirmationCodeGenerationService);
-            verifyNoInteractions(reservationRepository);
-        }
+        verifyNoInteractions(roomManagementFacade);
+        verifyNoInteractions(reservationAvailabilityService);
+        verifyNoInteractions(reservationCodeGenerationService);
+        verifyNoInteractions(confirmationCodeGenerationService);
+        verifyNoInteractions(reservationRepository);
     }
 
     @Test
@@ -122,24 +131,22 @@ class CreateReservationTests {
         UUID roomId = UUID.randomUUID();
         List<UUID> roomIds = List.of(roomId);
 
-        try (MockedStatic<Reservation> reservationStatic = mockStatic(Reservation.class)) {
-            reservationStatic.when(() -> Reservation.createValidStayDate(command.checkInDate(), command.checkOutDate()))
-                    .thenReturn(stayDate);
+        reservationStatic.when(() -> Reservation.createValidStayDate(command.checkInDate(), command.checkOutDate()))
+                .thenReturn(stayDate);
 
-            when(roomManagementFacade.findAllRoomIdsForRoomType(command.roomTypeId()))
-                    .thenReturn(roomIds);
+        when(roomManagementFacade.findAllRoomIdsForRoomType(command.roomTypeId()))
+                .thenReturn(roomIds);
 
-            when(reservationAvailabilityService.findAvailableRoomToReserveForStayDate(roomIds, stayDate))
-                    .thenThrow(new IllegalStateException("No available room"));
+        when(reservationAvailabilityService.findAvailableRoomToReserveForStayDate(roomIds, stayDate))
+                .thenThrow(new IllegalStateException("No available room"));
 
-            assertThrows(IllegalStateException.class, () -> handler.handle(command));
+        assertThrows(IllegalStateException.class, () -> handler.handle(command));
 
-            verify(roomManagementFacade).findAllRoomIdsForRoomType(command.roomTypeId());
-            verify(reservationAvailabilityService).findAvailableRoomToReserveForStayDate(roomIds, stayDate);
+        verify(roomManagementFacade).findAllRoomIdsForRoomType(command.roomTypeId());
+        verify(reservationAvailabilityService).findAvailableRoomToReserveForStayDate(roomIds, stayDate);
 
-            verifyNoInteractions(reservationCodeGenerationService);
-            verifyNoInteractions(confirmationCodeGenerationService);
-            verifyNoInteractions(reservationRepository);
-        }
+        verifyNoInteractions(reservationCodeGenerationService);
+        verifyNoInteractions(confirmationCodeGenerationService);
+        verifyNoInteractions(reservationRepository);
     }
 }

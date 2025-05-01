@@ -2,7 +2,6 @@ package com.mstftrgt.hotelreservationsystem;
 
 import com.mstftrgt.hotelreservationsystem.dto.RoomTypeCreate;
 import com.mstftrgt.hotelreservationsystem.dto.RoomTypeModify;
-import com.mstftrgt.hotelreservationsystem.event.RoomTypeRemovedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.model.RoomType;
 import org.junit.jupiter.api.Test;
 
@@ -118,18 +117,5 @@ public class RoomTypeTests {
         boolean canFit = roomType.canFit(0, 0);
 
         assertTrue(canFit);
-    }
-
-    @Test
-    void remove_ShouldRegisterRoomTypeRemovedDomainEvent() {
-        RoomType roomType = RoomTypeTestDataFactory.getTestRoomType();
-
-        roomType.remove();
-
-        assertEquals(1, roomType.getDomainEvents().size());
-
-        RoomTypeRemovedDomainEvent event = (RoomTypeRemovedDomainEvent) roomType.getDomainEvents().get(0);
-
-        assertEquals(roomType.getId(), event.roomTypeId());
     }
 }

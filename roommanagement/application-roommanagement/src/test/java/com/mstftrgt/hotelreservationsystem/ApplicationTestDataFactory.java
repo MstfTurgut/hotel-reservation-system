@@ -8,7 +8,6 @@ import com.mstftrgt.hotelreservationsystem.command.roomtype.modify.ModifyRoomTyp
 import com.mstftrgt.hotelreservationsystem.command.roomtype.remove.RemoveRoomTypeCommand;
 import com.mstftrgt.hotelreservationsystem.event.RoomAddedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.event.RoomRemovedDomainEvent;
-import com.mstftrgt.hotelreservationsystem.event.RoomTypeRemovedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.model.Room;
 import com.mstftrgt.hotelreservationsystem.model.RoomType;
 import com.mstftrgt.hotelreservationsystem.query.room.findallforroomtype.FindAllRoomsOfRoomTypeQuery;
@@ -116,7 +115,4 @@ public class ApplicationTestDataFactory {
         return new RoomRemovedDomainEvent(UUID.randomUUID());
     }
 
-    public static RoomTypeRemovedDomainEvent getRoomTypeRemovedTestDomainEvent() {
-        return new RoomTypeRemovedDomainEvent(UUID.randomUUID());
-    }
 }

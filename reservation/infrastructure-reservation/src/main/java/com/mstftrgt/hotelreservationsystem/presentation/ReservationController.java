@@ -1,7 +1,6 @@
 package com.mstftrgt.hotelreservationsystem.presentation;
 
 import com.mstftrgt.hotelreservationsystem.command.reservation.checkout.CheckOutReservationCommand;
-import com.mstftrgt.hotelreservationsystem.UserContract;
 import com.mstftrgt.hotelreservationsystem.generic.application.CommandBus;
 import com.mstftrgt.hotelreservationsystem.generic.application.QueryBus;
 import com.mstftrgt.hotelreservationsystem.presentation.dto.CancelReservationRequest;
@@ -16,7 +15,6 @@ import com.mstftrgt.hotelreservationsystem.readmodel.ReservationReadModel;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,8 +43,8 @@ public class ReservationController {
 
     @PostMapping("/create-in-hotel")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createInHotelReservation(@Valid @RequestBody CreateInHotelReservationRequest request) {
-        commandBus.dispatch(request.toCommand());
+    public UUID createInHotelReservation(@Valid @RequestBody CreateInHotelReservationRequest request) {
+        return commandBus.dispatchAndReturn(request.toCommand());
     }
 
     @PutMapping("{reservationId}/cancel")
@@ -70,18 +68,18 @@ public class ReservationController {
     @GetMapping("availability")
     @ResponseStatus(HttpStatus.OK)
     public List<ReservationAvailabilityForRoomTypeReadModel> findReservationAvailabilitiesForSuitableRoomTypes(@Valid @RequestBody FindReservationAvailabilitiesForSuitableRoomTypesRequest request) {
-        return queryBus.dispatch(request.toQuery());
+        return queryBus.dispatchAndReturn(request.toQuery());
     }
 
     @GetMapping("user")
     @ResponseStatus(HttpStatus.OK)
     public List<ReservationReadModel> findReservationsOfUser() {
-        return queryBus.dispatch(new FindReservationsOfUserQuery());
+        return queryBus.dispatchAndReturn(new FindReservationsOfUserQuery());
     }
 
     @GetMapping("customer")
     @ResponseStatus(HttpStatus.OK)
     public List<ReservationReadModel> findReservationsOfCustomer(@Valid @RequestBody FindReservationsOfCustomerRequest request) {
-        return queryBus.dispatch(request.toQuery());
+        return queryBus.dispatchAndReturn(request.toQuery());
     }
 }

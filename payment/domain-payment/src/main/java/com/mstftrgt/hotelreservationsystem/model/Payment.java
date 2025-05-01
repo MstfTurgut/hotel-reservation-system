@@ -53,8 +53,8 @@ public class Payment extends AggregateRoot {
         this.registerEvent(new RefundFailedDomainEvent(reservationId, amount));
     }
 
-    public void markAsPaid() {
-        status = PaymentStatus.PAID;
+    public void markAsCompleted() {
+        status = PaymentStatus.COMPLETED;
         this.registerEvent(new PaymentCompletedDomainEvent(reservationId, amount));
     }
 

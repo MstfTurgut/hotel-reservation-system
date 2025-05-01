@@ -27,7 +27,7 @@ public class QueryBusImpl implements QueryBus {
     }
 
     @Override
-    public <R, Q extends Query<R>> R dispatch(Q query) {
+    public <R, Q extends Query<R>> R dispatchAndReturn(Q query) {
         QueryHandler<Q, R> handler = handlers.get(query.getClass());
         if (handler == null) {
             throw new IllegalArgumentException("No handler found for query: " + query.getClass());

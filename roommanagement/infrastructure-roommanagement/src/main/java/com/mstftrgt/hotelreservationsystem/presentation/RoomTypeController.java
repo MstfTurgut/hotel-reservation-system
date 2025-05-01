@@ -54,12 +54,12 @@ public class RoomTypeController {
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public List<RoomTypeReadModel> getAllRoomTypes() {
-        return queryBus.dispatch(new FindAllRoomTypesQuery());
+        return queryBus.dispatchAndReturn(new FindAllRoomTypesQuery());
     }
 
     @GetMapping("{roomTypeId}/rooms")
     @ResponseStatus(HttpStatus.OK)
     public List<RoomReadModel> getAllRoomsOfRoomType(@PathVariable UUID roomTypeId) {
-        return queryBus.dispatch(new FindAllRoomsOfRoomTypeQuery(roomTypeId));
+        return queryBus.dispatchAndReturn(new FindAllRoomsOfRoomTypeQuery(roomTypeId));
     }
 }

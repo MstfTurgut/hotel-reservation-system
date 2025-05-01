@@ -1,6 +1,7 @@
 package com.mstftrgt.hotelreservationsystem.persistence;
 
 import com.mstftrgt.hotelreservationsystem.model.RoomType;
+import com.mstftrgt.hotelreservationsystem.persistence.entity.RoomEntity;
 import com.mstftrgt.hotelreservationsystem.persistence.entity.RoomTypeEntity;
 import com.mstftrgt.hotelreservationsystem.persistence.repository.RoomJpaRepository;
 import com.mstftrgt.hotelreservationsystem.persistence.repository.RoomTypeJpaRepository;
@@ -21,6 +22,7 @@ public class RoomTypeDataAdapter implements RoomTypeRepository {
     private final RoomJpaRepository roomJpaRepository;
     private final RoomTypeJpaRepository roomTypeJpaRepository;
 
+
     @Override
     public void save(RoomType roomType) {
         roomTypeJpaRepository.save(RoomTypeEntity.from(roomType));
@@ -31,6 +33,9 @@ public class RoomTypeDataAdapter implements RoomTypeRepository {
 
     @Override
     public void remove(RoomType roomType) {
+        List<RoomEntity> rooms = roomJpaRepository.findAllByRoomTypeId(roomType.getId());
+        roomJpaRepository.deleteAll(rooms);
+
         roomTypeJpaRepository.deleteById(roomType.getId());
 
         roomType.getDomainEvents().forEach(publisher::publishEvent);

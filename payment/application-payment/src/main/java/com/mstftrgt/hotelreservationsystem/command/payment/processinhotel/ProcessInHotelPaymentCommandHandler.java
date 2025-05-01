@@ -1,7 +1,6 @@
 package com.mstftrgt.hotelreservationsystem.command.payment.processinhotel;
 
 import com.mstftrgt.hotelreservationsystem.dto.PaymentCreate;
-import com.mstftrgt.hotelreservationsystem.generic.application.CommandHandler;
 import com.mstftrgt.hotelreservationsystem.generic.application.VoidCommandHandler;
 import com.mstftrgt.hotelreservationsystem.model.Payment;
 import com.mstftrgt.hotelreservationsystem.repository.PaymentRepository;
@@ -18,7 +17,7 @@ public class ProcessInHotelPaymentCommandHandler implements VoidCommandHandler<P
     public void handle(ProcessInHotelPaymentCommand command) {
         Payment payment = Payment.create(buildPaymentCreate(command));
 
-        payment.markAsPaid();
+        payment.markAsCompleted();
 
         paymentRepository.save(payment);
     }

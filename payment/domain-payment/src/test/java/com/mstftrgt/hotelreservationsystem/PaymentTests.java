@@ -7,7 +7,6 @@ import com.mstftrgt.hotelreservationsystem.event.PaymentFailedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.event.RefundFailedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.event.RefundInitiatedDomainEvent;
 import com.mstftrgt.hotelreservationsystem.exception.PaymentAlreadyRefundedException;
-import com.mstftrgt.hotelreservationsystem.kernel.CardDetails;
 import com.mstftrgt.hotelreservationsystem.model.Payment;
 import com.mstftrgt.hotelreservationsystem.model.PaymentStatus;
 import org.junit.jupiter.api.Test;
@@ -70,12 +69,12 @@ public class PaymentTests {
     }
 
     @Test
-    void markAsPaid_ShouldSetStatusAndRegisterEvent() {
+    void markAsCompleted_ShouldSetStatusAndRegisterEvent() {
         Payment payment = PaymentTestDataFactory.getTestPayment();
 
-        payment.markAsPaid();
+        payment.markAsCompleted();
 
-        assertEquals(PaymentStatus.PAID, payment.getStatus());
+        assertEquals(PaymentStatus.COMPLETED, payment.getStatus());
 
         assertEquals(1, payment.getDomainEvents().size());
 

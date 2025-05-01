@@ -56,7 +56,7 @@ public class ProcessOnlinePaymentCommandHandlerTests {
         }
 
         verify(payment).setTransactionId(transactionId);
-        verify(payment).markAsPaid();
+        verify(payment).markAsCompleted();
         verify(paymentRepository).save(payment);
     }
 

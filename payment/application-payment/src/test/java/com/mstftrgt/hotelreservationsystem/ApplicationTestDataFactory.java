@@ -60,7 +60,7 @@ public class ApplicationTestDataFactory {
                 .reservationId(UUID.randomUUID())
                 .transactionId(UUID.randomUUID())
                 .createDate(LocalDateTime.now())
-                .status(PaymentStatus.PAID)
+                .status(PaymentStatus.COMPLETED)
                 .build();
     }
 
