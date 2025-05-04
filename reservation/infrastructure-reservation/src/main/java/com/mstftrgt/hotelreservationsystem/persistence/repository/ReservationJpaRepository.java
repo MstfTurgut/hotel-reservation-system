@@ -18,4 +18,6 @@ public interface ReservationJpaRepository extends JpaRepository<ReservationEntit
     List<ReservationEntity> findAllByFullNameAndPhoneNumber(String fullName, String phoneNumber);
 
     List<ReservationEntity> findAllByUserId(UUID userId);
+
+    Optional<ReservationEntity> findByReservationCode(String reservationCode);
 }

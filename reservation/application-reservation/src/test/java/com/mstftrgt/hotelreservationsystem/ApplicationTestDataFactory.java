@@ -9,6 +9,7 @@ import com.mstftrgt.hotelreservationsystem.contract.RoomTypeContract;
 import com.mstftrgt.hotelreservationsystem.event.PaymentFailedIntegrationEvent;
 import com.mstftrgt.hotelreservationsystem.kernel.CardDetails;
 import com.mstftrgt.hotelreservationsystem.query.reservation.findavailabilitiesforroomtypes.FindReservationAvailabilitiesForSuitableRoomTypesQuery;
+import com.mstftrgt.hotelreservationsystem.query.reservation.findbyreservationcode.FindReservationByReservationCodeQuery;
 import com.mstftrgt.hotelreservationsystem.query.reservation.findforcustomer.FindReservationsOfCustomerQuery;
 import com.mstftrgt.hotelreservationsystem.query.reservation.findforuser.FindReservationsOfUserQuery;
 import com.mstftrgt.hotelreservationsystem.reservation.event.ReservationCancelledDomainEvent;
@@ -162,5 +163,38 @@ public class ApplicationTestDataFactory {
                 .reservationId(UUID.randomUUID())
                 .paymentAmount(BigDecimal.TEN)
                 .build();
+    }
+
+    public static FindReservationByReservationCodeQuery getFindReservationByReservationCodeTestQuery() {
+        return new FindReservationByReservationCodeQuery("testReservationCode");
+    }
+
+    public static Reservation getTestReservation() {
+
+        GuestSpecification guestSpec = new GuestSpecification(2, 1);
+
+        StayDate stayDate = new StayDate(
+                LocalDate.of(2030, 1, 1),
+                LocalDate.of(2030, 1, 3)
+        );
+
+        CustomerDetails customerDetails = new CustomerDetails(
+                "testFullName",
+                "test@example.com",
+                "1234567890"
+        );
+
+        return new Reservation(
+                UUID.randomUUID(),
+                UUID.randomUUID(),
+                UUID.randomUUID(),
+                "testConfirmationCode",
+                "testReservationCode",
+                guestSpec,
+                ReservationStatus.CONFIRMED,
+                stayDate,
+                customerDetails,
+                LocalDateTime.now()
+        );
     }
 }

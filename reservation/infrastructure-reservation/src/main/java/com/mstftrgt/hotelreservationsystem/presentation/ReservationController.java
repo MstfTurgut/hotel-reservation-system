@@ -9,6 +9,7 @@ import com.mstftrgt.hotelreservationsystem.presentation.dto.CreateInHotelReserva
 import com.mstftrgt.hotelreservationsystem.presentation.dto.CreateOnlineReservationRequest;
 import com.mstftrgt.hotelreservationsystem.presentation.dto.FindReservationAvailabilitiesForSuitableRoomTypesRequest;
 import com.mstftrgt.hotelreservationsystem.presentation.dto.FindReservationsOfCustomerRequest;
+import com.mstftrgt.hotelreservationsystem.query.reservation.findbyreservationcode.FindReservationByReservationCodeQuery;
 import com.mstftrgt.hotelreservationsystem.query.reservation.findforuser.FindReservationsOfUserQuery;
 import com.mstftrgt.hotelreservationsystem.readmodel.ReservationAvailabilityForRoomTypeReadModel;
 import com.mstftrgt.hotelreservationsystem.readmodel.ReservationReadModel;
@@ -59,6 +60,7 @@ public class ReservationController {
         commandBus.dispatch(request.toCommand(reservationId));
     }
 
+
     @PutMapping("{reservationId}/check-out")
     @ResponseStatus(HttpStatus.OK)
     public void checkOutReservation(@PathVariable UUID reservationId) {
@@ -81,5 +83,11 @@ public class ReservationController {
     @ResponseStatus(HttpStatus.OK)
     public List<ReservationReadModel> findReservationsOfCustomer(@Valid @RequestBody FindReservationsOfCustomerRequest request) {
         return queryBus.dispatchAndReturn(request.toQuery());
+    }
+
+    @GetMapping("{reservationCode}")
+    @ResponseStatus(HttpStatus.OK)
+    public ReservationReadModel findByReservationCode(@PathVariable String reservationCode) {
+        return queryBus.dispatchAndReturn(new FindReservationByReservationCodeQuery(reservationCode));
     }
 }

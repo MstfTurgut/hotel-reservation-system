@@ -14,6 +14,8 @@ import com.mstftrgt.hotelreservationsystem.presentation.dto.CheckInReservationRe
 import com.mstftrgt.hotelreservationsystem.presentation.dto.CreateInHotelReservationRequest;
 import com.mstftrgt.hotelreservationsystem.presentation.dto.CreateOnlineReservationRequest;
 import com.mstftrgt.hotelreservationsystem.presentation.dto.FindReservationAvailabilitiesForSuitableRoomTypesRequest;
+import com.mstftrgt.hotelreservationsystem.presentation.dto.FindReservationsOfCustomerRequest;
+import com.mstftrgt.hotelreservationsystem.query.reservation.findbyreservationcode.FindReservationByReservationCodeQuery;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import static com.mstftrgt.hotelreservationsystem.integration.controller.FakeExceptionFields.INVALID_CONFIRMATION_CODE;
+import static com.mstftrgt.hotelreservationsystem.integration.controller.FakeExceptionFields.INVALID_STAY_DATE_LOCAL_DATE;
 import static com.mstftrgt.hotelreservationsystem.integration.controller.FakeExceptionFields.RESERVATION_ALREADY_CANCELLED_ID;
 import static com.mstftrgt.hotelreservationsystem.integration.controller.FakeExceptionFields.RESERVATION_ALREADY_CHECKED_IN_ID;
 import static com.mstftrgt.hotelreservationsystem.integration.controller.FakeExceptionFields.RESERVATION_ALREADY_CHECKED_OUT_ID;
@@ -37,6 +40,7 @@ import static com.mstftrgt.hotelreservationsystem.integration.controller.FakeExc
 import static com.mstftrgt.hotelreservationsystem.integration.controller.FakeExceptionFields.RESERVATION_LAST_MINUTE_CANCELLATION_ID;
 import static com.mstftrgt.hotelreservationsystem.integration.controller.FakeExceptionFields.RESERVATION_NOT_AVAILABLE_ROOM_TYPE_ID;
 import static com.mstftrgt.hotelreservationsystem.integration.controller.FakeExceptionFields.RESERVATION_NOT_FOUND_ID;
+import static com.mstftrgt.hotelreservationsystem.integration.controller.FakeExceptionFields.RESERVATION_NOT_FOUND_RESERVATION_CODE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -311,6 +315,21 @@ class ReservationControllerIT {
     }
 
     @Test
+    void findReservationAvailabilities_withInvalidStayDate_shouldReturnBadRequest() throws Exception {
+        FindReservationAvailabilitiesForSuitableRoomTypesRequest request = new FindReservationAvailabilitiesForSuitableRoomTypesRequest(
+                2,
+                0,
+                INVALID_STAY_DATE_LOCAL_DATE,
+                LocalDate.now().plusDays(2)
+        );
+
+        mockMvc.perform(get("/api/reservations/availability")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void findReservationAvailabilities_withInvalidRequest_shouldReturnBadRequest() throws Exception {
         FindReservationAvailabilitiesForSuitableRoomTypesRequest request = new FindReservationAvailabilitiesForSuitableRoomTypesRequest(
                 2,
@@ -323,5 +342,74 @@ class ReservationControllerIT {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void findReservationsForUser_withValidRequest_shouldReturnReservationList() throws Exception {
+        mockMvc.perform(get("/api/reservations/user"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].id").value("11111111-1111-1111-1111-111111111111"))
+                .andExpect(jsonPath("$[0].userId").value("11111111-1111-1111-1111-111111111111"))
+                .andExpect(jsonPath("$[0].roomId").value("11111111-1111-1111-1111-111111111111"))
+                .andExpect(jsonPath("$[0].reservationCode").value("11111111"))
+                .andExpect(jsonPath("$[0].adultGuestCount").value(2))
+                .andExpect(jsonPath("$[0].childGuestCount").value(1))
+                .andExpect(jsonPath("$[0].status").value("CONFIRMED"))
+                .andExpect(jsonPath("$[0].checkInDate").value("2030-01-01"))
+                .andExpect(jsonPath("$[0].checkOutDate").value("2030-01-01"))
+                .andExpect(jsonPath("$[0].customerFullName").value("John Doe"))
+                .andExpect(jsonPath("$[0].customerPhoneNumber").value("0123456789"))
+                .andExpect(jsonPath("$[0].customerEmailAddress").value("johndoe@gmail.com"));
+    }
+
+    @Test
+    void findReservationsForCustomer_withValidRequest_shouldReturnReservationList() throws Exception {
+        FindReservationsOfCustomerRequest request = new FindReservationsOfCustomerRequest(
+            "John Doe",
+            "0123456789"
+        );
+
+        mockMvc.perform(get("/api/reservations/customer")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].id").value("11111111-1111-1111-1111-111111111111"))
+                .andExpect(jsonPath("$[0].userId").value("11111111-1111-1111-1111-111111111111"))
+                .andExpect(jsonPath("$[0].roomId").value("11111111-1111-1111-1111-111111111111"))
+                .andExpect(jsonPath("$[0].reservationCode").value("11111111"))
+                .andExpect(jsonPath("$[0].adultGuestCount").value(2))
+                .andExpect(jsonPath("$[0].childGuestCount").value(1))
+                .andExpect(jsonPath("$[0].status").value("CONFIRMED"))
+                .andExpect(jsonPath("$[0].checkInDate").value("2030-01-01"))
+                .andExpect(jsonPath("$[0].checkOutDate").value("2030-01-01"))
+                .andExpect(jsonPath("$[0].customerFullName").value("John Doe"))
+                .andExpect(jsonPath("$[0].customerPhoneNumber").value("0123456789"))
+                .andExpect(jsonPath("$[0].customerEmailAddress").value("johndoe@gmail.com"));
+    }
+
+    @Test
+    void findByReservationCode_withValidRequest_shouldReturnReservationList() throws Exception {
+        mockMvc.perform(get("/api/reservations/12345678"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id").value("11111111-1111-1111-1111-111111111111"))
+                .andExpect(jsonPath("userId").value("11111111-1111-1111-1111-111111111111"))
+                .andExpect(jsonPath("roomId").value("11111111-1111-1111-1111-111111111111"))
+                .andExpect(jsonPath("reservationCode").value("11111111"))
+                .andExpect(jsonPath("adultGuestCount").value(2))
+                .andExpect(jsonPath("childGuestCount").value(1))
+                .andExpect(jsonPath("status").value("CONFIRMED"))
+                .andExpect(jsonPath("checkInDate").value("2030-01-01"))
+                .andExpect(jsonPath("checkOutDate").value("2030-01-01"))
+                .andExpect(jsonPath("customerFullName").value("John Doe"))
+                .andExpect(jsonPath("customerPhoneNumber").value("0123456789"))
+                .andExpect(jsonPath("customerEmailAddress").value("johndoe@gmail.com"));
+    }
+
+    @Test
+    void findByReservationCode_whenReservationDoesNotExist_shouldReturnNotFound() throws Exception {
+        mockMvc.perform(get("/api/reservations/" + RESERVATION_NOT_FOUND_RESERVATION_CODE))
+                .andExpect(status().isNotFound());
     }
 }

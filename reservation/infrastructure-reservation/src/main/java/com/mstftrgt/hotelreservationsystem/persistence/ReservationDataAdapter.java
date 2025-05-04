@@ -64,4 +64,10 @@ public class ReservationDataAdapter implements ReservationRepository {
                 .map(ReservationEntity::toModel)
                 .toList();
     }
+
+    @Override
+    public Optional<Reservation> findByReservationCode(String reservationCode) {
+        return reservationJpaRepository.findByReservationCode(reservationCode)
+                .map(ReservationEntity::toModel);
+    }
 }

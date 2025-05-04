@@ -182,4 +182,26 @@ class ReservationDataAdapterIT {
         assertEquals("johndoe@example.com", reservation.getCustomerDetails().getEmailAddress());
         assertNotNull(reservation.getCreatedAt());
     }
+
+    @Test
+    void findByReservationCode_shouldRetrieveReservation() {
+        Optional<Reservation> optionalReservation = reservationDataAdapter.findByReservationCode("12345678");
+        assertTrue(optionalReservation.isPresent());
+
+        Reservation reservation = optionalReservation.get();
+        assertEquals(UUID.fromString("11111111-1111-1111-1111-111111111111"), reservation.getId());
+        assertEquals(UUID.fromString("11111111-1111-1111-1111-111111111111"), reservation.getUserId());
+        assertEquals(UUID.fromString("11111111-1111-1111-1111-111111111111"), reservation.getRoomId());
+        assertEquals("12345678", reservation.getConfirmationCode());
+        assertEquals("12345678", reservation.getReservationCode());
+        assertEquals(2, reservation.getGuestSpecification().getAdultGuestCount());
+        assertEquals(1, reservation.getGuestSpecification().getChildGuestCount());
+        assertEquals("CONFIRMED", reservation.getStatus().name()); // assuming status is an enum
+        assertEquals(LocalDate.of(2030, 1, 1), reservation.getStayDate().getCheckInDate());
+        assertEquals(LocalDate.of(2030, 1, 5), reservation.getStayDate().getCheckOutDate());
+        assertEquals("John Doe", reservation.getCustomerDetails().getFullName());
+        assertEquals("1234567890", reservation.getCustomerDetails().getPhoneNumber());
+        assertEquals("johndoe@example.com", reservation.getCustomerDetails().getEmailAddress());
+        assertNotNull(reservation.getCreatedAt());
+    }
 }

@@ -20,4 +20,6 @@ public interface ReservationRepository {
     List<Reservation> findAllByCustomerFullNameAndPhoneNumber(String fullName, String phoneNumber);
 
     List<Reservation> findAllByUserId(UUID userId);
+
+    Optional<Reservation> findByReservationCode(String reservationCode);
 }

@@ -22,4 +22,7 @@ public class FakeExceptionFields {
     public final static UUID RESERVATION_ALREADY_CHECKED_OUT_ID = UUID.fromString("00000000-0000-0000-0000-000000000007");
 
     public static final LocalDate INVALID_STAY_DATE_LOCAL_DATE = LocalDate.of(2000, 1, 1);
+
+    public final static String RESERVATION_NOT_FOUND_RESERVATION_CODE = "99999999";
+
 }
