@@ -6,6 +6,8 @@ import com.mstftrgt.hotelreservationsystem.generic.application.CommandBus;
 import com.mstftrgt.hotelreservationsystem.generic.application.QueryBus;
 import com.mstftrgt.hotelreservationsystem.presentation.dto.AddNewRoomRequest;
 import com.mstftrgt.hotelreservationsystem.query.room.findallforroomtype.FindAllRoomsOfRoomTypeQuery;
+import com.mstftrgt.hotelreservationsystem.query.room.findbyid.FindRoomByIdQuery;
+import com.mstftrgt.hotelreservationsystem.readmodel.RoomReadModel;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -38,5 +40,11 @@ public class RoomController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeRoom(@PathVariable UUID roomId) {
         commandBus.dispatch(new RemoveRoomCommand(roomId));
+    }
+
+    @GetMapping("/{roomId}")
+    @ResponseStatus(HttpStatus.OK)
+    public RoomReadModel findRoomById(@PathVariable UUID roomId) {
+        return queryBus.dispatchAndReturn(new FindRoomByIdQuery(roomId));
     }
 }

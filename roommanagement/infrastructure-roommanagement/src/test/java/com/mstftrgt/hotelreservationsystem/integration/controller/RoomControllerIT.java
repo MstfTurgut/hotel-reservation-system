@@ -19,7 +19,9 @@ import java.util.UUID;
 
 import static com.mstftrgt.hotelreservationsystem.integration.controller.FakeExceptionFields.ROOM_NOT_FOUND_ID;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -61,6 +63,21 @@ public class RoomControllerIT {
     @Test
     void removeRoom_whenRoomNotFound_shouldReturnNotFound() throws Exception {
         mockMvc.perform(delete("/api/rooms/" + ROOM_NOT_FOUND_ID))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void findRoomById_shouldReturnRoom() throws Exception {
+        mockMvc.perform(get("/api/rooms/" + UUID.randomUUID()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id").value("11111111-1111-1111-1111-111111111111"))
+                .andExpect(jsonPath("roomTypeId").value("11111111-1111-1111-1111-111111111111"))
+                .andExpect(jsonPath("roomNumber").value("101"));
+    }
+
+    @Test
+    void findRoomById_whenRoomNotFound_shouldReturnNotFound() throws Exception {
+        mockMvc.perform(get("/api/rooms/" + ROOM_NOT_FOUND_ID))
                 .andExpect(status().isNotFound());
     }
 }
