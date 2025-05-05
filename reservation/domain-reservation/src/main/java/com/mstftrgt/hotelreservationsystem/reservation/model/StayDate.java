@@ -32,4 +32,8 @@ public class StayDate {
     public boolean isCheckInDateNotToday() {
         return !checkInDate.isEqual(LocalDate.now());
     }
+
+    public int daysLeftToCheckInDate() {
+        return checkInDate.getDayOfYear() - LocalDate.now().getDayOfYear();
+    }
 }

@@ -85,7 +85,7 @@ public class Reservation extends AggregateRoot {
             throw new ReservationAlreadyCancelledException();
         }
 
-        if (stayDate.getCheckInDate().isBefore(LocalDate.now().plusDays(2))) {
+        if (stayDate.daysLeftToCheckInDate() < 1) {
             throw new LastMinuteCancellationException();
         }
 
