@@ -284,9 +284,13 @@ Customer wants to check out.
 
 - Each module must modify **only one aggregate instance per transaction**.
 
+<br>
+
 > "And a properly designed bounded context modifies only
 one aggregate instance per transaction in all cases."
 <br> - Vaughn Vernon, Effective Aggregate Design Part 1
+
+<br>
 
 When a transaction involves multiple aggregates or modules, we rely on eventual consistency.
 
@@ -339,9 +343,10 @@ To demonstrate how modules communicate, here's an example from this project whic
 
 Below is the integration submodule of the `reservation` module:;
 
+<br>
+
 <img src="assets/integrationsubmodule.png"  alt="integration-submodule">
 
-<br>
 <br>
 
 
@@ -354,7 +359,6 @@ One of the integration events in the `integration-reservation` submodule is `Res
 <img src="assets/itevent.png" alt="it-event">
 
 <br>
-<br>
 
 This event is then handled within the `payment` module, as shown below:
 
@@ -362,6 +366,7 @@ This event is then handled within the `payment` module, as shown below:
 
 <img src="assets/iteventhandler.png" alt="it-event-handler">
 
+<br>
 
 The `payment` module processes this event by depending solely on the `integration-reservation` submodule of the `reservation` module. Because the dependencies of the integration submodule are inverted, this approach minimizes coupling between the modules.
 
@@ -371,7 +376,7 @@ The `payment` module processes this event by depending solely on the `integratio
 
 This part contains which patterns (high level and low level) are used in this project.
 
-
+<br>
 
 ### 6.1 Ports & Adapters
 
@@ -380,6 +385,7 @@ Most of the modules in this project use ports and adapters pattern.
 
 Ports and Adapters is a software architecture pattern that aims to isolate the core logic of an application from external systems such as databases, user interfaces, messaging systems, and other services. It achieves this separation by introducing "ports" as interfaces through which the core application communicates, and "adapters" as implementations of those interfaces for specific technologies or infrastructures.
 
+<br>
 
 >"Allow an application to equally be driven by users, programs, automated test or batch scripts, and to be developed and tested in isolation from its eventual run-time devices and databases."
 <br> - Alistair Cockburn, Hexagonal architecture the original 2005 article
@@ -388,7 +394,6 @@ Ports and Adapters is a software architecture pattern that aims to isolate the c
 
 <img src="assets/hexagonal.png" alt="hexagonal">
 
-<br>
 <br>
 <br>
 
@@ -408,7 +413,6 @@ As shown below, each controller uses command/query buses to dispatch incoming re
 
 <img src="assets/controller.png" alt="controller">
 
-<br>
 <br>
 <br>
 
@@ -464,7 +468,6 @@ The screenshot below shows the console output log when a 'Create Online Reservat
 
 <br>
 <br>
-<br>
 
 ### 6.4 Design Patterns
 
@@ -474,7 +477,6 @@ While designing this project, certain parts seemed well-suited for the use of sp
 
 <img src="assets/strategy.png" width="800" alt="strategy">
 
-<br>
 <br>
 <br>
 
@@ -504,8 +506,11 @@ An object that represents a descriptive aspect of the domain that has no concept
 
 #### Service
 
+<br>
+
 A SERVICE is an operation offered as an interface that stands alone in the model, without encapsulating state as ENTITIES and VALUE OBJECTS do.
 
+<br>
 
 > "Further, don’t confuse a Domain Service with an Application Service. We don’t want to house business logic in an Application Service, but we do want business logic housed in a Domain Service."<br><br><br>"Briefly, to differentiate the two, an Application Service, being the natural client of the domain model, would normally be the client of a Domain Service."
 <br> - Vaughn Vernon, IDDD, page 267
@@ -536,7 +541,11 @@ An AGGREGATE is a cluster of associated objects that we treat as a unit for the 
 
 ##### Raising Domain Events Inside The Aggregate
 
+<br>
+
 > "Instead of dispatching to a domain event handler immediately, what if instead we recorded our domain events, and before committing our transaction, dispatch those domain events at that point? This will have a number of benefits, besides us not tearing our hair out." <br> - Jimmy Boggard, A better domain events pattern, 2014
+
+<br>
 
 In this approach, domain events are not published immediately when they occur. Instead, they are **recorded** within the aggregate root during the execution of business logic. These recorded events are then dispatched only after the aggregate has been persisted—ensuring consistency between the state changes and the events they produce.
 
