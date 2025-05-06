@@ -26,7 +26,9 @@ This project took a lot of time and effort. If you like it, please consider givi
 
 &nbsp;&nbsp;[6.4 Design Patterns](#64-design-patterns)
 
-&nbsp;&nbsp;[6.5 Tactical Patterns](#65-tactical-patterns)
+&nbsp;&nbsp;[6.5 Aggregate Tactical Pattern](#65-aggregate-tactical-pattern)
+
+&nbsp;&nbsp;&nbsp;&nbsp;[6.5.1 Raising Domain Events Inside The Aggregate](#651-raising-domain-events-inside-the-aggregate)
 
 [7. Testing](#7-testing)
 
@@ -486,60 +488,21 @@ While designing this project, certain parts seemed well-suited for the use of sp
 <br>
 <br>
 
-### 6.5 Tactical Patterns
 
-I have also used tactical patterns from the Domain-Driven Design book. Below are some quotes from the DDD book and other sources that define these patterns. Please inspect the domain layer of each module to see how the tactical patterns are applied.
+### 6.5 Aggregate Tactical Pattern
 
-<br>
-
-#### Entity
-
-An object defined primarily by its identity is called an “ENTITY”. ENTITIES have special modeling and design considerations. They have lifecycles that can radically change their form and content, while a thread of continuity must be maintained. Their identities must be defined so that they can be effectively tracked."
+The Aggregate is one of the key tactical patterns introduced in the book Domain-Driven Design by Eric Evans. It helps manage complexity and maintain consistency within the domain model.
 
 <br>
 
-#### Value Object
-
-An object that represents a descriptive aspect of the domain that has no conceptual identity is called a VALUE OBJECT. VALUE OBJECTS are instantiated to represent elements of the design that we care about only for what they are, not who they are."
-
-<br>
-
-#### Service
-
-<br>
-
-A SERVICE is an operation offered as an interface that stands alone in the model, without encapsulating state as ENTITIES and VALUE OBJECTS do.
-
-<br>
-
-> "Further, don’t confuse a Domain Service with an Application Service. We don’t want to house business logic in an Application Service, but we do want business logic housed in a Domain Service."<br><br><br>"Briefly, to differentiate the two, an Application Service, being the natural client of the domain model, would normally be the client of a Domain Service."
-<br> - Vaughn Vernon, IDDD, page 267
-
-<br>
-
-#### Repository
-
-A REPOSITORY represents all objects of a certain type as a conceptual set (usually simulated). It acts like a collection, except with more elaborate querying capability. Objects of the appropriate type are added and removed, and the machinery behind the REPOSITORY inserts them or deletes them from the database. This definition gathers a cohesive set of responsibilities for providing access to the roots of AGGREGATES from early-lifecycle through the end."
-
-
-<br>
-
-#### Domain Event
-
-An event is something that has happened in the past. A domain event is, something that happened in the domain that you want other parts of the same domain (in-process) to be aware of. The notified parts usually react somehow to the events.
-
-<br>
-
-#### Aggregate
-
-
+**Book definition:**
 
 An AGGREGATE is a cluster of associated objects that we treat as a unit for the purpose of data changes. Each AGGREGATE has a root and a boundary. The boundary defines what is inside the AGGREGATE. The root is a single specific ENTITY contained in the AGGREGATE. The root is the only member of the AGGREGATE that outside objects are allowed to hold references to, although objects within the boundary may hold references to each other
 
 
 <br>
 
-##### Raising Domain Events Inside The Aggregate
+#### 6.5.1 Raising Domain Events Inside The Aggregate
 
 <br>
 
