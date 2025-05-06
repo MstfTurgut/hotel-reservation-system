@@ -1,8 +1,14 @@
 # Hotel Reservation System
 
+<br>
+
 A modular monolith hotel software with cqrs, ports & adapters and event-driven support.
 
+<br>
+
 This project took a lot of time and effort. If you like it, please consider giving it a ⭐ star!
+
+<br>
 
 ## Table of Contents
 
@@ -50,9 +56,12 @@ You can explore the full event storming board in detail [here](https://miro.com/
 
 ## 2. UML Modeling
 
+<br>
+
 > “A model is a selectively simplified and consciously structured form of knowledge.”
 <br> - Eric Evans, Domain Driven Design, Page 12
 
+<br>
 
 The system has undergone significant evolution since my initial modeling attempts, which began with simple paper sketches.
 
@@ -64,6 +73,7 @@ Another challenging decision involved removing the `Availability` class in favor
 
 The image below displays some of the early conceptual sketches created at the outset of the project. At that time, `RoomType` was treated merely as an enumeration, and the `Availability` class was directly associated with the Room.
 
+<br>
 
 <img src="assets/papers.jpg" height=800 alt="papers">
 
@@ -551,6 +561,7 @@ Unit tests focus on verifying business behaviors, not just individual methods or
 
 <img src="assets/checkinunit.png"  width="800" alt="check-in-unit">
 
+<br>
 
 ### Integration Testing
 
@@ -568,3 +579,7 @@ Integration tests validate how multiple components of the system work together �
 <img src="assets/createreservationfakehandler.png"  width="800" alt="create-reservation-fake-handler">
 
 <img src="assets/createonlineit.png"  width="800" alt="create-online-it">
+
+
+<br>Mustafa Turgut
+<br>mstftrgt00@gmail.com
