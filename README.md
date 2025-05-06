@@ -442,7 +442,7 @@ I used the choreography approach for this project. Below is the model illustrati
 <br>
 <br>
 
-And here is the event flow model:
+Here is the event flow model of this project:
 
 
 <img src="assets/saga1.png" width="800" alt="saga1">
