@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Value;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Value
 @Builder
@@ -34,6 +35,6 @@ public class StayDate {
     }
 
     public int daysLeftToCheckInDate() {
-        return checkInDate.getDayOfYear() - LocalDate.now().getDayOfYear();
+        return (int) ChronoUnit.DAYS.between(LocalDate.now(), checkInDate);
     }
 }

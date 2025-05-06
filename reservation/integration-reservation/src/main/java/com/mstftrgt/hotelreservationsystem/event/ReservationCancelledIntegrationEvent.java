@@ -8,5 +8,7 @@ import java.util.UUID;
 @Builder
 public record ReservationCancelledIntegrationEvent(
         UUID reservationId
-) implements IntegrationEvent {
-}
+
+) implements IntegrationEvent {}
+
+

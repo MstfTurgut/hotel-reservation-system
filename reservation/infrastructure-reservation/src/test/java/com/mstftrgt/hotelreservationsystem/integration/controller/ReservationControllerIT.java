@@ -73,18 +73,7 @@ class ReservationControllerIT {
 
     @Test
     void createOnlineReservation_withValidRequest_shouldReturnCreated() throws Exception {
-        CreateOnlineReservationRequest request = new CreateOnlineReservationRequest(
-                UUID.randomUUID(),
-                LocalDate.now().plusDays(1),
-                LocalDate.now().plusDays(2),
-                2,
-                0,
-                "John Doe",
-                "123456789",
-                "john.doe@example.com",
-                BigDecimal.valueOf(300),
-                new CardDetails("4111111111111111", "John Doe", "12/30", "123")
-        );
+        CreateOnlineReservationRequest request = ControllerTestDataFactory.getTestCreateOnlineReservationRequest();
 
         mockMvc.perform(post("/api/reservations/create-online")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -93,19 +82,9 @@ class ReservationControllerIT {
     }
 
     @Test
-    void createOnlineReservation_whenRoomNotAvailable_shouldReturnConflict() throws Exception {
-        CreateOnlineReservationRequest request = new CreateOnlineReservationRequest(
-                RESERVATION_NOT_AVAILABLE_ROOM_TYPE_ID,
-                LocalDate.now().plusDays(1),
-                LocalDate.now().plusDays(2),
-                2,
-                0,
-                "John Doe",
-                "123456789",
-                "john.doe@example.com",
-                BigDecimal.valueOf(300),
-                new CardDetails("4111111111111111", "John Doe", "12/30", "123")
-        );
+    void createOnlineReservation_whenReservationNotAvailable_shouldReturnConflict() throws Exception {
+        CreateOnlineReservationRequest request = ControllerTestDataFactory.getTestCreateOnlineReservationRequest()
+                .withRoomTypeId(RESERVATION_NOT_AVAILABLE_ROOM_TYPE_ID);
 
         mockMvc.perform(post("/api/reservations/create-online")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -136,17 +115,8 @@ class ReservationControllerIT {
 
     @Test
     void createInHotelReservation_withValidRequest_shouldReturnCreated() throws Exception {
-        CreateInHotelReservationRequest request = new CreateInHotelReservationRequest(
-                UUID.randomUUID(),
-                LocalDate.now().plusDays(1),
-                LocalDate.now().plusDays(2),
-                2,
-                0,
-                "John Doe",
-                "123456789",
-                "john.doe@example.com",
-                BigDecimal.valueOf(300)
-        );
+        CreateInHotelReservationRequest request = ControllerTestDataFactory
+                .getTestCreateInHotelReservationRequest();
 
         mockMvc.perform(post("/api/reservations/create-in-hotel")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -156,17 +126,9 @@ class ReservationControllerIT {
 
     @Test
     void createInHotelReservation_whenRoomNotAvailable_shouldReturnConflict() throws Exception {
-        CreateInHotelReservationRequest request = new CreateInHotelReservationRequest(
-                RESERVATION_NOT_AVAILABLE_ROOM_TYPE_ID,
-                LocalDate.now().plusDays(1),
-                LocalDate.now().plusDays(2),
-                2,
-                0,
-                "John Doe",
-                "123456789",
-                "john.doe@example.com",
-                BigDecimal.valueOf(300)
-        );
+        CreateInHotelReservationRequest request = ControllerTestDataFactory
+                .getTestCreateInHotelReservationRequest()
+                .withRoomTypeId(RESERVATION_NOT_AVAILABLE_ROOM_TYPE_ID);
 
         mockMvc.perform(post("/api/reservations/create-in-hotel")
                         .contentType(MediaType.APPLICATION_JSON)

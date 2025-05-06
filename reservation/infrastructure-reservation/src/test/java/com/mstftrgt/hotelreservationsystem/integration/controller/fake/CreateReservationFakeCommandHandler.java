@@ -18,6 +18,7 @@ public class CreateReservationFakeCommandHandler implements CommandHandler<Creat
         if(RESERVATION_NOT_AVAILABLE_ROOM_TYPE_ID.equals(command.roomTypeId())) {
             throw new ReservationNotAvailableException();
         }
+
         return UUID.randomUUID();
     }
 }

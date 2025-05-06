@@ -75,7 +75,7 @@ public class ReservationTests {
 
     @Test
     void cancel_whenLastMinute_shouldThrowException() {
-        StayDate stayDate = new StayDate(LocalDate.now().plusDays(1), LocalDate.now().plusDays(3));
+        StayDate stayDate = new StayDate(LocalDate.now(), LocalDate.now().plusDays(3));
 
         Reservation reservation = ReservationTestDataFactory.getTestReservationWith(stayDate);
 
@@ -84,9 +84,7 @@ public class ReservationTests {
 
     @Test
     void cancel_whenValid_shouldCancelAndRegisterEvent() {
-        StayDate stayDate = new StayDate(LocalDate.now().plusDays(10), LocalDate.now().plusDays(15));
-
-        Reservation reservation = ReservationTestDataFactory.getTestReservationWith(stayDate, ReservationStatus.CONFIRMED);
+        Reservation reservation = ReservationTestDataFactory.getTestReservation();
 
         reservation.cancel();
 
@@ -108,10 +106,11 @@ public class ReservationTests {
 
     @Test
     void checkIn_whenValid_shouldChangeStatus() {
-        Reservation reservation = ReservationTestDataFactory.getTestReservationWith(new StayDate(
-                LocalDate.now(),
-                LocalDate.now().plusDays(5)
-        ));
+        Reservation reservation = ReservationTestDataFactory.getTestReservationWith(
+                new StayDate(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(5))
+        );
 
         reservation.checkIn();
 
@@ -143,7 +142,7 @@ public class ReservationTests {
 
     @Test
     void isNotCancelled_whenNotCancelled_shouldReturnTrue() {
-        Reservation reservation = ReservationTestDataFactory.getTestReservationWith(ReservationStatus.CONFIRMED);
+        Reservation reservation = ReservationTestDataFactory.getTestReservation();
 
         assertTrue(reservation.isNotCancelled());
     }

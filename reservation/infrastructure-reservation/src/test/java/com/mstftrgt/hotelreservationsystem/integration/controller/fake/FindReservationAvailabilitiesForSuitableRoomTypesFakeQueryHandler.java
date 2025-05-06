@@ -8,13 +8,13 @@ import com.mstftrgt.hotelreservationsystem.reservation.exception.InvalidStayDate
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
+
+import static com.mstftrgt.hotelreservationsystem.integration.controller.FakeExceptionFields.INVALID_STAY_DATE_LOCAL_DATE;
 
 @Service
 public class FindReservationAvailabilitiesForSuitableRoomTypesFakeQueryHandler implements QueryHandler<FindReservationAvailabilitiesForSuitableRoomTypesQuery, List<ReservationAvailabilityForRoomTypeReadModel>> {
 
-    private static final LocalDate INVALID_STAY_DATE_LOCAL_DATE = LocalDate.of(2000, 1, 1);
 
     @Override
     public List<ReservationAvailabilityForRoomTypeReadModel> handle(FindReservationAvailabilitiesForSuitableRoomTypesQuery query) {
