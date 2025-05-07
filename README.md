@@ -556,7 +556,12 @@ Unit tests focus on verifying business behaviors, not just individual methods or
 
 #### Samples :
 
+<br>
+
 <img src="assets/cancelunit.png"  width="800" alt="cancel-unit">
+
+<br>
+<br>
 
 <img src="assets/checkinunit.png"  width="800" alt="check-in-unit">
 
@@ -571,14 +576,27 @@ Integration tests validate how multiple components of the system work together â
 
 #### Samples :
 
+<br>
+
 <img src="assets/authintegration.png"  width="800" alt="auth-integration">
+
+<br>
+<br>
 
 <img src="assets/deletereservationit.png"  width="800" alt="delete-reservation-it">
 
+<br>
+<br>
+
 <img src="assets/createreservationfakehandler.png"  width="800" alt="create-reservation-fake-handler">
+
+<br>
+<br>
 
 <img src="assets/createonlineit.png"  width="800" alt="create-online-it">
 
+<br>
+<br>
 
 <br>Mustafa Turgut
 <br>mstftrgt00@gmail.com
