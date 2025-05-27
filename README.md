@@ -74,7 +74,7 @@ The image below displays some of the early conceptual sketches created at the ou
 
 <br>
 
-<img src="assets/papers.jpg" height=800 alt="papers">
+<img src="assets/papers.jpg" alt="papers" style="width:100%; height:auto; max-width:600px;">
 
 <br>
 <br>
