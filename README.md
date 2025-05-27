@@ -1,7 +1,7 @@
 # Hotel Reservation System
 
 
-A modular monolith hotel software with cqrs, ports & adapters and event-driven support.
+A modular monolith hotel software with ddd, cqrs, ports & adapters and event-driven support.
 
 <br>
 
