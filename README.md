@@ -114,7 +114,7 @@ Reservation made directly by the customer online.
 2. Site checks available rooms and returns suitable room types via:
 
    ```
-   POST /api/reservations/availability
+   GET /api/reservations/availability
    ```
 
 3. Customer selects room type, enters personal and card details.
@@ -138,7 +138,7 @@ This refers to a **reservation made over the phone** by a customer, where the re
 2. **Receptionist** checks room availability via:
 
    ```
-   POST /api/reservations/availability
+   GET /api/reservations/availability
    ```
 
 3. **Receptionist** confirms availability and enters reservation details using:
@@ -160,7 +160,7 @@ Customer walks in and wants to book and check in immediately.
 2. **Receptionist** checks availability:
 
    ```
-   POST /api/reservations/availability
+   GET /api/reservations/availability
    ```
 
 3. **Receptionist** creates the reservation:
